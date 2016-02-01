@@ -1,0 +1,137 @@
+#ifndef skei_interpolate_included
+#define skei_interpolate_included
+//----------------------------------------------------------------------
+
+// http://paulbourke.net/miscellaneous/interpolation/
+
+//----------
+
+float SInterpolate_Linear(float t, float y1,float y2) {
+  return ( y1*(1-t) + y2*t );
+}
+
+//----------------------------------------------------------------------
+
+
+float SInterpolate_Cosine(float t, float y1,float y2) {
+  float t2;
+  t2 = (1-cosf(t*SKEI_PI))/2;
+  return(y1*(1-t2)+y2*t2);
+}
+
+//----------------------------------------------------------------------
+
+float SInterpolate_Cubic(float t, float y0,float y1, float y2,float y3) {
+  float a0,a1,a2,a3,t2;
+  t2 = t*t;
+  a0 = y3 - y2 - y0 + y1;
+  a1 = y0 - y1 - a0;
+  a2 = y2 - y0;
+  a3 = y1;
+  return(a0*t*t2+a1*t2+a2*t+a3);
+}
+
+//----------------------------------------------------------------------
+
+/*
+  Tension: 1 is high, 0 normal, -1 is low
+  Bias: 0 is even, positive is towards first segment, negative towards the other
+*/
+
+float SInterpolate_Hermite(float t, float y0, float y1, float y2, float y3, float tension=0, float bias=0) {
+  float m0,m1,t2,t3;
+  float a0,a1,a2,a3;
+
+	t2 = t * t;
+	t3 = t2 * t;
+  m0  = (y1-y0)*(1+bias)*(1-tension)/2;
+  m0 += (y2-y1)*(1-bias)*(1-tension)/2;
+  m1  = (y2-y1)*(1+bias)*(1-tension)/2;
+  m1 += (y3-y2)*(1-bias)*(1-tension)/2;
+  a0 =  2*t3 - 3*t2 + 1;
+  a1 =    t3 - 2*t2 + t;
+  a2 =    t3 -   t2;
+  a3 = -2*t3 + 3*t2;
+  return(a0*y1+a1*m0+a2*m1+a3*y2);
+}
+
+//----------------------------------------------------------------------
+
+// http://www.musicdsp.org/showone.php?id=93
+
+// original
+float SInterpolate_Hermite1(float t, float y0, float y1, float y2, float y3)
+{
+  // 4-point, 3rd-order Hermite (x-form)
+  float c0 = y1;
+  float c1 = 0.5f * (y2 - y0);
+  float c2 = y0 - 2.5f * y1 + 2.f * y2 - 0.5f * y3;
+  float c3 = 1.5f * (y1 - y2) + 0.5f * (y3 - y0);
+  return ((c3 * t + c2) * t + c1) * t + c0;
+}
+
+//----------
+
+// james mccartney
+float SInterpolate_Hermite2(float t, float y0, float y1, float y2, float y3)
+{
+  // 4-point, 3rd-order Hermite (x-form)
+  float c0 = y1;
+  float c1 = 0.5f * (y2 - y0);
+  float c3 = 1.5f * (y1 - y2) + 0.5f * (y3 - y0);
+  float c2 = y0 - y1 + c1 - c3;
+  return ((c3 * t + c2) * t + c1) * t + c0;
+}
+
+//----------
+
+// james mccartney
+float SInterpolate_Hermite3(float t, float y0, float y1, float y2, float y3)
+{
+  // 4-point, 3rd-order Hermite (x-form)
+  float c0 = y1;
+  float c1 = 0.5f * (y2 - y0);
+  float y0my1 = y0 - y1;
+  float c3 = (y1 - y2) + 0.5f * (y3 - y0my1 - y2);
+  float c2 = y0my1 + c1 - c3;
+  return ((c3 * t + c2) * t + c1) * t + c0;
+}
+
+//----------
+
+// laurent de soras
+float SInterpolate_Hermite4(float t, float xm1, float x0, float x1, float x2)
+{
+  float c = (x1 - xm1) * 0.5f;
+  float v = x0 - x1;
+  float w = c + v;
+  float a = w + v + (x2 - x0) * 0.5f;
+  float b_neg = w + a;
+  return ((((a * t) - b_neg) * t + c) * t + x0);
+}
+
+//----------------------------------------------------------------------
+
+
+// http://www.pascalgamedevelopment.com/showthread.php?4621-Bezier-curves/page2&highlight=catmull
+
+/*
+  catmull-rom
+  a0 = -0.5*y0 + 1.5*y1 - 1.5*y2 + 0.5*y3;
+  a1 = y0 - 2.5*y1 + 2*y2 - 0.5*y3;
+  a2 = -0.5*y0 + 0.5*y2;
+  a3 = y1;
+*/
+
+//----------
+
+// https://code.google.com/p/nxpascal/source/browse/trunk/src/nxMath.pas#87
+
+float SInterpolate_CatmullRom(float t, float p0, float p1, float p2, float p3) {
+  return 0.5 * ( 2*p1 + (p2-p0)*t +
+               ( 2*p0 - 5*p1 + 4*p2 - p3) * t*t +
+               ( 3*p1 -   p0 - 3*p2 + p3) * t*t*t );
+}
+
+//----------------------------------------------------------------------
+#endif

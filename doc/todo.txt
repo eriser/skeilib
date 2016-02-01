@@ -1,0 +1,104 @@
+
+//----------------------------------------------------------------------
+//
+// bugs
+//
+//----------------------------------------------------------------------
+
+* vst editor resizing
+  works in:
+  - bitwig studio
+  doesn't work in:
+  - qtractor: crashes (reports "sizeWindow");
+  - carla: resizes back?
+  - jost:
+  - ardour4: no effect
+  
+----------
+
+* clipping
+  there's something fishy with the clipping.. if i default all widgets to do
+  clipping, something is wrong..
+  probably: initial cliprect + push/pop
+  
+//----------------------------------------------------------------------
+//
+// (potential) problems
+//
+//----------------------------------------------------------------------
+  
+* most gfx/bitmap stuff assumes 32 bit, rgba..
+
+* display connections..
+
+* keyboard
+  - ascii..
+  - todo: utf?
+
+//----------------------------------------------------------------------
+//
+// improvements
+//
+//----------------------------------------------------------------------
+
+* skin
+  - generic gui if user is not creating editor
+  - automatic disabled colors (fade towards background color)
+  
+* FlexSurface
+  - allow use of tilemaps
+
+//----------------------------------------------------------------------
+//
+// widgets
+//
+//----------------------------------------------------------------------
+
+* dual values
+  - min/max slider
+  - xy pad
+
+* multiple values
+  - slider bank
+
+* WidgetGrid
+
+* NodeEdit
+  - callback for drawing (node-list)
+    - line -> adsr
+  - canedit, canadd/delete
+  - node / canedit  
+  
+//----------------------------------------------------------------------
+//
+// source code
+//
+//----------------------------------------------------------------------
+
+* valgrind
+  valgrind reports one error.. in XGetDefault.. www says:
+  "XGetDefault is fairly obnoxious about leaving reachable memory around"
+  todo: valgrind suppressions?
+
+//----------
+  
+* getters and setters
+  - remove get/set*, getValue() -> value()
+  - remove _*
+
+* standardize prefixes, capitalization, etc, throughout the library
+
+* one global static class/object..
+  initialize all static stuff in constructor
+  cleanup in destructor
+  - debugging
+  - win32: register window class (?)
+  - linux: xinitthreads?
+  
+//----------------------------------------------------------------------
+//
+// other
+//
+//----------------------------------------------------------------------
+
+

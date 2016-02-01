@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# todo:
+# - for all (.h) files in directory, do compile file
+# - file name criteria?
+
+# ./compile debug_plug
+
+./compile -i fx_fracdelay
+./compile -i fx_pitch
+./compile -i fx_stutter
+
+
+# ./compile -i fx_blur
+# ./compile -i fx_clipper
+# ./compile -i fx_dist3
+# ./compile -i fx_freeze
+# ./compile -i fx_gain
+# ./compile -i fx_grains
+# ./compile -i fx_jungle
+# ./compile -i fx_tempodelay
+# ./compile -i fx_tone
+
