@@ -8,6 +8,8 @@
 #include "skei_drawable.h"
 
 //----------------------------------------------------------------------
+// should these really be here?
+//----------------------------------------------------------------------
 
 static XRenderPictFormat xrender_argb_templ = {
   0,              // id

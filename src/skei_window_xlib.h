@@ -76,6 +76,7 @@ char skei_xlib_blank_cursor[] = { 0,0,0,0,0,0,0,0 };
 
 #ifdef SKEI_LIB
 void* skei_xlib_threadproc(void* AData);
+void* skei_xlib_idleproc(void* AData);
 #endif
 
 void* skei_xlib_timerproc(void* AData);
@@ -90,7 +91,13 @@ class SWindow_Xlib
 
   friend class SWindow;
   friend void* skei_xlib_threadproc(void* AData);
+  friend void* skei_xlib_threadsleepproc(void* AData);
+  friend void* skei_xlib_idleproc(void* AData);
   friend void* skei_xlib_timerproc(void* AData);
+
+  private:
+
+    //SLock MLock;
 
   private:
 
@@ -106,23 +113,29 @@ class SWindow_Xlib
     XColor              MBlack;
     Atom                MDeleteAtom;
     Atom                MCustomAtom;
+    Atom                MIdleAtom;
     XExposeEvent        MExposeEvent;   // invalidate
     XClientMessageEvent MSendEvent;     // sendEvent
+    XClientMessageEvent MIdleEvent;     // idleEvent
     int32               MWindowCursor;
     pthread_t           MTimerThread;
     bool                MTimerThreadActive;
     int32               MTimerSleep;
     #ifdef SKEI_LIB
     pthread_t           MEventThread;
+    pthread_t           MIdleThread;
     bool                MEventThreadActive;
+    bool                MIdleThreadActive;
     #endif
     bool                MWindowExposed;
     bool                MWindowMapped;
 
+    #ifdef SKEI_XFT
     //XftFont*      MXftFont;
     //XftDraw*      MXftDraw;
     XftColor      MXftColor;
     bool          font_color_allocated;
+    #endif
 
   //----------------------------------------
   //
@@ -164,6 +177,7 @@ class SWindow_Xlib
       #ifdef SKEI_LIB
       MEventThread        = 0;
       MEventThreadActive  = false;
+      MIdleThreadActive   = false;
       #endif
 
       //MWindowCreated      = false;
@@ -236,16 +250,16 @@ class SWindow_Xlib
       XAllocColor(MDisplay,XDefaultColormap(MDisplay,0),&MBlack);
       MWindowCursor = -1;
 
+      #ifdef SKEI_XFT
       //initFonts();
-
       //MXftDraw = XftDrawCreate(
       //  MDisplay,
       //  MWindow,//MDrawable,
       //  DefaultVisual(MDisplay,DefaultScreen(MDisplay)),
       //  DefaultColormap(MDisplay,DefaultScreen(MDisplay))
       //);
-
       font_color_allocated = false;
+      #endif
 
     }
 
@@ -278,6 +292,7 @@ class SWindow_Xlib
 
     virtual ~SWindow_Xlib() {
 
+      #ifdef SKEI_XFT
       if (font_color_allocated)
         XftColorFree(
           MDisplay,
@@ -286,10 +301,11 @@ class SWindow_Xlib
           &MXftColor
         );
       //XftDrawDestroy(MXftDraw);
+      #endif
 
       if (MTimerThreadActive) stopTimer();
       #ifdef SKEI_LIB
-      if (MEventThreadActive) stopEventThread();
+      if (MEventThreadActive) stopThreads();
       #endif
 
       XFreePixmap(MDisplay,MEmptyPixmap);
@@ -334,6 +350,9 @@ class SWindow_Xlib
   private:
 
     void eventHandler(XEvent* AEvent) {
+
+      //MLock.lock();
+
       //int32 x, y, b, s, k; // w, h
       //int32 w,h;
       //SRect rec;
@@ -483,6 +502,8 @@ class SWindow_Xlib
 
       } // case
 
+      //MLock.unlock();
+
     }
 
 
@@ -615,9 +636,11 @@ class SWindow_Xlib
 
     #ifdef SKEI_LIB
 
-    void startEventThread(void) {
+    void startThreads(void) {
       MEventThreadActive = true;
       pthread_create(&MEventThread,SKEI_NULL,skei_xlib_threadproc,this);
+      MIdleThreadActive = true;
+      pthread_create(&MIdleThread,SKEI_NULL,skei_xlib_idleproc,this);
     }
 
     #endif
@@ -626,10 +649,13 @@ class SWindow_Xlib
 
     #ifdef SKEI_LIB
 
-    void stopEventThread(void) {
-      void* ret;
+    void stopThreads(void) {
+      void* ret = SKEI_NULL;
       MEventThreadActive = false;
+      MIdleThreadActive = false;
       sendEvent(sts_kill);
+      pthread_cancel(MIdleThread);
+      pthread_join(MIdleThread,&ret);
       pthread_join(MEventThread,&ret);
     }
 
@@ -755,7 +781,7 @@ class SWindow_Xlib
       waitforMapNotify;
       #endif
       #ifdef SKEI_LIB
-      startEventThread();
+      startThreads();
       #endif
     }
 
@@ -764,7 +790,7 @@ class SWindow_Xlib
     //virtual
     void close(void) {
       #ifdef SKEI_LIB
-      stopEventThread();
+      stopThreads();
       #endif
       XUnmapWindow(MDisplay,MWindow);
       XFlush(MDisplay);
@@ -779,6 +805,20 @@ class SWindow_Xlib
     }
 
     //----------
+
+    /*
+      http://forums.libsdl.org/viewtopic.php?t=5720&sid=16cd6404ab2715a87d39bd48b3fc8fc0
+
+      Calling Xsync causes a round trip to the server. The calling thread is
+      forced to wait while the round trip takes place. While that thread is
+      waiting no other thread can use Xlib. That means that Xsync is the
+      opposite of what you want to use in a multithreaded program. Using
+      your own mutexes is a bad idea because you can't be sure that other
+      parts of the code, parts of libraries you have linked in, are not
+      making their own multi-threaded calls to Xlib. To make sure that Xlib
+      is actually being accessed properly you must use SinitThreads() and
+      Xlibs own lock and unlock operations.
+    */
 
     //virtual
     void sync(void) {
@@ -986,7 +1026,7 @@ class SWindow_Xlib
       void* ret;
       MTimerThreadActive = false;
       pthread_join(MTimerThread,&ret);
-      STrace("timer stopped..\n");
+      //STrace("timer stopped..\n");
     }
 
     //------------------------------
@@ -1019,6 +1059,10 @@ class SWindow_Xlib
     }
 
     //----------
+
+    void setIdleAtom(Atom atm) {
+      MIdleAtom = atm;
+    }
 
 };
 
@@ -1068,20 +1112,42 @@ class SWindow_Xlib
 
 //----------
 
+/*
+  so.. Display* can not be used across threads..
+  we create the window, which sets up the Display*..
+  if window->open, we create this thread (which uses the Display*, hmm)
+
+  and also, in a vst plugin, is effEditOpen and effEditIdle called from the
+  same thread?
+*/
+
+//static SLock MEventThreadLock;
+
+    // test
+    //MEventThreadLock.lock();
+
+    //Display* dsp = XOpenDisplay(SKEI_NULL);
+    //uint32 eventmask  =
+    //  ExposureMask        |
+    //  StructureNotifyMask |
+    //  PropertyChangeMask  |
+    //  ButtonPressMask     |
+    //  ButtonReleaseMask   |
+    //  PointerMotionMask   |
+    //  KeyPressMask        |
+    //  KeyReleaseMask      |
+    //  ClientMessage;
+    //XSelectInput(dsp,win->MWindow,eventmask);
+
 #ifdef SKEI_LIB
+
 void* skei_xlib_threadproc(void* AData) {
   SWindow_Xlib* win = (SWindow_Xlib*)AData;
   if (win) {
-
-    //while (1) {
-    //while (win->MEventThreadActive) {
-
-    #ifndef SKEI_LINUX_EVENT_THREAD_SLEEP
-
-    //while (1) {
     while (win->MEventThreadActive) {
       XEvent ev;
       XNextEvent(win->MDisplay, &ev);
+      //if (ev.xany.display != win->MDisplay || ev.xany.window != win->MWindow) continue;
       if (ev.type == ClientMessage) {
         XClientMessageEvent* cev = (XClientMessageEvent*)&ev;
         uint32 dta = ev.xclient.data.l[0];
@@ -1090,37 +1156,91 @@ void* skei_xlib_threadproc(void* AData) {
           else win->eventHandler(&ev);
         } // custom atom
       } //ClientMessage
-      else
-        win->eventHandler(&ev);
+      else win->eventHandler(&ev);
     } // while ..
-
-    #else
-
-    while (XPending(win->MDisplay) > 0) {
-      XEvent ev;
-      XNextEvent(win->MDisplay, &ev);
-      if (ev.type == ClientMessage) {
-        XClientMessageEvent* cev = (XClientMessageEvent*)&ev;
-        uint32 dta = ev.xclient.data.l[0];
-        if (cev->message_type == win->MCustomAtom) {
-          if (dta == sts_kill) pthread_exit(SKEI_NULL);
-          else win->eventHandler(&ev);
-        } // custom atom
-      } //ClientMessage
-      else
-        win->eventHandler(&ev);
-     } // pending
-     //win->sendEvent(sts_idle);
-     if (win->MWindowMapped && win->MWindowExposed) win->on_idle();
-      SSleep(SKEI_LINUX_THREADPROC_IDLESLEEP);
-    } // while ..
-
-   #endif // SKEI_LINUX_EVENT_THREAD_SLEEP
-
   } // win
   return SKEI_NULL;
 }
-#endif
+
+#endif // SKEI_LIB
+
+//----------------------------------------------------------------------
+// sleep proc
+//----------------------------------------------------------------------
+
+#ifdef SKEI_LIB
+#ifdef SKEI_LINUX_SLEEP_THREAD
+
+void* skei_xlib_threadsleepproc(void* AData) {
+  SWindow_Xlib* win = (SWindow_Xlib*)AData;
+  if (win) {
+    while (win->MEventThreadActive) {
+      while (XPending(win->MDisplay) > 0) {
+        XEvent ev;
+        XNextEvent(win->MDisplay, &ev);
+        if (ev.type == ClientMessage) {
+          XClientMessageEvent* cev = (XClientMessageEvent*)&ev;
+          uint32 dta = ev.xclient.data.l[0];
+          if (cev->message_type == win->MCustomAtom) {
+            if (dta == sts_kill) pthread_exit(SKEI_NULL);
+            else win->eventHandler(&ev);
+          } // custom atom
+        } //ClientMessage
+        else
+          win->eventHandler(&ev);
+      } // pending
+      //win->sendEvent(sts_idle);
+      if (win->MWindowMapped && win->MWindowExposed) win->on_idle();
+      SSleep(SKEI_LINUX_SLEEP_MS);
+    } // while ..
+  }
+  //STrace("sleep thread returning\n");
+  return SKEI_NULL;
+}
+
+
+#endif // SKEI_LINUX_SLEEP_THREAD
+#endif // SKEI_LIB
+
+//----------------------------------------------------------------------
+// idle proc
+//----------------------------------------------------------------------
+
+#ifdef SKEI_LIB
+
+//static XClientMessageEvent event;
+
+void* skei_xlib_idleproc(void* AData) {
+  int prev_cancel_type;
+  pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS,&prev_cancel_type);
+  SWindow_Xlib* win = (SWindow_Xlib*)AData;
+  if (win) {
+    //Atom atom = XInternAtom(dsp,"idle",true);
+    //Display* dsp = win->MDisplay;
+    Display* dsp = XOpenDisplay(SKEI_NULL);
+    while (win->MIdleThreadActive) {
+      if (win->MWindowMapped && win->MWindowExposed) {
+        XClientMessageEvent* event = &win->MIdleEvent;
+        //win->on_idle();
+        SMemset(event,0,sizeof(XClientMessageEvent));
+        event->type           = ClientMessage;
+        event->message_type  = 0;//MIdleAtom;
+        event->display       = dsp;//MDisplay;
+        event->window        = win->MWindow;
+        event->format        = 32;
+        event->data.l[0]     = sts_idle;
+        XSendEvent(dsp,win->MWindow,False,NoEventMask,(XEvent*)event);
+        XFlush(dsp);
+      } // mapped & active
+      SSleep(SKEI_LINUX_IDLE_MS);
+    } // while active
+    //XSync(dsp,false);
+    XCloseDisplay(dsp);
+  } // win
+  return SKEI_NULL;
+}
+
+#endif //  SKEI_LIB
 
 //----------------------------------------------------------------------
 // timer proc

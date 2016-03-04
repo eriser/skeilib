@@ -56,7 +56,9 @@ class SQueue
     //----------
 
     /*
-      TODO: remove when we know it works
+      notes to self:
+      TODO: remove when we are 110% sure it works
+
       (wp-rp) and FBufferMask = 'items in buffer'
       in write(), we avoid filling the entire buffer, by letting there always be
       at least one free item, because read() could misinterpret a full buffer
@@ -192,6 +194,18 @@ class SQueue_Buffer
     //  }
 
 };
+
+//----------------------------------------------------------------------
+// standard/predefined queue types
+//----------------------------------------------------------------------
+
+//typedef SQueue<char>  SCharQueue;
+//typedef SQueue<char*> SStrQueue;
+//typedef SQueue<int32> SIntQueue;
+//typedef SQueue<float> SFloatQueue;
+//typedef SQueue<void>  SPtrQueue;
+//typedef SQueue<bool>  SBoolQueue;
+
 
 //----------------------------------------------------------------------
 #endif

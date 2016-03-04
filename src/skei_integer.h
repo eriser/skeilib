@@ -2,6 +2,8 @@
 #define skei_interger_included
 //----------------------------------------------------------------------
 
+#include <math.h> // sqrtf
+
 /*
   calculate the average value of a set of integers
   example:

@@ -3,6 +3,9 @@
 //----------------------------------------------------------------------
 
 #include "skei_voice_manager.h"
+#include "skei_osc1.h"
+#include "skei_filter_dc.h"
+#include "skei_interpolate.h"
 
 //----------------------------------------------------------------------
 
@@ -11,11 +14,30 @@ class myVoice : public SVoice {
 
   private:
 
-    uint32                waveform;
+    //float p,s;
+
     uint32                oversample;
     uint32                decimator;
-    SPhase                phase;
-    SEnvelope_ADSR        adsr;
+    //uint32                oversample2;
+    //uint32                decimator2;
+
+    uint32                waveform1;
+    SPhase                phase1;
+    SEnvelope_ADSR        adsr1;
+    SOsc1                 osc1;
+
+    //uint32                waveform2;
+    //SPhase                phase2;
+    //SEnvelope_ADSR        adsr2;
+    SOsc1                 osc2;
+
+    //SFilter_DC            dc;
+
+    uint32 combine;
+    float  oct;
+    float  semi;
+    float  cent;
+    float  mix;
 
     SFilter_Decimator5    decim5[8];
     SFilter_Decimator7    decim7[8];
@@ -50,11 +72,13 @@ class myVoice : public SVoice {
 
     myVoice(SVoiceManager* AManager)
     : SVoice(AManager) {
-      waveform = 0;
       oversample = 1;
       decimator = 0;
-      adsr.setDecay(0);
-      adsr.setSustain(1);
+      waveform1 = 0;
+      adsr1.setDecay(0);
+      adsr1.setSustain(1);
+      //p = 0.5;
+      //s = 1.0;
     }
 
     //----------
@@ -69,7 +93,7 @@ class myVoice : public SVoice {
   private:
 
     float _getOsc(float t, float dt) {
-      switch(waveform) {
+      switch(waveform1) {
         case 0:  return saw_naive.process(t,dt);      break;
         case 1:  return saw_dpw.process(t,dt);        break;
         case 2:  return saw_dpw2.process(t,dt);       break;
@@ -79,8 +103,18 @@ class myVoice : public SVoice {
         case 6:  return saw_ptr2.process(t,dt);       break;
         case 7:  return saw_polyblep.process(t,dt);   break;
         case 8:  return saw_ptr3.process(t,dt);       break;
-        //case 10:  return saw_polyblep2.process(t,dt); break;
-        //case 11: return saw_polyblep3.process(t,dt);  break;
+
+        case 9: {
+          float a = osc1.process();
+          float b = osc2.process();
+          switch(combine) {
+            case 0: return SInterpolate_Linear(mix,a,b); break;
+          }
+          break;
+        }
+
+
+
       }
       return 0;
     }
@@ -129,7 +163,8 @@ class myVoice : public SVoice {
       }
       float change = (float)oversample / (float)over;
       oversample = over;
-      phase.dt *= change;
+      phase1.dt *= change;
+      //phase2.dt *= change;
     }
 
   //------------------------------
@@ -148,8 +183,13 @@ class myVoice : public SVoice {
     void on_noteOn(int ANote, int AVel) {
       SVoice::on_noteOn(ANote,AVel);
       float hz = SNoteToHz(ANote+MPitchBend);
-      phase.setFreq(hz,MSampleRate*oversample);
-      adsr.noteOn();
+      phase1.setFreq(hz,MSampleRate*oversample);
+      osc1.setFreq(hz,MSampleRate*oversample);
+      adsr1.noteOn();
+      hz = SNoteToHz(ANote+MPitchBend+oct+semi+cent);
+      //phase2.setFreq(hz,MSampleRate*oversample);
+      osc2.setFreq(hz,MSampleRate*oversample);
+      //adsr2.noteOn();
     }
 
     //----------
@@ -158,7 +198,8 @@ class myVoice : public SVoice {
     void on_noteOff(int ANote, int AVel) {
       SVoice::on_noteOff(ANote,AVel);
       MState = svs_released;
-      adsr.noteOff();
+      adsr1.noteOff();
+      //adsr2.noteOff();
     }
 
     //----------
@@ -168,17 +209,33 @@ class myVoice : public SVoice {
       //float hz = 0;
       SVoice::on_control(AIndex,AValue);
       switch(AIndex) {
-        case 0: on_pitchBend(AValue); break;
-        case 1: waveform = AValue; break;
-        case 2: setOverSample(AValue); break;
-        case 3: setDecimator(AValue); break;
-        case 4: adsr.setAttack(AValue); break;
-        //case 5: adsr.setDecay(AValue); break;
-        //case 6: adsr.setSustain(AValue); break;
-        case 5: adsr.setRelease(AValue); break;
-        //case 8: svf.setMode(AValue); break;
-        //case 9: svf.setFreq(AValue*AValue); break;
-        //case 10: svf.setBW(AValue); break;
+        //case 0: break;
+        case 1:   on_pitchBend(AValue); break;
+        case 2:   setOverSample(AValue); break;
+        case 3:   setDecimator(AValue); break;
+
+        case 4:   waveform1 = AValue; break;
+        case 5:   osc1.setPulseWidth(AValue); break;
+        case 6:   osc1.setSawSqu(AValue); break;
+        case 7:   osc1.setSquTri(AValue); break;
+        case 8:   osc1.setTriSin(AValue); break;
+        case 9:   adsr1.setAttack(AValue); break;
+        case 10:  adsr1.setRelease(AValue); break;
+
+        //case :  /*waveform2 = AValue;*/ break;
+        case 11:  osc2.setPulseWidth(AValue); break;
+        case 12:  osc2.setSawSqu(AValue); break;
+        case 13:  osc2.setSquTri(AValue); break;
+        case 14:  osc2.setTriSin(AValue); break;
+        //case :  /*adsr2.setAttack(AValue);*/ break;
+        //case :  /*adsr2.setRelease(AValue);*/ break;
+
+        case 15:  combine = AValue; break;
+        case 16:  oct = (AValue*12); break;
+        case 17:  semi = AValue; break;
+        case 18:  cent = AValue / 100.0f; break;
+        case 19:  mix = AValue; break;
+
       }
     }
 
@@ -188,7 +245,11 @@ class myVoice : public SVoice {
     void on_pitchBend(float ABend) {
       SVoice::on_pitchBend(ABend);
       float hz = SNoteToHz((float)MMidiNote + MPitchBend);
-      phase.setFreq(hz, MSampleRate * oversample );
+      phase1.setFreq(hz, MSampleRate * oversample );
+      osc1.setFreq(hz, MSampleRate * oversample );
+      hz = SNoteToHz((float)MMidiNote + MPitchBend +oct+semi+cent);
+      //phase2.setFreq(hz, MSampleRate * oversample );
+      osc2.setFreq(hz, MSampleRate * oversample );
 
     }
 
@@ -216,8 +277,8 @@ class myVoice : public SVoice {
       float buffer[256];
 
       for (uint32 i=0; i<oversample; i++) {
-        phase.process();
-        buffer[i] = _getOsc(phase.t,phase.dt);
+        phase1.process();
+        buffer[i] = _getOsc(phase1.t,phase1.dt);
       }
 
       // decimate
@@ -253,9 +314,11 @@ class myVoice : public SVoice {
       // todo: * midivel
 
       // envelope
-      float env = adsr.process();
-      if (adsr.stage() == ses_finished) MState = svs_off;
+      float env = adsr1.process();
+      if (adsr1.stage() == ses_finished) MState = svs_off;
       out *= env;
+
+      //out = dc.process(out);
 
       // out
 

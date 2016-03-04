@@ -19,8 +19,8 @@ class SWidget_Slider
     : SWidget_Value(ARect,AValue,AAlignment) {
       MName  = "SWidget_Slider";
       MHint = "slider";
-      MBackColor = SDarkGrey;
-      MBarColor = SBlack;
+      MBackColor = SGrey;
+      MBarColor = SDarkGrey;
       MTextColor = SLightYellow;
       MValueColor = SLightGrey;
       MDrawName = true;

@@ -85,6 +85,12 @@ class SArray {
 
     //----------
 
+    void deleteItems(void) {
+      for (int32 i=0; i<MSize; i++) delete MBuffer[i];
+    }
+
+    //----------
+
     /**
       x = SArray[n];
     */

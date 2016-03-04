@@ -2,163 +2,139 @@
 #define skei_thread_included
 //----------------------------------------------------------------------
 
-////#include "lib/h_Defines.h"
-//#include "src/h_Defines.h"
-//
-////----------------------------------------------------------------------
-//
-//class h_ThreadBase
-//{
-//  protected:
-//    bool  mThreadRunning;
-//    int   mThreadSleep;
-//  public:
-//    h_ThreadBase()                      { mThreadRunning=false; mThreadSleep=-1; }
-//    virtual ~h_ThreadBase()             {}
-//    virtual void startThread(int ms=-1) {} // -1 = no timer
-//    virtual void stopThread(void)       {}
-//    //
-//    // override this..
-//    // called at thread creation, or every timer tick if ms > 0
-//    virtual void doThreadFunc(void)     {}
-//    //
-//};
-//
-////----------------------------------------------------------------------
-//#ifdef H_LINUX
-////----------------------------------------------------------------------
-//
+#ifdef SKEI_LINUX
 //#include <pthread.h>
 //#include <unistd.h> // sleep
-//
-//class h_Thread : public h_ThreadBase
-//{
-//  private:
-//    pthread_t mThreadHandle;
-//    //bool      mThreadRunning;
-//    //int       mThreadSleep;
-//
-//  private:
-//
-//    static void* threadProc(void* data)
-//      {
-//        h_Thread* thr = (h_Thread*)data;
-//        if (thr)
-//        {
-//          if (thr->mThreadSleep>=0)
-//          {
-//            while (thr->mThreadRunning)
-//            {
-//              thr->doThreadFunc();
-//              usleep(thr->mThreadSleep*1000); //ms*1000;
-//            }
-//          } else thr->doThreadFunc();
-//        }
-//        return NULL;
-//      }
-//
-//  public:
-//
-//    h_Thread()
-//    : h_ThreadBase()
-//      {
-//        mThreadHandle = 0;
-//        //mThreadRunning = false;
-//        //mThreadSleep = -1;
-//      }
-//
-//    virtual ~h_Thread()
-//      {
-//        if (mThreadRunning) stopThread();
-//      }
-//
-//    //virtual void doThreadFunc(void) {}
-//
-//    virtual void startThread(int ms=-1)
-//      {
-//        mThreadSleep = ms;
-//        mThreadRunning = true;
-//        pthread_create(&mThreadHandle,NULL,&threadProc,this);
-//      }
-//
-//    virtual void stopThread(void)
-//      {
-//        mThreadRunning = false;
-//        void* ret;
-//        pthread_join(mThreadHandle,&ret);
-//      }
-//
-//};
-//
-//#endif
-//
-////----------------------------------------------------------------------
-//#ifdef H_WIN32
-////----------------------------------------------------------------------
-//
+#endif
+
+#ifdef SKEI_WIN32
 //#include <windows.h>
-////#include <unistd.h> // sleep
-//
-//class h_Thread : public h_ThreadBase
-//{
-//  private:
-//    HANDLE  mThreadHandle;
-//    DWORD   mThreadID;
-//      //bool  mThreadRunning;
-//      //int   mThreadSleep;
-//
-//  private:
-//
-//    static DWORD WINAPI threadProc(LPVOID data)
-//      {
-//        h_Thread* thr = (h_Thread*)data;
-//        if (thr)
-//        {
-//          if (thr->mThreadSleep>=0)
-//          {
-//            while (thr->mThreadRunning)
-//            {
-//              thr->doThreadFunc();
-//              Sleep(thr->mThreadSleep);
-//            }
-//          } else thr->doThreadFunc();
-//        }
-//        return H_NULL;
-//      }
-//
-//  public:
-//
-//    h_Thread() //: h_ThreadBase()
-//      {
-//        mThreadHandle = 0;
-//        mThreadID = 0;
-//        //mThreadRunning = false;
-//        //mThreadSleep = -1;
-//      }
-//
-//    virtual ~h_Thread()
-//      {
-//        if (mThreadRunning) stopThread();
-//      }
-//
-//    virtual void startThread(int ms=-1)
-//      {
-//        mThreadSleep   = ms;
-//        mThreadRunning = true;
-//        mThreadHandle = CreateThread(H_NULL,0,&threadProc,(LPVOID)this,H_NULL,&mThreadID);
-//      }
-//
-//    virtual void stopThread(void)
-//      {
-//        //void* ret;
-//        mThreadRunning = false;
-//        //DWORD waiter = WaitForSingleObject(mThreadHandle,INFINITE);
-//        CloseHandle(mThreadHandle);
-//      }
-//
-//};
-//
-//#endif
+#endif
+
+//----------------------------------------------------------------------
+
+class SThread {
+
+  private:
+
+    bool        MThreadRunning;
+    int         MThreadSleep;
+    #ifdef SKEI_LINUX
+    pthread_t   MThreadHandle;
+    #endif
+    #ifdef SKEI_WIN32
+    HANDLE  MThreadHandle;
+    DWORD   MThreadID;
+    #endif
+
+  //----------------------------------------
+  //
+  //----------------------------------------
+
+  private:
+
+    #ifdef SKEI_LINUX
+    static void* threadProc(void* data) {
+      SThread* thr = (SThread*)data;
+      if (thr) {
+        if (thr->SThreadSleep>=0) {
+          while (thr->SThreadRunning) {
+            thr->doThreadFunc();
+            usleep(thr->mThreadSleep*1000); //ms*1000;
+          }
+        } else thr->doThreadFunc();
+      }
+      return SKEI_NULL;
+    }
+    #endif
+
+    //----------
+
+    #ifdef SKEI_WIN32
+    static DWORD WINAPI threadProc(LPVOID data) {
+      MThread* thr = (MThread*)data;
+      if (thr) {
+        if (thr->MThreadSleep>=0) {
+          while (thr->MThreadRunning) {
+            thr->on_threadFunc();
+            Sleep(thr->MThreadSleep);
+          }
+        } else thr->on_threadFunc();
+      }
+      return SKEI_NULL;
+    }
+    #endif
+
+  public:
+
+    SThread() {
+      MThreadRunning = false;
+      MThreadSleep = -1;
+      #ifdef SKEI_LINUX
+      mThreadHandle = 0;
+      #endif
+      #ifdef SKEI_WIN32
+      MThreadHandle = 0;
+      MThreadID = 0;
+      #endif
+    }
+
+    //----------
+
+    virtual ~SThread() {
+      if (MThreadRunning) stopThread();
+    }
+
+  //----------------------------------------
+  //
+  //----------------------------------------
+
+  public:
+
+    // -1 = no timer
+
+
+
+    void startThread(int ms=-1) {
+      MThreadSleep = ms;
+      MThreadRunning = true;
+      #ifdef SKEI_LINUX
+      pthread_create(&MThreadHandle,SKEI_NULL,&threadProc,this);
+      #endif
+      #ifdef SKEI_WIN32
+      MThreadHandle = CreateThread(SKEI_NULL,0,&threadProc,(LPVOID)this,SKEI_NULL,&MThreadID);
+      #endif
+    }
+
+
+
+    virtual void stopThread(void) {
+      MThreadRunning = false;
+      void* ret;
+      #ifdef SKEI_LINUX
+      pthread_join(MThreadHandle,&ret);
+      #endif
+      #ifdef SKEI_WIN32
+      //void* ret;
+      //DWORD waiter = WaitForSingleObject(MThreadHandle,INFINITE);
+      CloseHandle(MThreadHandle);
+      #endif
+    }
+
+  //----------------------------------------
+  //
+  //----------------------------------------
+
+  public:
+
+    // override this..
+    // called at thread creation, or every timer tick if ms > 0
+
+    virtual
+    void on_threadFunc(void) {
+    }
+
+};
 
 //----------------------------------------------------------------------
 #endif

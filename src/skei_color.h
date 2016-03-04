@@ -37,6 +37,27 @@ struct SColor {
     a = aa;
   }
 
+  void set(float ac) {
+    r = ac;
+    g = ac;
+    b = ac;
+    a = 1; // 0
+  }
+
+  void set(float ar, float ag, float ab) {
+    r = ar;
+    g = ag;
+    b = ab;
+    a = 1; // 0
+  }
+
+  void set(float ar, float ag, float ab, float aa) {
+    r = ar;
+    g = ag;
+    b = ab;
+    a = aa;
+  }
+
   // value = 0 = src
   // value = 1 = arg
 

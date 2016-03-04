@@ -897,8 +897,8 @@ class SPlugin_Vst
           #ifdef SKEI_DEBUG_VST
           //DTrace("vst dispatcher: effEditIdle()\n");
           #endif
-          #ifndef SKEI_LINUX_EVENT_THREAD_SLEEP
           #ifdef SKEI_PLUGIN_HAS_EDITOR
+          #ifndef SKEI_LINUX_IDLE_THREAD
           if (MEditorIsOpen) {
             if (MEditor) {
               on_idleEditor(MEditor);
@@ -906,8 +906,8 @@ class SPlugin_Vst
               return 1;
             }
           }
+          #endif // SKEI_LINUX_IDLE_THREAD
           #endif // SKEI_PLUGIN_HAS_EDITOR
-          #endif // SKEI_LINUX_EVENT_THREAD_SLEEP
           break;
 
         //----------

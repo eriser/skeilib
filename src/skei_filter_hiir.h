@@ -578,8 +578,8 @@ class SFilter_Hiir4 {
 class SFilter_Hiir2 {
   private:
     float FPrevious;
-    SFilter_Allpass a0,a1,a2;
-    SFilter_Allpass b0,b1,b2;
+    SFilter_Allpass a0;//,a1,a2;
+    SFilter_Allpass b0;//,b1,b2;
   public:
     SFilter_Hiir2() {
       FPrevious = 0;
@@ -597,6 +597,11 @@ class SFilter_Hiir2 {
       FPrevious = b;
       return result;
     }
+    //float process0(void) {
+    //  return 0;
+    //}
+    //void processDrop(void) {
+    //}
     void upsample(float AInput, float* AOutput1, float* AOutput2) {
       *AOutput1 = process(AInput);
       *AOutput2 = process(0.0f);
@@ -608,6 +613,10 @@ class SFilter_Hiir2 {
     }
 };
 
+
+//----------------------------------------------------------------------
+//
+//----------------------------------------------------------------------
 
 //----------------------------------------------------------------------
 #endif

@@ -81,7 +81,6 @@ float SPolyBlep3(float t, float dt, float h) {
     t0 /= dt;                   // fractional phase (-1,0)
     c0 = 0.5*t0*t0 + t0 + 0.5;  // correction polynomial
     c0 = c0 * h;                // scale with transition height
-  //s[n] = x[n] + c0;           // update sample value
     return c0;
   }
   else if (t < dt) {            // -- after transition ------------------------
@@ -89,7 +88,6 @@ float SPolyBlep3(float t, float dt, float h) {
     t0 /= dt;                   // fractional phase (0,1)
     c0 = -0.5*t0*t0 + t0 - 0.5; // correction polynomial
     c0 = c0 * h;                // scale with transition height
-  //s[n] = x[n] + c0            // update sample value
     return c0;
   }
   else return 0;                // -- not inside transition area: nop ---------

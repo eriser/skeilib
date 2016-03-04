@@ -137,16 +137,26 @@ class SEditor
       todo: this is a hack.. find a better way..
     */
 
-    #ifdef SKEI_LINUX_EVENT_THREAD_SLEEP
+    //#ifdef SKEI_LINUX_EVENT_THREAD_SLEEP
+    ////virtual
+    //void on_idle(void) {
+    //  // ifdef linux?
+    //  MListener->idleFromEditor();
+    //  //STrace("on_idle\n");
+    //  //MListener->on_idleEditor();
+    //  //MListener->updateEditorInIdle();
+    //}
+    //#else
+
+    #ifdef SKEI_LINUX_IDLE_THREAD
+
     //virtual
     void on_idle(void) {
-      // ifdef linux?
-      MListener->idleFromEditor();
-//      STrace("on_idle\n");
-//      MListener->on_idleEditor();
-//      MListener->updateEditorInIdle();
+      //STrace("on_idle\n");
+      if (MListener) MListener->idleFromEditor();
     }
-    #endif
+
+    #endif // SKEI_LINUX_IDLE_THREAD
 
   //----------------------------------------
   // do_

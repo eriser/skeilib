@@ -80,9 +80,11 @@ class SPainter_Xlib
 
     XFontStruct*  MFont;
 
+    #ifdef SKEI_XFT
     XftDraw*      MXftDraw;
     XftColor      MXftColor;
     bool          xft_color_allocated;
+    #endif
 
     #ifdef SKEI_XRENDER
     Picture       MPicture;
@@ -139,12 +141,14 @@ class SPainter_Xlib
 
       MGC       = XCreateGC(MDisplay,MDrawable,0,&MGCvalues);
       MFont     = XQueryFont(MDisplay,XGContextFromGC(MGC));
+      #ifdef SKEI_XFT
       MXftDraw = XftDrawCreate(
         MDisplay,
         MDrawable,
         DefaultVisual(MDisplay,DefaultScreen(MDisplay)),
         DefaultColormap(MDisplay,DefaultScreen(MDisplay))
       );
+      #endif
       MClipRect.set(0,0,ADrawable->width(),ADrawable->height());
       #ifdef SKEI_XRENDER
         MPicture = ADrawable->picture();
@@ -157,7 +161,9 @@ class SPainter_Xlib
       MBlendMode = PictOpOver;
       #endif
       //font_color_allocated = false;
+      #ifdef SKEI_XFT
       xft_color_allocated = false;
+      #endif
     }
 
     //----------
@@ -166,8 +172,8 @@ class SPainter_Xlib
       XFreeFontInfo(SKEI_NULL,MFont,1);   // 1??
       #ifdef SKEI_XFT
       if (xft_color_allocated) XftColorFree(MDisplay,MVisual,MColorMap,&MXftColor);
-      #endif
       XftDrawDestroy(MXftDraw);
+      #endif
       XFreeGC(MDisplay,MGC);
       //TODO: delete picture etc...
       //self..noClip;

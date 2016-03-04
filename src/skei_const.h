@@ -19,7 +19,8 @@
 #define SKEI_LADSPA_MAX_OUTPUTS           16
 #define SKEI_LADSPA_MAX_PARAMS            256
 
-#define SKEI_LINUX_THREADPROC_IDLESLEEP   30
+#define SKEI_LINUX_SLEEP_MS               30
+#define SKEI_LINUX_IDLE_MS                40
 
 //#define SKEI_LINUX_THREADPROC_TICKLENGTH  1
 //#define SKEI_LINUX_THREADPROC_TICKIDLE    30

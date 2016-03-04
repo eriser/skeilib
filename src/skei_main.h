@@ -30,8 +30,8 @@
 
   // where is dllexport?
   // move these to skei_plugin_vst.h ??
-  #include "extern/aeffect.h"
-  #include "extern/aeffectx.h"
+  #include "extern/vst/aeffect.h"
+  #include "extern/vst/aeffectx.h"
 
   //----------
 

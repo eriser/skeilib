@@ -15,6 +15,86 @@
 #include "skei.h"
 #include "skei_plugin.h"
 #include "skei_module.h"
+
+//----------------------------------------------------------------------
+// plugin
+//----------------------------------------------------------------------
+
+class myPlugin
+: public SPlugin
+{
+
+  private:
+
+  public:
+
+    //virtual
+    void on_create(void) {
+      MInfo.name       = "test_module";
+      MInfo.author     = "skei";
+      MInfo.product    = MInfo.name;
+      MInfo.uniqueId   = SKEI_MAGIC + 0x0000;
+      MInfo.numInputs  = 2;
+      MInfo.numOutputs = 2;
+
+    }
+
+    //----------
+
+    //virtual
+    void on_stateChange(uint32 AState) {
+      switch(AState) {
+        case sps_sampleRate:
+          break;
+        case sps_blockSize:
+          break;
+        case sps_resume:
+          break;
+      }
+    }
+
+    //----------
+
+    //virtual
+    void on_processBlock(SSample** AInputs, SSample** AOutputs, int32 ANumSamples) {
+      //MAudioModule->processBlock(AInputs,AOutputs,ANumSamples);
+    }
+
+};
+
+//----------------------------------------------------------------------
+
+SKEI_MAIN(myPlugin);
+
+//----------------------------------------------------------------------
+#endif
+
+
+
+
+
+#if 0
+
+
+
+
+#ifndef test_module_included
+#define test_module_included
+//----------------------------------------------------------------------
+
+#define SKEI_DEBUG_MEM
+#ifdef SKEI_VST
+  #define SKEI_DEBUG_SOCKET
+#endif
+//#define SKEI_PLUGIN_PER_SAMPLE
+//#define SKEI_PLUGIN_IS_SYNTH
+//#define SKEI_PLUGIN_RECEIVE_MIDI
+
+//----------
+
+#include "skei.h"
+#include "skei_plugin.h"
+#include "skei_module.h"
 #include "skei_module_noise.h"
 
 //----------------------------------------------------------------------
@@ -94,3 +174,5 @@ SKEI_MAIN(myPlugin);
 
 //----------------------------------------------------------------------
 #endif
+
+#endif // 0

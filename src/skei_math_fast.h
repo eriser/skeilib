@@ -289,5 +289,17 @@ float STanhF(const float x) {
   return x*(27 + x2) / (27 + 9*x2);
 }
 
+//----------
+
+// http://www.juce.com/comment/319543#comment-319543
+
+/*
+float rational_tanh(x) {
+  if (x<-3) return -1;
+  else if (x>3) return 1;
+  else return x * (27+x*x) / (27+9*x*x);
+}
+*/
+
 //----------------------------------------------------------------------
 #endif

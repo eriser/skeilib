@@ -57,7 +57,7 @@ class SParser {
       MBuffer[MBufLen] = 0;
       // replace any non-visual chars with '\0'
       for (uint32 i=0; i<MBufLen; i++) {
-        if (MBuffer[i]<=32) MBuffer[i] = 0;
+        if (MBuffer[i] <= 32 ) MBuffer[i] = 0;
       }
       // new tokens after each (last) 0
       char prev_c = 0;

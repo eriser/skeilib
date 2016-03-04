@@ -1710,3 +1710,587 @@
 1454190835 /home/skei/Desktop/skeilib/test/test_synth_voice.h
 	"skei_voice_manager.h"
 
+1456842723 source:/home/skei/git/skeilib/build/skeilib.cpp
+	"midi_fibonacci.h"
+
+1454454096 /home/skei/git/skeilib/test/test_module.h
+	"skei.h"
+	"skei_plugin.h"
+	"skei_module.h"
+	"skei.h"
+	"skei_plugin.h"
+	"skei_module.h"
+	"skei_module_noise.h"
+
+1452450629 /home/skei/git/skeilib/src/skei.h
+	"skei_doxygen.h"
+	"skei_config.h"
+	"skei_defines.h"
+	"skei_const.h"
+	"skei_types.h"
+	"skei_flags.h"
+	"skei_debug.h"
+	"skei_linux.h"
+	"skei_win32.h"
+	"skei_main.h"
+
+1450123011 /home/skei/git/skeilib/src/skei_doxygen.h
+
+1454980798 /home/skei/git/skeilib/src/skei_config.h
+
+1450218243 /home/skei/git/skeilib/src/skei_defines.h
+
+1455054444 /home/skei/git/skeilib/src/skei_const.h
+
+1439153309 /home/skei/git/skeilib/src/skei_types.h
+	"skei_defines.h"
+	"skei_const.h"
+
+1453839786 /home/skei/git/skeilib/src/skei_flags.h
+
+1451762633 /home/skei/git/skeilib/src/skei_debug.h
+	"skei_string.h"
+	"skei_convert.h"
+	<iostream>
+	<stdarg.h>
+	<stdio.h>
+	<Windows.h>
+	<sys/socket.h>
+	<sys/un.h>
+	<unistd.h>
+	<string.h>
+	<iostream>
+
+1450916814 /home/skei/git/skeilib/src/skei_string.h
+	<string.h>
+	"skei_memory.h"
+
+1455056638 /home/skei/git/skeilib/src/skei_memory.h
+	<stdlib.h>
+	<memory.h>
+	"skei_integer.h"
+
+1450910249 /home/skei/git/skeilib/src/skei_convert.h
+	"skei_string.h"
+	"skei_utils.h"
+
+1448052591 /home/skei/git/skeilib/src/skei_utils.h
+	<math.h>
+	"skei_const.h"
+	"skei_memory.h"
+	"skei_string.h"
+
+1452451436 /home/skei/git/skeilib/src/skei_linux.h
+	<time.h>
+	"skei_xlib.h"
+	"skei_xrender.h"
+	"skei_xft.h"
+	<pthread.h>
+	<X11/X.h>
+	<X11/Xlib.h>
+	<X11/Xutil.h>
+	<X11/cursorfont.h>
+
+1455189858 /home/skei/git/skeilib/src/skei_xlib.h
+	<X11/X.h>
+	<X11/Xlib.h>
+	<X11/Xutil.h>
+	<X11/cursorfont.h>
+	<pthread.h>
+	<X11/extensions/Xrender.h>
+
+1455107145 /home/skei/git/skeilib/src/skei_xrender.h
+	<X11/extensions/Xrender.h>
+	"skei_color.h"
+	"skei_drawable.h"
+
+1454982871 /home/skei/git/skeilib/src/skei_color.h
+	<math.h>
+	"skei_math.h"
+
+1455027934 /home/skei/git/skeilib/src/skei_math.h
+	<math.h>
+
+1452451035 /home/skei/git/skeilib/src/skei_drawable.h
+
+1452451105 /home/skei/git/skeilib/src/skei_xft.h
+	<X11/Xft/Xft.h>
+
+1439069722 /home/skei/git/skeilib/src/skei_win32.h
+
+1454358077 /home/skei/git/skeilib/src/skei_main.h
+	"extern/vst/aeffect.h"
+	"extern/vst/aeffectx.h"
+
+1439666690 /home/skei/git/skeilib/src/skei_plugin.h
+	"skei_plugin_exe.h"
+	"skei_plugin_vst.h"
+
+1456648125 /home/skei/git/skeilib/src/skei_plugin_exe.h
+	"skei_plugin_base.h"
+	"skei_editor.h"
+
+1455054732 /home/skei/git/skeilib/src/skei_plugin_base.h
+	"skei_parameter.h"
+	"skei_program.h"
+	"skei_queue.h"
+	"skei_editor.h"
+	"skei_editor_listener.h"
+
+1441012423 /home/skei/git/skeilib/src/skei_parameter.h
+	"skei_array.h"
+	"skei_convert.h"
+	"skei_math.h"
+
+1454348728 /home/skei/git/skeilib/src/skei_array.h
+	"skei_const.h"
+	"skei_memory.h"
+
+1439681929 /home/skei/git/skeilib/src/skei_program.h
+	"skei_array.h"
+
+1456653774 /home/skei/git/skeilib/src/skei_queue.h
+	"skei_memory.h"
+
+1454980270 /home/skei/git/skeilib/src/skei_editor.h
+	"skei_color.h"
+	"skei_editor_listener.h"
+	"skei_parameter.h"
+	"skei_plugin_listener.h"
+	"skei_window.h"
+	"skei_window.h"
+
+1454980310 /home/skei/git/skeilib/src/skei_editor_listener.h
+
+1439757942 /home/skei/git/skeilib/src/skei_plugin_listener.h
+	"skei_parameter.h"
+
+1454932231 /home/skei/git/skeilib/src/skei_window.h
+	"skei.h"
+	"skei_painter.h"
+	"skei_rect.h"
+	"skei_surface.h"
+	"skei_widget.h"
+	"skei_window_xlib.h"
+	"skei_window_win32.h"
+
+1452451404 /home/skei/git/skeilib/src/skei_painter.h
+	"skei_integer.h"
+	"skei_painter_xlib.h"
+	"skei_painter_win32.h"
+
+1455056552 /home/skei/git/skeilib/src/skei_integer.h
+	<math.h>
+
+1454845906 /home/skei/git/skeilib/src/skei_painter_xlib.h
+	<X11/X.h>
+	<X11/Xlib.h>
+	<X11/Xutil.h>
+	<X11/cursorfont.h>
+	<pthread.h>
+	<unistd.h>
+	<X11/Xft/Xft.h>
+	<X11/extensions/Xrender.h>
+	"skei_xrender.h"
+	"skei_color.h"
+	"skei_drawable.h"
+	"skei_math.h"
+	"skei_painter_base.h"
+	"skei_point.h"
+	"skei_rect.h"
+	"skei_stack.h"
+	"skei_surface.h"
+
+1451738633 /home/skei/git/skeilib/src/skei_painter_base.h
+	"skei_drawable.h"
+	"skei_point.h"
+	"skei_rect.h"
+	"skei_surface.h"
+	"skei_image.h"
+
+1439079876 /home/skei/git/skeilib/src/skei_point.h
+	"skei_array.h"
+
+1448921749 /home/skei/git/skeilib/src/skei_rect.h
+	"skei_array.h"
+
+1450127152 /home/skei/git/skeilib/src/skei_surface.h
+	"skei_surface_xlib.h"
+	"skei_surface_win32.h"
+	"skei_bitmap.h"
+	"skei_image.h"
+
+1452451163 /home/skei/git/skeilib/src/skei_surface_xlib.h
+	<X11/X.h>
+	<X11/Xlib.h>
+	<X11/Xutil.h>
+	<X11/extensions/Xrender.h>
+	"skei_xrender.h"
+	"skei_drawable.h"
+	"skei_surface_base.h"
+
+1439748426 /home/skei/git/skeilib/src/skei_surface_base.h
+	"skei_drawable.h"
+
+1452430497 /home/skei/git/skeilib/src/skei_bitmap.h
+	"extern/upng/upng.c"
+	"skei_rect.h"
+
+1448093122 /home/skei/git/skeilib/src/extern/upng/upng.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<limits.h>
+	"upng.h"
+
+1448093060 /home/skei/git/skeilib/src/extern/upng/upng.h
+
+1450127472 /home/skei/git/skeilib/src/skei_image.h
+	"skei_bitmap.h"
+	"skei_image_xlib.h"
+	"skei_image_win32.h"
+
+1448231024 /home/skei/git/skeilib/src/skei_image_xlib.h
+	"skei_image_base.h"
+	"skei_bitmap.h"
+
+1450127468 /home/skei/git/skeilib/src/skei_image_base.h
+	"skei_bitmap.h"
+
+1439247806 /home/skei/git/skeilib/src/skei_stack.h
+
+1450786488 /home/skei/git/skeilib/src/skei_widget.h
+	"skei_array.h"
+	"skei_edges.h"
+	"skei_painter.h"
+	"skei_rect.h"
+
+1439140967 /home/skei/git/skeilib/src/skei_edges.h
+
+1455106289 /home/skei/git/skeilib/src/skei_window_xlib.h
+	<X11/X.h>
+	<X11/Xlib.h>
+	<X11/Xutil.h>
+	<X11/cursorfont.h>
+	<pthread.h>
+	<X11/extensions/Xrender.h>
+	"skei_drawable.h"
+	"skei_painter.h"
+	"skei_rect.h"
+	"skei_surface.h"
+	"skei_widget.h"
+	"skei_window_base.h"
+
+1450355544 /home/skei/git/skeilib/src/skei_window_base.h
+	"skei_painter.h"
+	"skei_widget.h"
+
+1454980918 /home/skei/git/skeilib/src/skei_plugin_vst.h
+	"skei_plugin_base.h"
+	"skei_editor.h"
+
+1454533152 /home/skei/git/skeilib/src/skei_module.h
+
+1454285869 /home/skei/git/skeilib/src/skei_module_noise.h
+	"skei_module.h"
+	"skei_random.h"
+
+1451334549 /home/skei/git/skeilib/src/skei_random.h
+	<stdlib.h>
+	<stdint.h>
+	<stdint.h>
+	<stdint.h>
+
+1454543350 /home/skei/git/skeilib/test/test_synth.h
+	"skei.h"
+	"skei_plugin.h"
+	"skei_editor.h"
+	"skei_voice_manager.h"
+	"skei_phase.h"
+	"skei_envelope.h"
+	"skei_waveform_naive.h"
+	"skei_waveform_dpw.h"
+	"skei_waveform_ptr.h"
+	"skei_waveform_eptr.h"
+	"skei_waveform_polyblep.h"
+	"skei_waveform_polyblamp.h"
+	"skei_filter_decimator.h"
+	"skei_filter_hiir.h"
+	"skei_filter_downsample.h"
+	"skei_widget_slider.h"
+	"test_synth_voice.h"
+
+1453758364 /home/skei/git/skeilib/src/skei_voice_manager.h
+	"skei_list.h"
+
+1451218717 /home/skei/git/skeilib/src/skei_list.h
+
+1453847381 /home/skei/git/skeilib/src/skei_phase.h
+
+1452117613 /home/skei/git/skeilib/src/skei_envelope.h
+	<math.h>
+
+1453838027 /home/skei/git/skeilib/src/skei_waveform_naive.h
+
+1454022265 /home/skei/git/skeilib/src/skei_waveform_dpw.h
+
+1454022056 /home/skei/git/skeilib/src/skei_waveform_ptr.h
+
+1453930117 /home/skei/git/skeilib/src/skei_waveform_eptr.h
+
+1454446413 /home/skei/git/skeilib/src/skei_waveform_polyblep.h
+
+1453838038 /home/skei/git/skeilib/src/skei_waveform_polyblamp.h
+
+1453978598 /home/skei/git/skeilib/src/skei_filter_decimator.h
+
+1454431349 /home/skei/git/skeilib/src/skei_filter_hiir.h
+	"skei_filter_allpass.h"
+
+1453948075 /home/skei/git/skeilib/src/skei_filter_allpass.h
+
+1453978691 /home/skei/git/skeilib/src/skei_filter_downsample.h
+
+1454528404 /home/skei/git/skeilib/test/test_synth_voice.h
+	"skei_voice_manager.h"
+	"skei_osc1.h"
+	"skei_filter_dc.h"
+	"skei_interpolate.h"
+
+1266592340 /home/skei/git/skeilib/src/extern/vst/aeffect.h
+	<string.h>
+	<stdint.h>
+
+1213370194 /home/skei/git/skeilib/src/extern/vst/aeffectx.h
+	"aeffect.h"
+
+1454498293 /home/skei/git/skeilib/src/skei_osc1.h
+	"skei_phase.h"
+	"skei_waveform_polyblep.h"
+
+1453674214 /home/skei/git/skeilib/src/skei_filter_dc.h
+
+1451166896 /home/skei/git/skeilib/src/skei_interpolate.h
+
+1454436117 /home/skei/git/skeilib/src/skei_widget_slider.h
+	"skei_widget_value.h"
+
+1448581512 /home/skei/git/skeilib/src/skei_widget_value.h
+	"skei_widget.h"
+
+1454667519 /home/skei/git/skeilib/test/test_gain.h
+	"skei.h"
+	"skei_plugin.h"
+
+1455043120 /home/skei/git/skeilib/plugins/ana_fft.h
+	<math.h>
+	"skei.h"
+	"skei_plugin.h"
+	"skei_math_fast.h"
+	"skei_queue.h"
+	"skei_editor.h"
+	"skei_widget_slider.h"
+	"skei_lock.h"
+	"skei_fft.h"
+
+1407606899 /home/skei/git/skeilib/src/extern/pffft/pffft.h
+	<stddef.h>
+
+1407606899 /home/skei/git/skeilib/src/extern/pffft/pffft.c
+	"pffft.h"
+	<stdlib.h>
+	<stdio.h>
+	<math.h>
+	<assert.h>
+	<xmmintrin.h>
+	<arm_neon.h>
+	<string.h>
+
+1454355780 /home/skei/git/skeilib/src/skei_math_fast.h
+	<math.h>
+
+1439159009 /home/skei/git/skeilib/src/skei_lock.h
+	"skei_defines.h"
+	<windows.h>
+	<pthread.h>
+
+1455566111 /home/skei/git/skeilib/src/skei_fft.h
+	"extern/pffft/pffft.h"
+	"extern/pffft/pffft.c"
+	"skei_math_fast.h"
+
+1454982900 /home/skei/git/skeilib/test/test_animate.h
+	"skei.h"
+	"skei_lock.h"
+	"skei_editor.h"
+	"skei_plugin.h"
+	"skei_random.h"
+	"skei_widget.h"
+
+1455565253 /home/skei/git/skeilib/test/test_buffering.h
+	"skei.h"
+	"skei_buffer_queue.h"
+	"skei_fft.h"
+	"skei_math_fast.h"
+	"skei_plugin.h"
+	"skei_widget_slider.h"
+	"skei_widget_waveform.h"
+	"skei_complex.h"
+
+1455060354 /home/skei/git/skeilib/plugins/template.h
+	"skei.h"
+	"skei_plugin.h"
+	"skei_editor.h"
+
+1450641607 /home/skei/git/skeilib/src/skei_widget_waveform.h
+	"skei_color.h"
+	"skei_widget.h"
+
+1455236231 /home/skei/git/skeilib/src/skei_buffer_queue.h
+	"skei_queue.h"
+
+1452464753 /home/skei/git/skeilib/test/test_gui1.h
+	"skei.h"
+	"skei_plugin.h"
+	"skei_editor.h"
+	"skei_widget.h"
+	"skei_widget_button.h"
+	"skei_widget_buttonrow.h"
+	"skei_widget_circular_waveform.h"
+	"skei_widget_color.h"
+	"skei_widget_grid.h"
+	"skei_widget_groupbox.h"
+	"skei_widget_image.h"
+	"skei_widget_imagestrip.h"
+	"skei_widget_keyboard.h"
+	"skei_widget_knob.h"
+	"skei_widget_menu.h"
+	"skei_widget_menuitem.h"
+	"skei_widget_nodes.h"
+	"skei_widget_number.h"
+	"skei_widget_panel.h"
+	"skei_widget_scrollbar.h"
+	"skei_widget_scrollbox.h"
+	"skei_widget_sizer.h"
+	"skei_widget_slider.h"
+	"skei_widget_sliderbank.h"
+	"skei_widget_switch.h"
+	"skei_widget_surface.h"
+	"skei_widget_tabs.h"
+	"skei_widget_text.h"
+	"skei_widget_textedit.h"
+	"skei_widget_value.h"
+	"skei_widget_waveform.h"
+	"skei_bitmap.h"
+	"skei_random.h"
+	"skei_tilemap.h"
+	"../data/knob2_32x32_31.h"
+	"../data/fader1_20x64_65.h"
+	"../data/skei_png.h"
+
+1448581155 /home/skei/git/skeilib/src/skei_widget_button.h
+	"skei_widget.h"
+
+1450083003 /home/skei/git/skeilib/src/skei_widget_buttonrow.h
+	"skei_widget_grid.h"
+
+1448581200 /home/skei/git/skeilib/src/skei_widget_grid.h
+
+1448585126 /home/skei/git/skeilib/src/skei_widget_circular_waveform.h
+	"skei_widget.h"
+
+1448581190 /home/skei/git/skeilib/src/skei_widget_color.h
+	"skei_color.h"
+	"skei_painter.h"
+	"skei_rect.h"
+	"skei_widget.h"
+
+1448581214 /home/skei/git/skeilib/src/skei_widget_groupbox.h
+	"skei_widget.h"
+	"skei_widget_switch.h"
+
+1448581442 /home/skei/git/skeilib/src/skei_widget_switch.h
+	"skei_widget.h"
+
+1448581315 /home/skei/git/skeilib/src/skei_widget_image.h
+	"skei_image.h"
+	"skei_widget.h"
+
+1450125075 /home/skei/git/skeilib/src/skei_widget_imagestrip.h
+	"skei_tilemap.h"
+	"skei_widget_value.h"
+
+1448923356 /home/skei/git/skeilib/src/skei_tilemap.h
+	"skei_surface.h"
+
+1448581249 /home/skei/git/skeilib/src/skei_widget_keyboard.h
+	"skei_widget.h"
+
+1448581263 /home/skei/git/skeilib/src/skei_widget_knob.h
+	"skei_widget_value.h"
+
+1448608853 /home/skei/git/skeilib/src/skei_widget_menu.h
+	"skei_widget_menuitem.h"
+	"skei_widget_color.h"
+
+1450130680 /home/skei/git/skeilib/src/skei_widget_menuitem.h
+	"skei_widget_text.h"
+
+1448666061 /home/skei/git/skeilib/src/skei_widget_text.h
+	"skei_widget.h"
+
+1448612117 /home/skei/git/skeilib/src/skei_widget_nodes.h
+	"skei_widget.h"
+
+1448581584 /home/skei/git/skeilib/src/skei_widget_number.h
+	"skei_widget.h"
+
+1448581529 /home/skei/git/skeilib/src/skei_widget_panel.h
+	"skei_color.h"
+	"skei_painter.h"
+	"skei_rect.h"
+	"skei_widget.h"
+
+1449176676 /home/skei/git/skeilib/src/skei_widget_scrollbar.h
+	"skei_widget.h"
+
+1448581370 /home/skei/git/skeilib/src/skei_widget_scrollbox.h
+	"skei_widget.h"
+	"skei_widget_scrollbar.h"
+
+1448581386 /home/skei/git/skeilib/src/skei_widget_sizer.h
+	"skei_widget.h"
+
+1448581407 /home/skei/git/skeilib/src/skei_widget_sliderbank.h
+	"skei_random.h"
+	"skei_widget.h"
+
+1448581430 /home/skei/git/skeilib/src/skei_widget_surface.h
+	"skei_surface.h"
+	"skei_widget.h"
+
+1450128442 /home/skei/git/skeilib/src/skei_widget_tabs.h
+	"skei_widget.h"
+	"skei_widget_buttonrow.h"
+	"skei_widget_pages.h"
+
+1448581327 /home/skei/git/skeilib/src/skei_widget_pages.h
+	"skei_widget.h"
+
+1448581488 /home/skei/git/skeilib/src/skei_widget_textedit.h
+	"skei_widget.h"
+
+1448832671 /home/skei/git/skeilib/data/knob2_32x32_31.h
+
+1448832588 /home/skei/git/skeilib/data/fader1_20x64_65.h
+
+1450042498 /home/skei/git/skeilib/data/skei_png.h
+
+1456180815 /home/skei/git/skeilib/src/skei_complex.h
+
+1456907823 /home/skei/git/skeilib/plugins/midi_fibonacci.h
+	"skei.h"
+	"skei_plugin.h"
+	"skei_editor.h"
+	"skei_widget_slider.h"
+

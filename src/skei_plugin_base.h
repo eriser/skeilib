@@ -644,22 +644,18 @@ class SPlugin_Base
 
     #endif
 
-    /*
-
-
     #ifdef SKEI_PLUGIN_HAS_EDITOR
-    #ifdef SKEI_LINUX_EVENT_THREAD_SLEEP
+    #ifdef SKEI_LINUX_IDLE_THREAD
 
     //virtual
     void idleFromEditor(void) {
+      //STrace("on_idle\n");
       on_idleEditor(MEditor);
       updateEditorInIdle();
     }
 
     #endif
     #endif
-
-    */
 
 };
 

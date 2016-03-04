@@ -113,12 +113,8 @@ class SWindow
     void paintBuffer(SRect ARect) {
       if (MBufferPainter) {
         MBufferPainter->pushClip(ARect);
-
         if (MModalWidget) { MModalWidget->on_paint(MBufferPainter,ARect); }
-        else
-
-        on_paint(MBufferPainter,ARect);
-
+        else { on_paint(MBufferPainter,ARect); }
         MBufferPainter->popClip();
         if (MWindowExposed && MWindowMapped) invalidate( ARect.x, ARect.y, ARect.w, ARect.h ) ;
 
@@ -149,7 +145,7 @@ class SWindow
     //virtual
     void blitBuffer(SRect ARect) {
       if (MWindowExposed && MWindowMapped) {
-        if ((MBufferSurface) && (MBufferPainter)) {
+        if ( (MBufferSurface) && (MBufferPainter) && (MWindowPainter) ) {
           MWindowPainter->drawSurface( ARect.x,ARect.y,MBufferSurface,ARect.x, ARect.y, ARect.w, ARect.h );
         }
       }

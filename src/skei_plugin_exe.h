@@ -9,6 +9,9 @@
   SPlugin_Editor
 > SPlugin_Implementation
   SPlugin
+
+  todo: idle thread -> timer..
+
 */
 
 //#include "skei_plugin_editor.h"
@@ -57,11 +60,11 @@ class SPlugin_Exe
         setDefaultParameterValues();
 
         //updateEditorInIdle();
-        //#ifdef SKEI_LINUX_EVENT_THREAD_SLEEP
+        #ifdef SKEI_LINUX_IDLE_THREAD
         //idleFromEditor(); // hack? initial parameter setup..
         on_idleEditor(MEditor);
         updateEditorInIdle();
-        //#endif
+        #endif
 
         editor->on_align();
         editor->paintBuffer();

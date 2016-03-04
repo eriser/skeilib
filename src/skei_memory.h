@@ -10,6 +10,8 @@
 #include <stdlib.h>
 #include <memory.h>
 
+#include "skei_integer.h"
+
 //----------
 
 #define SMalloc   malloc
@@ -21,6 +23,24 @@
 
 #define SMemset   memset
 #define SMemcpy   memcpy
+
+//----------------------------------------------------------------------
+
+// AAlignment = power of 2
+
+/*
+void* SMalloc_Aligned(uint32 ASize, uint32 AAlignment=16) {
+  // we can't assert here.. debug is ont oncluded yet (it needs to do some
+  // #define tricks with memory stuff..
+  //SAssert( SIsPowerOfTwo(AAlignment) );
+  if (AAlignment < sizeof(intptr)*2) AAlignment = sizeof(intptr)*2;
+  uint32 alignmask = AAlignment-1;
+  void* mem = SMalloc(ASize + AAlignment*2 - 1 );
+  intptr ma = (intptr)mem & alignmask;
+  ma +=
+  return (void*)ma;
+}
+*/
 
 //----------------------------------------------------------------------
 #endif
