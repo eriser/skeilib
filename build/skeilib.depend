@@ -1710,8 +1710,8 @@
 1454190835 /home/skei/Desktop/skeilib/test/test_synth_voice.h
 	"skei_voice_manager.h"
 
-1457292539 source:/home/skei/git/skeilib/build/skeilib.cpp
-	"fx_grains.h"
+1457333127 source:/home/skei/git/skeilib/build/skeilib.cpp
+	"test_audio.h"
 
 1454454096 /home/skei/git/skeilib/test/test_module.h
 	"skei.h"
@@ -2299,4 +2299,57 @@
 	"skei_plugin.h"
 	"skei_random.h"
 	"skei_editor.h"
+
+1457335947 /home/skei/git/skeilib/test/test_audio.h
+	"extern/rtaudio-4.1.2/RtAudio.h"
+	"extern/rtaudio-4.1.2/RtAudio.cpp"
+	"skei.h"
+
+1456175752 /home/skei/git/skeilib/src/extern/rtaudio-4.1.2/RtAudio.cpp
+	"RtAudio.h"
+	<iostream>
+	<cstdlib>
+	<cstring>
+	<climits>
+	<algorithm>
+	"tchar.h"
+	<jack/jack.h>
+	<unistd.h>
+	<cstdio>
+	"asiosys.h"
+	"asio.h"
+	"iasiothiscallresolver.h"
+	"asiodrivers.h"
+	<cmath>
+	<audioclient.h>
+	<avrt.h>
+	<mmdeviceapi.h>
+	<functiondiscoverykeys_devpkey.h>
+	<dsound.h>
+	<assert.h>
+	<algorithm>
+	<alsa/asoundlib.h>
+	<unistd.h>
+	<pulse/error.h>
+	<pulse/simple.h>
+	<cstdio>
+	<unistd.h>
+	<sys/ioctl.h>
+	<unistd.h>
+	<fcntl.h>
+	<sys/soundcard.h>
+	<errno.h>
+	<math.h>
+
+1456175752 /home/skei/git/skeilib/src/extern/rtaudio-4.1.2/RtAudio.h
+	<string>
+	<vector>
+	<exception>
+	<iostream>
+	<windows.h>
+	<process.h>
+	<pthread.h>
+	<sys/time.h>
+	<sstream>
+	<CoreAudio/AudioHardware.h>
 

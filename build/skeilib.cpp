@@ -23,6 +23,9 @@
 
 //#include "demo.h"
 
+#include "test_audio.h"
+
+
 //----------------------------------------------------------------------
 // plugins
 //----------------------------------------------------------------------
@@ -30,7 +33,7 @@
 //#include "ana_fft.h"
 
 //#include "fx_fracdelay.h"
-#include "fx_grains.h"
+//#include "fx_grains.h"
 
 //#include "midi_fibonacci.h"
 
