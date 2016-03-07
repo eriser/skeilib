@@ -354,11 +354,8 @@
 		<Unit filename="../doc/readme.txt" />
 		<Unit filename="../doc/todo.txt" />
 		<Unit filename="../plugins/ana_fft.h" />
-		<Unit filename="../plugins/fx_cutter.h" />
 		<Unit filename="../plugins/fx_fracdelay.h" />
-		<Unit filename="../plugins/fx_freeze.h" />
-		<Unit filename="../plugins/fx_pitch.h" />
-		<Unit filename="../plugins/fx_stutter.h" />
+		<Unit filename="../plugins/fx_grains.h" />
 		<Unit filename="../plugins/midi_fibonacci.h" />
 		<Unit filename="../plugins/template.h" />
 		<Unit filename="../src/skei.h" />

@@ -27,15 +27,20 @@
 // plugins
 //----------------------------------------------------------------------
 
-#include "ana_fft.h"
+//#include "ana_fft.h"
+
+//#include "fx_fracdelay.h"
+#include "fx_grains.h"
+
+//#include "midi_fibonacci.h"
+
+
 
 //#include "fx_cutter.h"
-//#include "fx_fracdelay.h"
 //#include "fx_freeze.h"
 //#include "fx_pitch.h"
 //#include "fx_stutter.h"
 
-//#include "midi_fibonacci.h"
 
 //----------------------------------------------------------------------
 // bugs

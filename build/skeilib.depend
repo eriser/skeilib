@@ -1710,8 +1710,8 @@
 1454190835 /home/skei/Desktop/skeilib/test/test_synth_voice.h
 	"skei_voice_manager.h"
 
-1456842723 source:/home/skei/git/skeilib/build/skeilib.cpp
-	"midi_fibonacci.h"
+1457292539 source:/home/skei/git/skeilib/build/skeilib.cpp
+	"fx_grains.h"
 
 1454454096 /home/skei/git/skeilib/test/test_module.h
 	"skei.h"
@@ -2293,4 +2293,10 @@
 	"skei_plugin.h"
 	"skei_editor.h"
 	"skei_widget_slider.h"
+
+1457293300 /home/skei/git/skeilib/plugins/fx_grains.h
+	"skei.h"
+	"skei_plugin.h"
+	"skei_random.h"
+	"skei_editor.h"
 
