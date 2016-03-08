@@ -177,6 +177,11 @@
 		<Linker>
 			<Add library="pthread" />
 		</Linker>
+		<Unit filename="../../README.md" />
+		<Unit filename="../../data/fader1_20x64_65.h" />
+		<Unit filename="../../data/knob2_32x32_31.h" />
+		<Unit filename="../../data/knob2_bi_32x32_31.h" />
+		<Unit filename="../../data/skei_png.h" />
 		<Unit filename="../../doc/about.txt" />
 		<Unit filename="../../doc/code.txt" />
 		<Unit filename="../../doc/doxygen.cfg" />
@@ -370,6 +375,13 @@
 		<Unit filename="../../test/test_gui1.h" />
 		<Unit filename="../../test/test_module.h" />
 		<Unit filename="../../test/test_painter.h" />
+		<Unit filename="../../tools/bin2h.c">
+			<Option compilerVar="CC" />
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="../compile" />
+		<Unit filename="../compileall" />
 		<Unit filename="skeilib.cpp" />
 		<Extensions>
 			<code_completion />

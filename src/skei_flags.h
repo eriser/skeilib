@@ -146,10 +146,14 @@
 
 // mouse buttons (window)
 
-#define smb_none    0
-#define smb_left    1
-#define smb_middle  2
-#define smb_right   3
+#define smb_none      0
+#define smb_left      1
+#define smb_middle    2
+#define smb_right     3
+#define smb_wheelUp   4
+#define smb_wheelDown 5
+#define smb_backward  8
+#define smb_forward   9
 
 // mouse cursors (window)
 

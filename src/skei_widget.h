@@ -962,15 +962,11 @@ class SWidget {
     virtual
     void do_redraw(SWidget* AWidget, SRect ARect) {
       if (MParent) {
-
         //if (!hasFlag(swf_opaque)) MParent->do_redraw(MParent,ARect);
         //else MParent->do_redraw(AWidget,ARect);
-
         if (AWidget->hasFlag(swf_opaque)) MParent->do_redraw(AWidget,ARect);
         else MParent->do_redraw(this,ARect);
-
         //MParent->do_redraw(AWidget,ARect);
-
       }
     }
 
@@ -986,6 +982,13 @@ class SWidget {
     virtual
     void do_cursor(SWidget* AWidget, int32 ACursor) {
       if (MParent) MParent->do_cursor(AWidget,ACursor);
+    }
+
+    //----------
+
+    virtual
+    void do_cursorPos(SWidget* AWidget, int32 AXpos, int32 AYpos) {
+      if (MParent) MParent->do_cursorPos(AWidget,AXpos,AYpos);
     }
 
     //----------

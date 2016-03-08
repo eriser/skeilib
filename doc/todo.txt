@@ -6,6 +6,7 @@
 //----------------------------------------------------------------------
 
 * vst editor resizing
+
   works in:
   - bitwig studio
   doesn't work in:
@@ -17,6 +18,7 @@
 ----------
 
 * clipping
+
   there's something fishy with the clipping.. if i default all widgets to do
   clipping, something is wrong..
   probably: initial cliprect + push/pop
@@ -29,9 +31,10 @@
   
 * most gfx/bitmap stuff assumes 32 bit, rgba..
 
-* display connections..
+* (multiple) display connections..
 
 * keyboard
+
   - ascii..
   - todo: utf?
 
@@ -42,11 +45,14 @@
 //----------------------------------------------------------------------
 
 * skin
+
   - generic gui if user is not creating editor
   - automatic disabled colors (fade towards background color)
   
 * FlexSurface
+
   - allow use of tilemaps
+  - move to (xlib/cairo specific -> 'optimized' versions)
 
 //----------------------------------------------------------------------
 //
@@ -54,16 +60,19 @@
 //
 //----------------------------------------------------------------------
 
-* dual values
+* dual/multiple values
+
   - min/max slider
   - xy pad
-
-* multiple values
   - slider bank
 
-* WidgetGrid
+* SWidget_ValueGrid
+
+* SWidget_WidgetGrid
+
 
 * NodeEdit
+
   - callback for drawing (node-list)
     - line -> adsr
   - canedit, canadd/delete
@@ -76,19 +85,22 @@
 //----------------------------------------------------------------------
 
 * valgrind
+
   valgrind reports one error.. in XGetDefault.. www says:
   "XGetDefault is fairly obnoxious about leaving reachable memory around"
   todo: valgrind suppressions?
 
 //----------
   
-* getters and setters
+* standardize prefixes, capitalization, etc, throughout the library
+
+  - getters and setters
   - remove get/set*, getValue() -> value()
   - remove _*
 
-* standardize prefixes, capitalization, etc, throughout the library
 
 * one global static class/object..
+
   initialize all static stuff in constructor
   cleanup in destructor
   - debugging

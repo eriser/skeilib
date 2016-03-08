@@ -540,11 +540,16 @@ class SWindow_Xlib
     //----------
 
     int32 remapButton(int32 AButton) {
+      //STrace("button: %i\n",AButton);
       int32 result = smb_none;
       switch(AButton) {
-        case 1: result = smb_left; break;
-        case 2: result = smb_middle; break;
-        case 3: result = smb_right; break;
+        case 1: result = smb_left;      break;
+        case 2: result = smb_middle;    break;
+        case 3: result = smb_right;     break;
+        case 4: result = smb_wheelUp;   break;
+        case 5: result = smb_wheelDown; break;
+        case 8: result = smb_backward;  break;
+        case 9: result = smb_forward;   break;
       }
       return result;
     }
@@ -950,8 +955,13 @@ class SWindow_Xlib
 
     //----------
 
+    // http://stackoverflow.com/questions/2433447/how-to-set-mouse-cursor-position-in-c-on-linux
+
     //virtual
     void setCursorPos(int32 AXpos, int32 AYpos) {
+      XWarpPointer(MDisplay,None,MWindow,0,0,0,0,AXpos,AYpos);
+      //Flush the output buffer, therefore updates the cursor's position.
+      //XFlush(MDisplay);
     }
 
     //----------

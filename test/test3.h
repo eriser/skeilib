@@ -40,6 +40,12 @@ class myWidget
       SWidget::on_paint(APainter,ARect,AMode);
     }
 
+    //virtual
+    void on_mouseDown(int32 AXpos, int32 AYpos, int32 AButton, int32 AState) {
+      //STrace("clicky %i\n",AButton);
+      do_cursorPos(this,0,0);
+    }
+
 };
 
 //----------------------------------------------------------------------

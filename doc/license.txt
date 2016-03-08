@@ -1,6 +1,6 @@
 not decided yet..
 
-----------
+----------------------------------------------------------------------
 
 * vst: not compatible with opensource licenses that require redistribution of
        all required files..
@@ -12,39 +12,41 @@ not decided yet..
 "GPL requires to include all of the required source code which implies to
 include ('re-distribute') the VST-SDK which the VST license not allows"
 
-"As the first author of the software, you can actually just release your source,
-and have the users get the SDK them selves. As the first authour, you can do
-what ever you want.
-The problem is that this basically makes the GPL pointless since the recipients
-can't redistribute the software in turn. It also means you can't rely on any
-gpl'ed libs and such.
-So essentially, you are only pushing the problem on to your users."
+"As the first author of the software, you can actually just release your
+source, and have the users get the SDK them selves. As the first authour, you
+can do what ever you want. The problem is that this basically makes the GPL
+pointless since the recipients can't redistribute the software in turn. It also
+means you can't rely on any gpl'ed libs and such. So essentially, you are only
+pushing the problem on to your users."
 
 "Steinberg has terms in their VST SDK license that forbids anyone to
-redistribute it. In order to build this project, you need some header files from
-the SDK. Under the terms of the GPL, if you distribute a binary built from
+redistribute it. In order to build this project, you need some header files
+from the SDK. Under the terms of the GPL, if you distribute a binary built from
 GPL'ed code then you must distribute the source. This would involve
 redistributing the SDK which would violate the terms of Steinberg's license."
 
 ----------
 
-
-maybe..
+so, maybe..
 triple license?
 
 a) free, opensource
+
   gpl
   
 b) free, closed source
+
   require updated and equal binaries for all platforms
   or contribution back to lib/project..
 
-- commercial
+c) commercial
+
   $
 
-----------
+----------------------------------------------------------------------
 
 do we need/want additional clause for vst, or whatever?
+"you are allowed to..."
 
 ----------
 

@@ -223,6 +223,13 @@ class SWindow
     //----------
 
     //virtual
+    void do_cursorPos(SWidget* AWidget, int32 AXpos, int32 AYpos) {
+      setCursorPos(AXpos,AYpos);
+    }
+
+    //----------
+
+    //virtual
     void do_hint(SWidget* AWidget, const char* AHint) {
     }
 
