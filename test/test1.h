@@ -217,7 +217,7 @@ class myPlugin
       wa->setNumGrid(5);
       editor->appendWidget(wa);
 
-      SWidget_Grid* gr = new SWidget_Grid( SRect(100), swa_fillBottom );
+      SWidget_Grid* gr = new SWidget_Grid( SRect(100), 10,10,swa_fillBottom );
       editor->appendWidget(gr);
 
       SWidget*    wdg = (SWidget*)editor->subWidget(2);

@@ -3,6 +3,113 @@
 //----------------------------------------------------------------------
 
 #include <stdio.h>
+
+//----------------------------------------------------------------------
+
+#define SKEI_FILE_RB    (char*)"rb"
+#define SKEI_FILE_R     (char*)"r"
+
+#define SKEI_FILE_WB    (char*)"wb"
+#define SKEI_FILE_W     (char*)"w"
+#define SKEI_FILE_AB    (char*)"ab"
+#define SKEI_FILE_A     (char*)"a"
+
+//----------------------------------------------------------------------
+
+class SFile {
+
+  protected:
+
+    FILE* MHandle;
+    const char* MName;
+    const char* MMode;
+
+  public:
+
+    SFile(const char* AFilename, const char* AMode=SKEI_FILE_RB) {
+      MHandle = SKEI_NULL;
+      MName = AFilename;
+      MMode = AMode;
+    }
+
+    //----------
+
+    virtual ~SFile() {
+      close();
+    }
+
+    //----------
+
+    virtual bool exists(void) {
+      if (MHandle) return true;
+      FILE* fp = fopen(MName,SKEI_FILE_R);
+      if (fp) {
+        close();
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+
+    //----------
+
+    virtual uint32 length(void) {
+      uint32 len = 0;
+      if (MHandle) {
+        int32 pos = ftell(MHandle);
+        fseek(MHandle,0,SEEK_END);
+        len = ftell(MHandle);
+        fseek(MHandle,pos,SEEK_SET);
+      }
+      else {
+        FILE* fp = fopen(MName,SKEI_FILE_R);
+        if (!fp) return 0;
+        fseek(fp,0,SEEK_END);
+        len = ftell(fp);
+        //fseek(fp,0,SEEK_SET);
+        fclose(fp);
+      }
+      return len;
+    }
+
+    //----------
+
+    virtual bool open(void) {
+      MHandle = fopen(MName,MMode);
+      if (MHandle) return true;
+      return false;
+    }
+
+    //----------
+
+    virtual void close(void) {
+      if (MHandle) fclose(MHandle);
+      MHandle = SKEI_NULL;
+    }
+
+    //----------
+
+    virtual uint32 read(void* ABuffer, uint32 ALength, uint32 ASize=1) {
+      uint32 num_read = fread(ABuffer,ASize,ALength,MHandle);
+      return num_read;
+    }
+
+    //----------
+
+    virtual uint32 write(void* ABuffer, uint32 ALength, uint32 ASize=1) {
+      uint32 num_written = fwrite(ABuffer,ASize,ALength,MHandle);
+      return num_written;
+    }
+
+};
+
+//----------------------------------------------------------------------
+
+
+/*
+
+#include <stdio.h>
 #include "skei_basepath.h"
 #include "skei_const.h"
 #include "skei_memory.h"
@@ -152,6 +259,8 @@ class SFile {
     }
 
 };
+
+*/
 
 //----------------------------------------------------------------------
 #endif

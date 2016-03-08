@@ -1,9 +1,9 @@
-#ifndef _included
-#define _included
+#ifndef template_included
+#define template_included
 //----------------------------------------------------------------------
 
 /*
-
+  nc -U -l -k /tmp/skei.sock
 */
 
 //----------------------------------------------------------------------
@@ -19,7 +19,6 @@
 //#define SKEI_PLUGIN_RECEIVE_MIDI
 //#define SKEI_PLUGIN_AUTOSYNC
 
-
 //----- format -----
 
 #ifdef SKEI_PLUGIN_HAS_EDITOR
@@ -30,7 +29,7 @@
 
 //----- debug -----
 
-//#define SKEI_DEBUG_MEM
+#define SKEI_DEBUG_MEM
 
 #ifdef SKEI_VST
   //#define SKEI_DEBUG_VST
@@ -63,8 +62,8 @@ class myPlugin
 
     //virtual
     void on_create(void) {
-      MInfo.name       = "";
-      MInfo.author     = "";
+      MInfo.name       = "template";
+      MInfo.author     = "skei";
       MInfo.product    = MInfo.name;
       MInfo.uniqueId   = SKEI_MAGIC + 0x0000;
       MInfo.numInputs  = 2;
@@ -197,6 +196,3 @@ SKEI_MAIN(myPlugin);
 
 //----------------------------------------------------------------------
 #endif
-
-
-

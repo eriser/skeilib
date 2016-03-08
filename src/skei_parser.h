@@ -30,11 +30,18 @@ class SParser {
       if (MBuffer) SFree(MBuffer);
     }
 
+  //----------------------------------------
+  //
+  //----------------------------------------
+
   public:
 
     uint32  numTokens(void) { return MTokens.size(); }
     char*   token(uint32 i) { return MTokens[i]; }
 
+  //----------------------------------------
+  //
+  //----------------------------------------
 
   public:
 
@@ -47,6 +54,8 @@ class SParser {
 
     void parse(const char* ASource, uint32 ALength) {
 
+      bool quotes = false;
+
       if (MBuffer) SFree(MBuffer);
       //MBufLen = 0;
       MTokens.clear(/*true*/);
@@ -55,11 +64,25 @@ class SParser {
       MBuffer = (char*)SMalloc(MBufLen+1);
       SMemcpy(MBuffer,(char*)ASource,MBufLen);
       MBuffer[MBufLen] = 0;
+
       // replace any non-visual chars with '\0'
+
       for (uint32 i=0; i<MBufLen; i++) {
-        if (MBuffer[i] <= 32 ) MBuffer[i] = 0;
+        if (MBuffer[i]<32) {
+          MBuffer[i] = 0;
+        }
+        if (MBuffer[i]==32) { // space
+          if (!quotes) MBuffer[i] = 0;
+        }
+        if (MBuffer[i] == 34 ) { // "
+          if (quotes) quotes = false;
+          else quotes = true;
+          MBuffer[i] = 0;
+        }
       }
+
       // new tokens after each (last) 0
+
       char prev_c = 0;
       for (uint32 i=0; i<MBufLen; i++) {
         char c = MBuffer[i];
@@ -67,6 +90,19 @@ class SParser {
           MTokens.append(&MBuffer[i]);
         }
         prev_c = c;
+      }
+    }
+
+  //----------------------------------------
+  //
+  //----------------------------------------
+
+  public:
+
+    void dumpTokens(void) {
+      int32 num = MTokens.size();
+      for (int32 i=0; i<num; i++) {
+        DTrace("%i '%s'\n",i,MTokens[i]);
       }
     }
 

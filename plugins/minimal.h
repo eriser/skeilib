@@ -1,5 +1,12 @@
-#ifndef skei_doxygen_included
-#define skei_doxygen_included
+#ifndef minimal_included
+#define minimal_included
 //----------------------------------------------------------------------
+
+#include "skei.h"
+#include "skei_plugin.h"
+
+SKEI_MAIN(SPlugin);
+
 //----------------------------------------------------------------------
 #endif
+
