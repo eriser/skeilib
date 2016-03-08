@@ -3,8 +3,9 @@
 //#define SKEI_EXE
 
 //#define SKEI_DEBUG
-#define SKEI_DEBUG_MEM
-#define SKEI_DEBUG_MEM_PRINT
+//#define SKEI_DEBUG_MEM
+//#define SKEI_DEBUG_MEM_PRINT
+//#define SKEI_DEBUG_CALLSTACK
 
 //#define SKEI_DEBUG_CONSOLE
 //#define SKEI_DEBUG_SOCKET
@@ -20,10 +21,6 @@
 #include "skei_widget.h"
 #include "skei_window.h"
 
-
-//#define EASYTAB_IMPLEMENTATION
-//#include "extern/easytab.h"
-
 //----------------------------------------------------------------------
 
 class myWidget
@@ -33,6 +30,7 @@ class myWidget
 
     myWidget(SRect ARect, uint32 AAlignment=swa_fillClient)
     : SWidget(ARect,AAlignment){
+      DUMP_CALLSTACK;
     }
 
     //virtual

@@ -25,5 +25,7 @@
 #include "skei_debug_memtrace.h"
 #include "skei_debug_assert.h"
 
+#include "skei_debug_callstack.h"
+
 //----------------------------------------------------------------------
 #endif

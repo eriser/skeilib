@@ -28,11 +28,12 @@
 
 1457417482 /home/skei/git/skeilib/src/skei_flags.h
 
-1457448913 /home/skei/git/skeilib/src/skei_debug.h
+1457456131 /home/skei/git/skeilib/src/skei_debug.h
 	"skei_debug_socket.h"
 	"skei_debug_trace.h"
 	"skei_debug_memtrace.h"
 	"skei_debug_assert.h"
+	"skei_debug_callstack.h"
 
 1457352970 /home/skei/git/skeilib/src/skei_string.h
 	<string.h>
@@ -546,7 +547,7 @@
 	"skei_widget_color.h"
 	"skei_widget_panel.h"
 
-1457450355 /home/skei/git/skeilib/test/test3.h
+1457459860 /home/skei/git/skeilib/test/test3.h
 	"skei.h"
 	"skei_color.h"
 	"skei_widget.h"
@@ -755,7 +756,9 @@
 	"skei_widget_panel.h"
 	"skei_voice_manager.h"
 
-1457437458 /home/skei/git/skeilib/src/extern/callstack.h
+1457439970 /home/skei/git/skeilib/src/extern/callstack.h
+	"extern/callstack.h"
+	"extern/callstack.cpp"
 
 1457439628 /home/skei/git/skeilib/src/extern/callstack.cpp
 	"extern/callstack.h"
@@ -796,10 +799,19 @@
 1457447815 /home/skei/git/skeilib/src/skei_debug_console.h
 	<Windows.h>
 
-1457450376 /home/skei/git/skeilib/src/skei_debug_memtrace.h
+1457458790 /home/skei/git/skeilib/src/skei_debug_memtrace.h
 	<iostream>
 	"skei_utils.h"
 
 1457449142 /home/skei/git/skeilib/src/skei_debug_assert.h
 	<iostream>
+
+1457459829 /home/skei/git/skeilib/src/skei_debug_callstack.h
+	<execinfo.h>
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	<cxxabi.h>
+	<Windows.h>
+	<Dbghelp.h>
 

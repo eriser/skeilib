@@ -192,6 +192,8 @@ class SDebug_MemTrace {
 
     void dump(void) {
       DTrace("----------------------------------------\n");
+      DTrace("memtrace\n");
+      DTrace("----------------------------------------\n");
       DTrace("* num alloc     %i\n",MNumAlloc);
       DTrace("* num free      %i\n",MNumFree);
       DTrace("* num leaks     %i\n",MAllocatedNum);
