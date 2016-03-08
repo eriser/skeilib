@@ -43,6 +43,10 @@
 // test
 //----------------------------------------------------------------------
 
+//#define EASYTAB_IMPLEMENTATION
+//#include "extern/easytab.h"
+// -lXi
+
 //#include "demo.h"
 //#include "test1.h"
 //#include "test2.h"

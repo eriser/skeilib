@@ -1,8 +1,8 @@
 # depslib dependency file v1.0
-1457416591 source:/home/skei/git/skeilib/build/skeilib/skeilib.cpp
+1457441125 source:/home/skei/git/skeilib/build/skeilib/skeilib.cpp
 	"test3.h"
 
-1457344506 /home/skei/git/skeilib/src/skei.h
+1457448918 /home/skei/git/skeilib/src/skei.h
 	"skei_doxygen.h"
 	"skei_config.h"
 	"skei_defines.h"
@@ -18,28 +18,21 @@
 
 1454980798 /home/skei/git/skeilib/src/skei_config.h
 
-1450218243 /home/skei/git/skeilib/src/skei_defines.h
+1457438299 /home/skei/git/skeilib/src/skei_defines.h
 
 1455054444 /home/skei/git/skeilib/src/skei_const.h
 
-1439153309 /home/skei/git/skeilib/src/skei_types.h
+1457438153 /home/skei/git/skeilib/src/skei_types.h
 	"skei_defines.h"
 	"skei_const.h"
 
 1457417482 /home/skei/git/skeilib/src/skei_flags.h
 
-1451762633 /home/skei/git/skeilib/src/skei_debug.h
-	"skei_string.h"
-	"skei_convert.h"
-	<iostream>
-	<stdarg.h>
-	<stdio.h>
-	<Windows.h>
-	<sys/socket.h>
-	<sys/un.h>
-	<unistd.h>
-	<string.h>
-	<iostream>
+1457448913 /home/skei/git/skeilib/src/skei_debug.h
+	"skei_debug_socket.h"
+	"skei_debug_trace.h"
+	"skei_debug_memtrace.h"
+	"skei_debug_assert.h"
 
 1457352970 /home/skei/git/skeilib/src/skei_string.h
 	<string.h>
@@ -91,8 +84,8 @@
 	<math.h>
 	"skei_math.h"
 
-1455027934 /home/skei/git/skeilib/src/skei_math.h
-	<math.h>
+1457450320 /home/skei/git/skeilib/src/skei_math.h
+	<stdlib.h>
 
 1452451035 /home/skei/git/skeilib/src/skei_drawable.h
 
@@ -198,7 +191,7 @@
 	"skei_painter_xlib.h"
 	"skei_painter_win32.h"
 
-1454845906 /home/skei/git/skeilib/src/skei_painter_xlib.h
+1457450188 /home/skei/git/skeilib/src/skei_painter_xlib.h
 	<X11/X.h>
 	<X11/Xlib.h>
 	<X11/Xutil.h>
@@ -215,6 +208,7 @@
 	"skei_point.h"
 	"skei_rect.h"
 	"skei_stack.h"
+	"skei_string.h"
 	"skei_surface.h"
 
 1451738633 /home/skei/git/skeilib/src/skei_painter_base.h
@@ -283,13 +277,14 @@
 
 1439140967 /home/skei/git/skeilib/src/skei_edges.h
 
-1457417506 /home/skei/git/skeilib/src/skei_window_xlib.h
+1457450202 /home/skei/git/skeilib/src/skei_window_xlib.h
 	<X11/X.h>
 	<X11/Xlib.h>
 	<X11/Xutil.h>
 	<X11/cursorfont.h>
 	<pthread.h>
 	<X11/extensions/Xrender.h>
+	"skei_convert.h"
 	"skei_drawable.h"
 	"skei_painter.h"
 	"skei_rect.h"
@@ -551,14 +546,11 @@
 	"skei_widget_color.h"
 	"skei_widget_panel.h"
 
-1457417547 /home/skei/git/skeilib/test/test3.h
+1457450355 /home/skei/git/skeilib/test/test3.h
 	"skei.h"
 	"skei_color.h"
 	"skei_widget.h"
 	"skei_window.h"
-	"skei_widget_color.h"
-	"skei_widget_panel.h"
-	"skei_voice_manager.h"
 
 1453758364 /home/skei/git/skeilib/src/skei_voice_manager.h
 	"skei_list.h"
@@ -762,4 +754,52 @@
 	"skei_widget_color.h"
 	"skei_widget_panel.h"
 	"skei_voice_manager.h"
+
+1457437458 /home/skei/git/skeilib/src/extern/callstack.h
+
+1457439628 /home/skei/git/skeilib/src/extern/callstack.cpp
+	"extern/callstack.h"
+	<string.h>
+	<execinfo.h>
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	<cxxabi.h>
+	<Windows.h>
+	<Dbghelp.h>
+
+1457431221 /home/skei/git/skeilib/src/extern/easytab.h
+	"easytab.h"
+	<stdint.h>
+	<stdlib.h>
+	<string.h>
+	<X11/extensions/XInput.h>
+
+1457448578 /home/skei/git/skeilib/src/skei_debug2.h
+	"skei_debug_socket.h"
+	"skei_debug_trace.h"
+	"skei_debug_memtrace.h"
+
+1457450164 /home/skei/git/skeilib/src/skei_debug_trace.h
+	<stdarg.h>
+	<stdio.h>
+	"skei_string.h"
+	"skei_convert.h"
+
+1457449300 /home/skei/git/skeilib/src/skei_debug_socket.h
+	<sys/socket.h>
+	<sys/un.h>
+	<unistd.h>
+	<string.h>
+	<stdio.h>
+
+1457447815 /home/skei/git/skeilib/src/skei_debug_console.h
+	<Windows.h>
+
+1457450376 /home/skei/git/skeilib/src/skei_debug_memtrace.h
+	<iostream>
+	"skei_utils.h"
+
+1457449142 /home/skei/git/skeilib/src/skei_debug_assert.h
+	<iostream>
 

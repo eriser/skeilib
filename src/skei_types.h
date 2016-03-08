@@ -49,13 +49,20 @@
 // aligned types
 //----------------------------------------------------------------------
 
+/*
 typedef double    __aligned(8) double_8;
 typedef long long __aligned(8) longlong_8;
+*/
+
+typedef double    __SKEI_ALIGNED(8) double_8;
+typedef long long __SKEI_ALIGNED(8) longlong_8;
+
 
 //----------------------------------------------------------------------
 // aliasing types
 //----------------------------------------------------------------------
 
+/*
 typedef void*               __may_alias void_ptr_a;
 typedef long double         __may_alias ldouble_a;
 typedef double              __may_alias double_a;
@@ -70,6 +77,22 @@ typedef short               __may_alias short_a;
 typedef unsigned short      __may_alias ushort_a;
 typedef char                __may_alias char_a;
 typedef unsigned char       __may_alias uchar_a;
+*/
+
+typedef void*               __SKEI_MAY_ALIAS void_ptr_a;
+typedef long double         __SKEI_MAY_ALIAS ldouble_a;
+typedef double              __SKEI_MAY_ALIAS double_a;
+typedef float               __SKEI_MAY_ALIAS float_a;
+typedef long long           __SKEI_MAY_ALIAS longlong_a;
+typedef unsigned long long  __SKEI_MAY_ALIAS ulonglong_a;
+typedef long                __SKEI_MAY_ALIAS long_a;
+typedef unsigned long       __SKEI_MAY_ALIAS ulong_a;
+typedef int                 __SKEI_MAY_ALIAS int_a;
+typedef unsigned int        __SKEI_MAY_ALIAS uint_a;
+typedef short               __SKEI_MAY_ALIAS short_a;
+typedef unsigned short      __SKEI_MAY_ALIAS ushort_a;
+typedef char                __SKEI_MAY_ALIAS char_a;
+typedef unsigned char       __SKEI_MAY_ALIAS uchar_a;
 
 //----------------------------------------------------------------------
 #endif

@@ -41,6 +41,7 @@
 #include "skei_point.h"
 #include "skei_rect.h"
 #include "skei_stack.h"
+#include "skei_string.h"
 #include "skei_surface.h"
 
 //----------------------------------------------------------------------

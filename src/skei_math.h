@@ -2,7 +2,8 @@
 #define skei_math_included
 //----------------------------------------------------------------------
 
-#include <math.h>
+//#include <math.h>
+#include <stdlib.h> // abs
 
 float   SAverage(const unsigned int n, const float* ar);
 float   SClamp(const float input, const float limit);

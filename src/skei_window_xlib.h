@@ -15,6 +15,7 @@
 #endif
 */
 
+#include "skei_convert.h"
 #include "skei_drawable.h"
 #include "skei_painter.h"
 #include "skei_rect.h"
@@ -927,6 +928,12 @@ class SWindow_Xlib
       while (1) {
         XEvent event;
         XNextEvent(MDisplay, &event);
+
+          //if (EasyTab_HandleEvent(&event) == EASYTAB_OK)
+          //{
+          //  STrace("easytab x=%i, y=%i, z=%i\n",EasyTab->PosX, EasyTab->PosY, EasyTab->Pressure );
+          //}
+
         uint32 data = event.xclient.data.l[0];
         if ((event.type==ClientMessage) && (data==MDeleteAtom)) break;
         else eventHandler(&event);

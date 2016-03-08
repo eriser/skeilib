@@ -15,8 +15,6 @@
   - jost:
   - ardour4: no effect
   
-----------
-
 * clipping
 
   there's something fishy with the clipping.. if i default all widgets to do
@@ -53,6 +51,11 @@
 
   - allow use of tilemaps
   - move to (xlib/cairo specific -> 'optimized' versions)
+  
+* BackBuffer
+
+  move backbuffer stuff to platform specific window class..
+  blitting: xlib = xcopyarea, cairo = draw w/cairo
 
 //----------------------------------------------------------------------
 //
@@ -66,10 +69,15 @@
   - xy pad
   - slider bank
 
-* SWidget_ValueGrid
+* ValueGrid
 
-* SWidget_WidgetGrid
+  - mod-matrix
 
+* WidgetGrid
+
+  - widgets in grid-layout
+
+* scrolling waveform
 
 * NodeEdit
 
@@ -77,6 +85,8 @@
     - line -> adsr
   - canedit, canadd/delete
   - node / canedit  
+  
+
   
 //----------------------------------------------------------------------
 //

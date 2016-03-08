@@ -4,6 +4,9 @@
 
 //#define SKEI_DEBUG
 #define SKEI_DEBUG_MEM
+#define SKEI_DEBUG_MEM_PRINT
+
+//#define SKEI_DEBUG_CONSOLE
 //#define SKEI_DEBUG_SOCKET
 
 #define SKEI_XLIB
@@ -17,10 +20,9 @@
 #include "skei_widget.h"
 #include "skei_window.h"
 
-#include "skei_widget_color.h"
-#include "skei_widget_panel.h"
 
-#include "skei_voice_manager.h"
+//#define EASYTAB_IMPLEMENTATION
+//#include "extern/easytab.h"
 
 //----------------------------------------------------------------------
 
@@ -53,6 +55,9 @@ class myWidget
 int main(void) {
 
   SWindow* window = new SWindow(640,480);
+
+    //if (EasyTab_Load( window->display(), window->drawable() ) != EASYTAB_OK) { printf("Tablet init failed\n"); }
+
   window->setTitle("Hello World!");
 
   SWidget* widget = new myWidget(SRect(0),swa_fillClient);
@@ -64,6 +69,8 @@ int main(void) {
   window->paintBuffer();
   window->open();
   window->eventLoop();
+
+    //EasyTab_Unload();
 
   window->close();
   delete window;
