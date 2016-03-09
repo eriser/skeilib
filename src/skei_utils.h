@@ -60,7 +60,7 @@ int         SToUpper(int c);
 void        SRadixSort(long *source, long *dest, uint32 N, int byte);
 
 //----------------------------------------------------------------------
-//
+// sizeof
 //----------------------------------------------------------------------
 
 /*
@@ -77,9 +77,15 @@ void        SRadixSort(long *source, long *dest, uint32 N, int byte);
   return unsigned int
 */
 
-// size of array
 template<class T, size_t N> T SDecayArrayToSubType(T (&a)[N]);
+
 #define SArraySize(x) (sizeof(x)/sizeof(SDecayArrayToSubType(x)))
+
+//
+
+//#define lengthof(x) (sizeof(x)/sizeof(x[0]))
+
+//----------------------------------------------------------------------
 
 // clear bit
 #define SBitClear(x, bit)  ((x) & ~(1 << (bit)))
@@ -118,8 +124,6 @@ template<class T, size_t N> T SDecayArrayToSubType(T (&a)[N]);
 */
 
 //#define SDb2Lin(dB) ( SExpf( DB2LOG*(dB) ) )
-
-//----------
 
 // convert degrees to radians- rad = deg*(pi/180);
 #define SDeg2Rad(x) ( (x)*0.01745329251994f )
@@ -162,8 +166,6 @@ template<class T, size_t N> T SDecayArrayToSubType(T (&a)[N]);
 
 
 //----------------------------------------------------------------------
-
-//----------
 
 /*
   http://rosettacode.org/wiki/Binary_search#Pascal

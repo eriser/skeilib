@@ -971,6 +971,27 @@ class SWindow_Xlib
       //XFlush(MDisplay);
     }
 
+    void getCursorPos(int32* AXpos, int32* AYpos) {
+      Window root,child;
+      int root_xpos,root_ypos;
+      int child_xpos,child_ypos;
+      unsigned int mask;
+      XQueryPointer(
+        MDisplay,
+        MWindow,
+        &root,
+        &child,
+        &root_xpos,
+        &root_ypos,
+        &child_xpos,
+        &child_ypos,
+        &mask
+      );
+      *AXpos = child_xpos;
+      *AYpos = child_ypos;
+    }
+
+
     //----------
 
     //virtual

@@ -14,11 +14,13 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add option="-rdynamic" />
 					<Add option="-DSKEI_EXE" />
 					<Add option="-DSKEI_DEBUG" />
 					<Add directory="/usr/include/freetype2" />
 				</Compiler>
 				<Linker>
+					<Add option="-rdynamic" />
 					<Add library="X11" />
 					<Add library="Xrender" />
 					<Add library="Xft" />
@@ -65,6 +67,7 @@
 				<Linker>
 					<Add option="-fPIC" />
 					<Add option="-Wl,-Bsymbolic" />
+					<Add option="-rdynamic" />
 					<Add library="X11" />
 					<Add library="Xrender" />
 					<Add library="Xft" />
@@ -102,11 +105,13 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add option="-rdynamic" />
 					<Add option="-DSKEI_EXE" />
 					<Add option="-DSKEI_NOGUI" />
 					<Add option="-DSKEI_DEBUG" />
 				</Compiler>
 				<Linker>
+					<Add option="-rdynamic" />
 					<Add library="asound" />
 					<Add library="jack" />
 				</Linker>
@@ -145,6 +150,7 @@
 				<Linker>
 					<Add option="-fPIC" />
 					<Add option="-Wl,-Bsymbolic" />
+					<Add option="-rdynamic" />
 				</Linker>
 			</Target>
 			<Target title="vst nogui release">
@@ -226,7 +232,14 @@
 		<Unit filename="../../src/skei_convolution.h" />
 		<Unit filename="../../src/skei_cpu.h" />
 		<Unit filename="../../src/skei_debug.h" />
+		<Unit filename="../../src/skei_debug_assert.h" />
+		<Unit filename="../../src/skei_debug_callstack.h" />
+		<Unit filename="../../src/skei_debug_console.h" />
+		<Unit filename="../../src/skei_debug_memtrace.h" />
+		<Unit filename="../../src/skei_debug_socket.h" />
+		<Unit filename="../../src/skei_debug_trace.h" />
 		<Unit filename="../../src/skei_defines.h" />
+		<Unit filename="../../src/skei_dialogs.h" />
 		<Unit filename="../../src/skei_dmc.h" />
 		<Unit filename="../../src/skei_doxygen.h" />
 		<Unit filename="../../src/skei_drawable.h" />

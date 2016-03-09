@@ -79,6 +79,7 @@ class SWindow_Base
     virtual void renderLoop(void) {}
     virtual void setCursor(int32 ACursor) {}
     virtual void setCursorPos(int32 AXpos, int32 AYpos) {}
+    virtual void getCursorPos(int32* AXpos, int32* AYpos) {}
     virtual void showCursor(void) {}
     virtual void hideCursor(void) {}
     virtual void grabCursor(void) {}

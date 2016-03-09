@@ -264,5 +264,45 @@
 
 
 //----------------------------------------------------------------------
+//
+//----------------------------------------------------------------------
+
+/*
+  branch prediction hints to the compiler.
+  This can help immensely for performance critical code.
+  Note one should only use these hints where absolutely necessary
+  because they make the code more complicated to read/maintain.
+  For details search for builtin_expect in `info gcc`
+
+  #if __GNUC__ < 3
+    #define __builtin_expect(foo,bar) (foo)
+    #define expect(foo,bar) (foo)
+  #else
+    #define expect(foo,bar) __builtin_expect((long)(foo),bar)
+  #endif
+
+  idea for these macros taken from Linux kernel
+
+  Note tests for NULL (!something) don't need an unlikely
+  as gcc does that by default itself
+
+  #define __likely(foo) expect((foo),1)
+  #define __unlikely(foo) expect((foo),0)
+
+  An example use is:
+
+  for(;;) { //hot loop
+    ret = op1();
+    if (__unlikely(ret == error)) {
+      //handle error
+    }
+    ...
+  }
+
+*/
+
+//----------------------------------------------------------------------
+
+//----------------------------------------------------------------------
 #endif
 

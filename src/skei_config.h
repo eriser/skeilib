@@ -3,6 +3,7 @@
 //----------------------------------------------------------------------
 
 //#define SKEI_DEBUG
+//#define SKEI_DEBUG_CALLSTACK
 //#define SKEI_DEBUG_CONSOLE
 //#define SKEI_DEBUG_LOG
 //#define SKEI_DEBUG_MEM
@@ -35,8 +36,7 @@
 //#define SKEI_NO_AUTODELETE
 //#define SKEI_NO_SHRINK_BACKBUFFER
 //#define SKEI_NO_DMC_COMPRESS
-//#define SKEI_NO_PNG
-
+//#define SKEI_NO_BITMAP_PNG
 
 //----------
 

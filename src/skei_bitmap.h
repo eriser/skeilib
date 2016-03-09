@@ -72,7 +72,7 @@ class SBitmap {
 
     //----------
 
-    #ifndef SKEI_NO_PNG
+    #ifndef SKEI_NO_BITMAP_PNG
     SBitmap(const uint8* buffer, uint32 length) {
       upng = upng_new_from_bytes(buffer,length);
       if (upng) {
@@ -89,7 +89,7 @@ class SBitmap {
         upng = SKEI_NULL;
       }
     }
-    #endif // SKEI_NO_PNG
+    #endif // SKEI_NO_BITMAP_PNG
 
     //----------
 
