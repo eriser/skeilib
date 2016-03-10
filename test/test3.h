@@ -49,13 +49,13 @@ class myWidget
     #ifdef SKEI_TABLET
     virtual
     void on_tabletEvent(int32 AXpos, int32 AYpos, float APressure) {
-      STrace("tablet x:%i y:%i p:%f\n",AXpos,AYpos,APressure);
+      //STrace("tablet x:%i y:%i p:%f\n",AXpos,AYpos,APressure);
     }
     #endif
 
     //virtual
     void on_mouseDown(int32 AXpos, int32 AYpos, int32 AButton, int32 AState) {
-      STrace("mouse click x:%i y:%i b:%i\n",AXpos,AYpos,AButton);
+      //STrace("mouse click x:%i y:%i b:%i\n",AXpos,AYpos,AButton);
     }
 
     //virtual
@@ -73,8 +73,6 @@ class myWidget
     //void on_tabletEvent(int32 AXpos, int32 AYpos, float APressure) {
     //  STrace("x:%i y:%i p:%f\n",AXpos,AYpos,APressure);
     //}
-
-
 
 };
 

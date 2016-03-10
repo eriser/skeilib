@@ -28,8 +28,8 @@ class SWindow_Base
 
   public:
 
-    virtual void    on_timer(void) { /*STrace("on_timer\n");*/ }
-    virtual void    on_idle(void) {}
+    virtual void    on_timer(void)  { /*STrace("on_timer\n");*/ }
+    virtual void    on_idle(void)   {  /*STrace("on_idle\n");*/ }
 
   //----------------------------------------
   // access

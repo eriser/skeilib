@@ -224,11 +224,11 @@ class myPlugin
 
     //virtual
     void on_idleEditor(void* AEditor) {
-      //STrace("on_idleEditor\n");
-        SEditor* editor = (SEditor*)AEditor;
-        if ((editor) && (MEditorIsOpen)) {
-          editor->do_redraw(MWidget,MWidget->rect());
-        }
+      SEditor* editor = (SEditor*)AEditor;
+      //STrace("on_idleEditor %i (%i)\n",(intptr)editor,(int)MEditorIsOpen);
+      if ((editor) && (MEditorIsOpen)) {
+        editor->do_redraw(MWidget,MWidget->rect());
+      }
 
       /*
 

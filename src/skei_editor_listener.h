@@ -19,9 +19,10 @@ public:
   virtual void updateParameterFromEditor(int32 AIndex, float AValue) {}
   virtual void resizeWindowFromEditor(int32 AWidth, int32 AHeight) {}
 
-  #ifdef SKEI_LINUX_IDLE_THREAD
+  //#ifdef SKEI_LINUX_IDLE_THREAD
+  // also used in standalone exe (eventLoop)
   virtual void idleFromEditor(void) {}
-  #endif // SKEI_LINUX_IDLE_THREAD
+  //#endif // SKEI_LINUX_IDLE_THREAD
 
   // hack:
   // window idle timer callback -> plugin..

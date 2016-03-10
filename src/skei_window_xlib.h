@@ -79,9 +79,8 @@ char skei_xlib_blank_cursor[] = { 0,0,0,0,0,0,0,0 };
 
 #ifdef SKEI_LIB
 void* skei_xlib_threadproc(void* AData);
-void* skei_xlib_idleproc(void* AData);
 #endif
-
+void* skei_xlib_idleproc(void* AData);
 void* skei_xlib_timerproc(void* AData);
 
 //----------------------------------------------------------------------
@@ -94,7 +93,7 @@ class SWindow_Xlib
 
   friend class SWindow;
   friend void* skei_xlib_threadproc(void* AData);
-  friend void* skei_xlib_threadsleepproc(void* AData);
+  friend void* skei_xlib_threadproc_sleep(void* AData);
   friend void* skei_xlib_idleproc(void* AData);
   friend void* skei_xlib_timerproc(void* AData);
 
@@ -126,10 +125,10 @@ class SWindow_Xlib
     int32               MTimerSleep;
     #ifdef SKEI_LIB
     pthread_t           MEventThread;
-    pthread_t           MIdleThread;
     bool                MEventThreadActive;
-    bool                MIdleThreadActive;
     #endif
+    pthread_t           MIdleThread;
+    bool                MIdleThreadActive;
     bool                MWindowExposed;
     bool                MWindowMapped;
 
@@ -328,9 +327,16 @@ class SWindow_Xlib
       #endif
 
       if (MTimerThreadActive) stopTimer();
-      #ifdef SKEI_LIB
-      if (MEventThreadActive) stopThreads();
-      #endif
+
+      //#ifdef SKEI_LIB
+      //if (MEventThreadActive || MIdleThreadActive) stopThreads();
+      //#else
+      //if (MIdleThreadActive) stopThreads();
+      //#endif
+
+      stopThreads();
+
+
 
       XFreePixmap(MDisplay,MEmptyPixmap);
       if (MWindowCursor >= 0) XFreeCursor(MDisplay,MWindowCursor);
@@ -421,6 +427,7 @@ class SWindow_Xlib
               on_timer();
               break;
             case sts_idle:
+              //STrace("sts_idle\n");
               if (MWindowMapped && MWindowExposed) on_idle();  // on_idle = in widget
               break;
             //case sts_kill:
@@ -676,32 +683,43 @@ class SWindow_Xlib
 
     //----------
 
-    #ifdef SKEI_LIB
 
     void startThreads(void) {
+      #ifdef SKEI_LIB
       MEventThreadActive = true;
       pthread_create(&MEventThread,SKEI_NULL,skei_xlib_threadproc,this);
+      #endif
       MIdleThreadActive = true;
       pthread_create(&MIdleThread,SKEI_NULL,skei_xlib_idleproc,this);
     }
 
-    #endif
-
     //----------
 
-    #ifdef SKEI_LIB
+      //if (MTimerThreadActive) stopTimer();
+      //#ifdef SKEI_LIB
+      //if (MEventThreadActive || MIdleEventThreadActive) stopThreads();
+      //#else
+      //if (MIdleThreadActive) stopThreads();
+      //#endif
+
+
 
     void stopThreads(void) {
       void* ret = SKEI_NULL;
-      MEventThreadActive = false;
-      MIdleThreadActive = false;
-      sendEvent(sts_kill);
-      pthread_cancel(MIdleThread);
-      pthread_join(MIdleThread,&ret);
-      pthread_join(MEventThread,&ret);
+      #ifdef SKEI_LIB
+      if (MEventThreadActive) {
+        MEventThreadActive = false;
+        sendEvent(sts_kill);
+        pthread_join(MEventThread,&ret);
+      }
+      #endif
+      if (MIdleThreadActive) {
+        MIdleThreadActive = false;
+        pthread_cancel(MIdleThread);
+        pthread_join(MIdleThread,&ret);
+      }
     }
 
-    #endif
 
   //--------------------------------------------------
   // implementation
@@ -822,18 +840,18 @@ class SWindow_Xlib
       #ifdef SKEI_LINUX_WAIT_FOR_MAPNOTIFY
       waitforMapNotify;
       #endif
-      #ifdef SKEI_LIB
+      //#ifdef SKEI_LIB
       startThreads();
-      #endif
+      //#endif
     }
 
     //----------
 
     //virtual
     void close(void) {
-      #ifdef SKEI_LIB
+      //#ifdef SKEI_LIB
       stopThreads();
-      #endif
+      //#endif
       XUnmapWindow(MDisplay,MWindow);
       XFlush(MDisplay);
       //MWindowExposed = false;
@@ -961,6 +979,7 @@ class SWindow_Xlib
 
     //virtual
     void eventLoop(void) {
+      startThreads();
       while (1) {
         XEvent event;
         XNextEvent(MDisplay, &event);
@@ -975,6 +994,7 @@ class SWindow_Xlib
         if ((event.type==ClientMessage) && (data==MDeleteAtom)) break;
         else eventHandler(&event);
       } // while
+      stopThreads();
     }
 
     //----------
@@ -1253,7 +1273,7 @@ void* skei_xlib_threadproc(void* AData) {
 #ifdef SKEI_LIB
 #ifdef SKEI_LINUX_SLEEP_THREAD
 
-void* skei_xlib_threadsleepproc(void* AData) {
+void* skei_xlib_threadproc_sleep(void* AData) {
   SWindow_Xlib* win = (SWindow_Xlib*)AData;
   if (win) {
     while (win->MEventThreadActive) {
@@ -1295,7 +1315,12 @@ void* skei_xlib_threadsleepproc(void* AData) {
 // idle proc
 //----------------------------------------------------------------------
 
-#ifdef SKEI_LIB
+/*
+  sends client message sts_idle to window at regular intervals
+  end thread by setting MIdleThreadActive to false
+*/
+
+//#ifdef SKEI_LIB
 
 //static XClientMessageEvent event;
 
@@ -1329,7 +1354,7 @@ void* skei_xlib_idleproc(void* AData) {
   return SKEI_NULL;
 }
 
-#endif //  SKEI_LIB
+//#endif //  SKEI_LIB
 
 //----------------------------------------------------------------------
 // timer proc

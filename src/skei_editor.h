@@ -148,7 +148,12 @@ class SEditor
     //}
     //#else
 
-    #ifdef SKEI_LINUX_IDLE_THREAD
+    /*
+      also called from eventLoop()
+      standalone exe
+    */
+
+    //#ifdef SKEI_LINUX_IDLE_THREAD
 
     //virtual
     void on_idle(void) {
@@ -156,7 +161,7 @@ class SEditor
       if (MListener) MListener->idleFromEditor();
     }
 
-    #endif // SKEI_LINUX_IDLE_THREAD
+    //#endif // SKEI_LINUX_IDLE_THREAD
 
   //----------------------------------------
   // do_

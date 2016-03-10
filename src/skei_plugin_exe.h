@@ -59,17 +59,28 @@ class SPlugin_Exe
         MEditor = editor;
         setDefaultParameterValues();
 
+        /*
+          we didn't use on_idle, so we called this to get the initial
+          widget values, etc, updated once..
+          now that we call on_idle from a separate thread, we don't need this
+          anymore??
+        */
+
+        /*
         //updateEditorInIdle();
         #ifdef SKEI_LINUX_IDLE_THREAD
         //idleFromEditor(); // hack? initial parameter setup..
         on_idleEditor(MEditor);
         updateEditorInIdle();
         #endif
+        */
 
         editor->on_align();
         editor->paintBuffer();
         editor->open();
+        MEditorIsOpen = true;
         editor->eventLoop();
+        MEditorIsOpen = false;
         editor->close();
         on_closeEditor(editor);
       } // editor

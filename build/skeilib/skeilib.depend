@@ -1,6 +1,6 @@
 # depslib dependency file v1.0
-1457524925 source:/home/skei/git/skeilib/build/skeilib/skeilib.cpp
-	"test3.h"
+1457605688 source:/home/skei/git/skeilib/build/skeilib/skeilib.cpp
+	"syn_test1.h"
 
 1457539394 /home/skei/git/skeilib/src/skei.h
 	"skei_config.h"
@@ -16,7 +16,7 @@
 
 1457539275 /home/skei/git/skeilib/src/skei_doxygen.h
 
-1457558766 /home/skei/git/skeilib/src/skei_config.h
+1457568022 /home/skei/git/skeilib/src/skei_config.h
 
 1457557421 /home/skei/git/skeilib/src/skei_defines.h
 
@@ -144,11 +144,11 @@
 	"skei_plugin_exe.h"
 	"skei_plugin_vst.h"
 
-1456648125 /home/skei/git/skeilib/src/skei_plugin_exe.h
+1457604858 /home/skei/git/skeilib/src/skei_plugin_exe.h
 	"skei_plugin_base.h"
 	"skei_editor.h"
 
-1455054732 /home/skei/git/skeilib/src/skei_plugin_base.h
+1457604670 /home/skei/git/skeilib/src/skei_plugin_base.h
 	"skei_parameter.h"
 	"skei_program.h"
 	"skei_queue.h"
@@ -166,7 +166,7 @@
 1456653774 /home/skei/git/skeilib/src/skei_queue.h
 	"skei_memory.h"
 
-1454980270 /home/skei/git/skeilib/src/skei_editor.h
+1457604590 /home/skei/git/skeilib/src/skei_editor.h
 	"skei_color.h"
 	"skei_editor_listener.h"
 	"skei_parameter.h"
@@ -174,7 +174,7 @@
 	"skei_window.h"
 	"skei_window.h"
 
-1454980310 /home/skei/git/skeilib/src/skei_editor_listener.h
+1457604648 /home/skei/git/skeilib/src/skei_editor_listener.h
 
 1439757942 /home/skei/git/skeilib/src/skei_plugin_listener.h
 	"skei_parameter.h"
@@ -271,7 +271,7 @@
 
 1439247806 /home/skei/git/skeilib/src/skei_stack.h
 
-1457416802 /home/skei/git/skeilib/src/skei_widget.h
+1457567912 /home/skei/git/skeilib/src/skei_widget.h
 	"skei_array.h"
 	"skei_edges.h"
 	"skei_painter.h"
@@ -279,7 +279,7 @@
 
 1439140967 /home/skei/git/skeilib/src/skei_edges.h
 
-1457562204 /home/skei/git/skeilib/src/skei_window_xlib.h
+1457605001 /home/skei/git/skeilib/src/skei_window_xlib.h
 	<X11/X.h>
 	<X11/Xlib.h>
 	<X11/Xutil.h>
@@ -295,7 +295,7 @@
 	"skei_window_base.h"
 	"skei_tablet.h"
 
-1457465127 /home/skei/git/skeilib/src/skei_window_base.h
+1457605499 /home/skei/git/skeilib/src/skei_window_base.h
 	"skei_painter.h"
 	"skei_widget.h"
 
@@ -549,7 +549,7 @@
 	"skei_widget_color.h"
 	"skei_widget_panel.h"
 
-1457561847 /home/skei/git/skeilib/test/test3.h
+1457605591 /home/skei/git/skeilib/test/test3.h
 	"skei.h"
 	"skei_widget.h"
 	"skei_window.h"
@@ -559,7 +559,7 @@
 
 1451218717 /home/skei/git/skeilib/src/skei_list.h
 
-1454982900 /home/skei/git/skeilib/test/test_animate.h
+1457604519 /home/skei/git/skeilib/test/test_animate.h
 	"skei.h"
 	"skei_lock.h"
 	"skei_editor.h"
@@ -830,9 +830,79 @@
 
 1457555857 /home/skei/git/skeilib/src/skei_simd.h
 
-1457561809 /home/skei/git/skeilib/src/skei_tablet.h
+1457563496 /home/skei/git/skeilib/src/skei_tablet.h
 	<stdint.h>
 	<stdlib.h>
 	<string.h>
 	<X11/extensions/XInput.h>
+
+1455043120 /home/skei/git/skeilib/plugins/ana_fft.h
+	<math.h>
+	"skei.h"
+	"skei_plugin.h"
+	"skei_math_fast.h"
+	"skei_queue.h"
+	"skei_editor.h"
+	"skei_widget_slider.h"
+	"skei_lock.h"
+	"skei_fft.h"
+
+1457411751 /home/skei/git/skeilib/plugins/syn_test1.h
+	"skei.h"
+	"skei_plugin.h"
+	"skei_editor.h"
+	"skei_voice_manager.h"
+	"skei_phase.h"
+	"skei_envelope.h"
+	"skei_waveform_naive.h"
+	"skei_waveform_dpw.h"
+	"skei_waveform_ptr.h"
+	"skei_waveform_eptr.h"
+	"skei_waveform_polyblep.h"
+	"skei_waveform_polyblamp.h"
+	"skei_filter_decimator.h"
+	"skei_filter_hiir.h"
+	"skei_filter_downsample.h"
+	"skei_widget_slider.h"
+	"syn_test1_voice.h"
+
+1453847381 /home/skei/git/skeilib/src/skei_phase.h
+
+1452117613 /home/skei/git/skeilib/src/skei_envelope.h
+	<math.h>
+
+1453838027 /home/skei/git/skeilib/src/skei_waveform_naive.h
+
+1454022265 /home/skei/git/skeilib/src/skei_waveform_dpw.h
+
+1454022056 /home/skei/git/skeilib/src/skei_waveform_ptr.h
+
+1453930117 /home/skei/git/skeilib/src/skei_waveform_eptr.h
+
+1454446413 /home/skei/git/skeilib/src/skei_waveform_polyblep.h
+
+1453838038 /home/skei/git/skeilib/src/skei_waveform_polyblamp.h
+
+1453978598 /home/skei/git/skeilib/src/skei_filter_decimator.h
+
+1454431349 /home/skei/git/skeilib/src/skei_filter_hiir.h
+	"skei_filter_allpass.h"
+
+1453948075 /home/skei/git/skeilib/src/skei_filter_allpass.h
+
+1453978691 /home/skei/git/skeilib/src/skei_filter_downsample.h
+
+1457411767 /home/skei/git/skeilib/plugins/syn_test1_voice.h
+	"skei_voice_manager.h"
+	"skei_osc1.h"
+	"skei_filter_dc.h"
+	"skei_interpolate.h"
+
+1454498293 /home/skei/git/skeilib/src/skei_osc1.h
+	"skei_phase.h"
+	"skei_waveform_polyblep.h"
+
+1453674214 /home/skei/git/skeilib/src/skei_filter_dc.h
+
+1451166896 /home/skei/git/skeilib/src/skei_interpolate.h
 

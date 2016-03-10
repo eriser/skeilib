@@ -645,7 +645,7 @@ class SPlugin_Base
     #endif
 
     #ifdef SKEI_PLUGIN_HAS_EDITOR
-    #ifdef SKEI_LINUX_IDLE_THREAD
+    //#ifdef SKEI_LINUX_IDLE_THREAD
 
     //virtual
     void idleFromEditor(void) {
@@ -654,7 +654,7 @@ class SPlugin_Base
       updateEditorInIdle();
     }
 
-    #endif
+    //#endif
     #endif
 
 };
