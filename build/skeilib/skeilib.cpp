@@ -62,12 +62,12 @@
 //#include "demo.h"
 //#include "test1.h"
 //#include "test2.h"
-#include "test3.h"
+//#include "test3.h"
 //#include "test_animate.h"
 //#include "test_audio.h"
 //#include "test_buffering.h"
 //#include "test_gain.h"
-//#include "test_gui1.h"
+#include "test_gui1.h"
 //#include "test_module.h"
 
 //----------------------------------------------------------------------

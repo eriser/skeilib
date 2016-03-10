@@ -235,6 +235,7 @@
 		<Unit filename="../../src/skei_debug_assert.h" />
 		<Unit filename="../../src/skei_debug_callstack.h" />
 		<Unit filename="../../src/skei_debug_console.h" />
+		<Unit filename="../../src/skei_debug_crashhandler.h" />
 		<Unit filename="../../src/skei_debug_memtrace.h" />
 		<Unit filename="../../src/skei_debug_socket.h" />
 		<Unit filename="../../src/skei_debug_trace.h" />
@@ -311,6 +312,7 @@
 		<Unit filename="../../src/skei_random.h" />
 		<Unit filename="../../src/skei_reaper_ext.h" />
 		<Unit filename="../../src/skei_rect.h" />
+		<Unit filename="../../src/skei_simd.h" />
 		<Unit filename="../../src/skei_sinusoid.h" />
 		<Unit filename="../../src/skei_stack.h" />
 		<Unit filename="../../src/skei_string.h" />
@@ -401,6 +403,15 @@
 			<envvars />
 			<lib_finder disable_auto="1" />
 			<debugger />
+			<DoxyBlocks>
+				<comment_style block="0" line="0" />
+				<doxyfile_project />
+				<doxyfile_build extract_all="1" extract_private="1" extract_static="1" />
+				<doxyfile_warnings />
+				<doxyfile_output />
+				<doxyfile_dot class_diagrams="1" have_dot="1" />
+				<general />
+			</DoxyBlocks>
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

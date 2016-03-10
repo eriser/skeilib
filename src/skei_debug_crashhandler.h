@@ -2,11 +2,16 @@
 #define skei_debug_crashhandler
 //----------------------------------------------------------------------
 
-#ifdef SKEI_DEBUG_CRASHHANDLER
+/*
+  based on:
+  http://stackoverflow.com/questions/77005/how-to-generate-a-stacktrace-when-my-gcc-c-app-crashes
+*/
+
+// compile with: -g -rdynamic
 
 //----------------------------------------------------------------------
 
-// compile with: -g -rdynamic
+#ifdef SKEI_DEBUG_CRASHHANDLER
 
 #include <signal.h>
 
@@ -19,7 +24,8 @@
 */
 
 void __skei_crash_handler(int sig) {
-  SDumpCallStack;
+  DTrace("\n...crash...\n");
+  SDumpCallStackSkip(2);
   // You can't call exit() safely from a signal handler.
   // Use _exit() or _Exit()
   //exit(1);
@@ -33,13 +39,15 @@ class SDebug_CrashHandler {
     SDebug_CrashHandler() {
       signal(SIGSEGV,__skei_crash_handler);
     }
+    //~SDebug_CrashHandler() {
+    //  // uninstall signal handler?
+    //  // done automatically when program exits?
+    //}
 };
 
-//----------
+//----------------------------------------------------------------------
 
 static SDebug_CrashHandler skei_crash_handler;
-
-//----------
 
 #endif // SKEI_DEBUG_CRASHHANDLER
 

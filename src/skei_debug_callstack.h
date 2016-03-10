@@ -117,45 +117,34 @@ int callstack_symbols(void** addresses, callstack_symbol* out_syms, int num_addr
   size_t tmp_buf_len = 1024 * 32;
   char*  tmp_buffer  = (char*)malloc(tmp_buf_len);
   FILE* addr2line = run_addr2line(addresses,num_addresses,tmp_buffer,tmp_buf_len);
-  for( int i = 0; i < num_addresses; ++i ) {
+  for (int i=0; i<num_addresses; ++i) {
     char* symbol = syms[i];
     unsigned int offset = 0;
     // find function name and offset
-    char* name_start = strchr( symbol,'(');
-    char* offset_start = name_start ? strchr( name_start, '+' ) : 0x0;
-    if( name_start && offset_start ) {
+    char* name_start = strchr(symbol,'(');
+    char* offset_start = name_start ? strchr(name_start,'+') : 0x0;
+    if (name_start && offset_start) {
       // zero terminate all strings
       ++name_start;
-      *offset_start = '\0'; ++offset_start;
+      *offset_start = '\0';
+      ++offset_start;
     }
     if (name_start && offset_start ) {
-      offset = (unsigned int)strtoll( offset_start, 0x0, 16 );
-      symbol = demangle_symbol( name_start, tmp_buffer, tmp_buf_len );
+      offset = (unsigned int)strtoll(offset_start,0x0,16);
+      symbol = demangle_symbol(name_start,tmp_buffer,tmp_buf_len);
     }
-
-    out_syms[i].func = callstack_alloc_string( &outbuf, symbol, strlen( symbol ) );
-
-    //skei
-    //const char* _sym = SStripPath(symbol);
-    //out_syms[i].func = callstack_alloc_string( &outbuf, _sym, strlen( _sym ) );
-
+    out_syms[i].func  = callstack_alloc_string(&outbuf,symbol,strlen(symbol));
     out_syms[i].ofs   = offset;
-    out_syms[i].file = "failed to lookup file";
-    out_syms[i].line = 0;
+    out_syms[i].file  = "failed to lookup file";
+    out_syms[i].line  = 0;
     if( addr2line != 0x0 ) {
-      if( fgets( tmp_buffer, (int)tmp_buf_len, addr2line ) != 0x0 ) {
-        char* line_start = strchr( tmp_buffer, ':' );
+      if ( fgets(tmp_buffer,(int)tmp_buf_len, addr2line) != 0x0) {
+        char* line_start = strchr(tmp_buffer,':');
         *line_start = '\0';
-        if( tmp_buffer[0] != '?' && tmp_buffer[1] != '?' ) {
-
-          out_syms[i].file = callstack_alloc_string( &outbuf, tmp_buffer, strlen( tmp_buffer ) );
-
-          //skei
-          //const char* _fil = SStripPath(tmp_buffer);
-          //out_syms[i].file = callstack_alloc_string( &outbuf, _fil, strlen( _fil ) );
-
+        if (tmp_buffer[0] != '?' && tmp_buffer[1] != '?') {
+          out_syms[i].file = callstack_alloc_string(&outbuf,tmp_buffer,strlen(tmp_buffer));
         }
-        out_syms[i].line = (unsigned int)strtoll( line_start + 1, 0x0, 10 );
+        out_syms[i].line = (unsigned int)strtoll(line_start+1,0x0,10);
       }
     }
     ++num_translated;
@@ -207,18 +196,18 @@ int callstack_symbols(void** addresses, callstack_symbol* out_syms, int num_addr
     line.SizeOfStruct = sizeof(IMAGEHLP_LINE64);
     for( int i = 0; i < num_addresses; ++i ) {
       res = SymFromAddr( process, (DWORD64)addresses[i], &offset, sym_info );
-      if( res == 0 ) out_syms[i].func = "failed to lookup symbol";
-      else out_syms[i].func = callstack_alloc_string( &outbuf, sym_info->Name, sym_info->NameLen );
+      if (res==0) out_syms[i].func = "failed to lookup symbol";
+      else out_syms[i].func = callstack_alloc_string(&outbuf,sym_info->Name,sym_info->NameLen);
       res = SymGetLineFromAddr64( process, (DWORD64)addresses[i], &line_dis, &line );
       if( res == 0 ) {
-        out_syms[i].ofs = 0;
-        out_syms[i].file   = "failed to lookup file";
-        out_syms[i].line   = 0;
+        out_syms[i].ofs   = 0;
+        out_syms[i].file  = "failed to lookup file";
+        out_syms[i].line  = 0;
       }
       else {
-        out_syms[i].ofs = (unsigned int)line_dis;
-        out_syms[i].file   = callstack_alloc_string( &outbuf, line.FileName, strlen( line.FileName ) );
-        out_syms[i].line   = (unsigned int)line.LineNumber;
+        out_syms[i].ofs   = (unsigned int)line_dis;
+        out_syms[i].file  = callstack_alloc_string( &outbuf, line.FileName, strlen( line.FileName ) );
+        out_syms[i].line  = (unsigned int)line.LineNumber;
       }
       ++num_translated;
     }
@@ -231,7 +220,7 @@ int callstack_symbols(void** addresses, callstack_symbol* out_syms, int num_addr
 //
 //----------------------------------------------------------------------
 
-void callstack_print(void** AAddresses=SKEI_NULL, int ANumAddresses=0) {
+void skei_debug_callstack_print(void** AAddresses=SKEI_NULL, int ANumAddresses=0, int skip_last=0, int skip_first=0) {
   callstack_symbol  symbols[256];
   char              symbols_buffer[1024];
   int               num_addresses;
@@ -243,27 +232,46 @@ void callstack_print(void** AAddresses=SKEI_NULL, int ANumAddresses=0) {
     int num = callstack(0,adr,256);
     num_addresses = callstack_symbols(adr,symbols,num,symbols_buffer,1024);
   }
-  DTrace("----------------------------------------------------------------------\n");
+  DTrace("\n----------------------------------------------------------------------\n");
   DTrace("callstack\n");
   DTrace("----------------------------------------------------------------------\n");
-  for (int i=0; i<num_addresses; i++) {
-    DTrace("%i : %s : %s : line %i ofs %i\n",i,symbols[i].func, symbols[i].file, symbols[i].line, symbols[i].ofs);
+
+  /*
+    the last two entries are
+    - __libc_start_main
+    - skeilib_debug()
+  */
+  num_addresses -= skip_last;
+
+  for (int i=skip_first; i<num_addresses; i++) {
+    DTrace("%3i : %s\n", i-skip_first, symbols[i].func);
+    DTrace("      %s\n", symbols[i].file);
+    DTrace("      line %i offset %i\n", symbols[i].line, symbols[i].ofs);
   }
-  DTrace("----------------------------------------------------------------------\n");
+  DTrace("----------------------------------------------------------------------\n\n");
 }
 
 //----------
 
 /*
   macro, so that the callstack is generated from the place we put the macro
+  skip first f and last l entries..
 */
 
-#define SDumpCallStack              \
-  {                                 \
-    void* adr[256];                 \
-    int num = callstack(0,adr,256); \
-    callstack_print(adr,num);       \
+#define SDumpCallStack                        \
+  {                                           \
+    void* adr[256];                           \
+    int num = callstack(0,adr,256);           \
+    skei_debug_callstack_print(adr,num,2);    \
   }
+
+#define SDumpCallStackSkip(s)                 \
+  {                                           \
+    void* adr[256];                           \
+    int num = callstack(0,adr,256);           \
+    skei_debug_callstack_print(adr,num,2,s);  \
+  }
+
 
 //----------------------------------------------------------------------
 //

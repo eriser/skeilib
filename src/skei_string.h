@@ -139,5 +139,68 @@ class SString {
 };
 
 //----------------------------------------------------------------------
+//
+//----------------------------------------------------------------------
+
+// http://www.cprogramming.com/snippets/source-code/useful-c-string-functions
+
+//----------
+
+// remove specified characters from a string
+
+void SRemoveChars(char *str, char c) {
+	char *pos;
+	while( ( pos = SStrchr(str,c) ) ) {
+		SMemmove(pos, pos + 1, SStrlen(pos));
+  }
+}
+
+// remove specified chunks from a string
+
+void SRemoveChunks(char *str, char *cnk) {
+	char *pos;
+	int clen = SStrlen(cnk);
+	while( ( pos = SStrstr(str, cnk) ) ) {
+		SMemmove(pos, pos + clen, SStrlen(pos) - clen + 1);
+  }
+}
+
+// replace specified characters in a string
+
+void SReplaceChars(char *str, char c1, char c2) {
+	char *pos;
+	while( ( pos = SStrchr(str, c1) ) ) {
+		*pos = c2;
+  }
+}
+
+// replace specified chunks in a string
+// (size-independent, just remember about memory)
+
+void SReplaceChunks(char *str, char *cnk1, char *cnk2)
+{
+	char *pos;
+	int clen1 = SStrlen(cnk1), clen2 = SStrlen(cnk2);
+	while( ( pos = SStrstr(str,cnk1) ) )
+	{
+		SMemmove(pos + clen2, pos + clen1, SStrlen(pos) - clen1 + 1);
+		SMemcpy(pos, cnk2, clen2);
+	}
+}
+
+//reverse a string
+
+void SReverse(char *str) {
+	int i;
+	int len = SStrlen(str) - 1;
+	int mid = (len % 2) ? (len / 2) : ((len + 1) / 2);
+	for (i=0; i<=mid; ++i) {
+		char buf = str[i];
+		str[i] = str[len - i];
+		str[len - i] = buf;
+	}
+}
+
+//----------------------------------------------------------------------
 #endif
 

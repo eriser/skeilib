@@ -11,6 +11,8 @@
   #undef SKEI_DEBUG_CRASHHANDLER
 #endif
 
+//----------
+
 #ifndef SKEI_WIN32
   #undef SKEI_DEBUG_CONSOLE
 #endif
@@ -43,16 +45,19 @@
 //
 //----------------------------------------------------------------------
 
-#define SKEI_BREAKPOINT \
-  asm("int $0x3\n");
+#ifdef SKEI_DEBUG
 
-//----------
+  #define SKEI_BREAKPOINT \
+    asm("int $0x3\n");
 
-#define SKEI_ERROR(name, fmt, ...) \
-  fprintf( stderr, "SKEI_ERROR " #name ": " fmt "\n", __VA_ARGS__ )
+  //#define SKEI_ERROR(name, fmt, ...) fprintf( stderr, "SKEI_ERROR " #name ": " fmt "\n", __VA_ARGS__ )
 
-//----------
+#else // SKEI_DEBUG
 
+  #define SKEI_BREAKPOINT {}
+  //#define SKEI_ERROR(name, fmt, ...) {}
+
+#endif // SKEI_DEBUG
 
 //----------------------------------------------------------------------
 #endif

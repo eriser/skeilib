@@ -191,7 +191,7 @@ class SDebug_MemTrace {
     //----------
 
     void dump(void) {
-      DTrace("----------------------------------------\n");
+      DTrace("\n----------------------------------------\n");
       DTrace("memtrace\n");
       DTrace("----------------------------------------\n");
       DTrace("* num alloc     %i\n",MNumAlloc);
@@ -201,7 +201,7 @@ class SDebug_MemTrace {
       DTrace("* leaked memory %i\n",MAllocated);
       if (MAllocated > 0)
       {
-        DTrace("----------------------------------------\n");
+        DTrace("----------------------------------------\n\n");
         skei_debug_memnode* node = (skei_debug_memnode*)MHead;
         while (node) {
           DTrace("* [%s:%s:%i] %s,0x%x,%i\n",node->MFile,node->MFunc,node->MLine,(node->MNew?"new":"malloc"),node->MAddr,node->MSize);

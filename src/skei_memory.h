@@ -5,6 +5,7 @@
 /*
   TODO:
   - memory manager (big buffer)
+  - __builtin_alloca_with_align
 */
 
 #include <stdlib.h>
@@ -23,6 +24,7 @@
 
 #define SMemset   memset
 #define SMemcpy   memcpy
+#define SMemmove  memmove
 
 //----------------------------------------------------------------------
 

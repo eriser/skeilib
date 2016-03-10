@@ -5,6 +5,8 @@
 #include "skei_defines.h"
 
 //----------------------------------------------------------------------
+//
+//----------------------------------------------------------------------
 
 // http://bits.stephan-brumme.com/endianess.html
 
@@ -13,23 +15,65 @@ bool SIsLittleEndian(void) {
   return *(char*)&pattern == 0x01;
 }
 
-//----------
+//----------------------------------------------------------------------
+//
+//----------------------------------------------------------------------
 
-//#ifndef h_BitGet
-//  #define h_BitGet(x, bit)  ( 1  &  ((x)  >> (bit)))
+#ifdef SKEI_WIN32
+  #include <windows.h>
+#endif
+
+#ifdef SKEI_LINUX
+  #include <unistd.h>
+#endif
+
+//#elif SKEI_MAC
+//  #include <sys/param.h>
+//  #include <sys/sysctl.h>
 //#endif
 
+//----------
+
+int32 SNumCpuCores(void ) {
+  #ifdef SKEI_WIN32
+    SYSTEM_INFO sysinfo;
+    GetSystemInfo(&sysinfo);
+    return sysinfo.dwNumberOfProcessors;
+  #endif
+  #ifdef SKEI_LINUX
+    return sysconf(_SC_NPROCESSORS_ONLN);
+  #endif
+  //#ifdef SKEI_MAC
+  //  int nm[2];
+  //  size_t len = 4;
+  //  uint32_t count;
+  //  nm[0] = CTL_HW; nm[1] = HW_AVAILCPU;
+  //  sysctl(nm, 2, &count, &len, NULL, 0);
+  //  if(count < 1) {
+  //    nm[1] = HW_NCPU;
+  //    sysctl(nm, 2, &count, &len, NULL, 0);
+  //    if(count < 1) { count = 1; }
+  //  }
+  //  return count;
+  //#endif
+}
+
 //----------------------------------------------------------------------
+//
+//----------------------------------------------------------------------
+
+/*
 
 // fPIC compatible
 #define SKEI_CPU_EBX_REG "r"
+
 #define SKEI_CPU_EBX_STORE  \
-  "pushl %%ebx;"          \
-  "cpuid;"                \
-  "movl %%ebx, %1;"       \
+  "pushl %%ebx;"            \
+  "cpuid;"                  \
+  "movl %%ebx, %1;"         \
   "popl %%ebx;"
 
-//----------------------------------------------------------------------
+//----------
 
 class SCPU {
 
@@ -37,20 +81,9 @@ class SCPU {
 
     unsigned char isCalled;
     char          cpustringbuf[SKEI_MAX_STRING_SIZE];
-
     unsigned int  _caps;
-    unsigned char _SSE3,
-                  _SSSE3,
-                  _FPU,
-                  _CMOV,
-                  _SSE,
-                  _SSE2,
-                  _SSE4A,
-                  _SSE5,
-                  _MMX,
-                  _MMXEXT,
-                  _3DNOW,
-                  _3DNOWEXT;
+    unsigned char _SSE3, _SSSE3, _FPU, _CMOV, _SSE, _SSE2, _SSE4A, _SSE5, _MMX,
+                  _MMXEXT, _3DNOW, _3DNOWEXT;
 
   public:
 
@@ -157,11 +190,11 @@ class SCPU {
 
     #ifdef SKEI_64BIT
     inline unsigned long rdtsc(void) {
-      /*
-      unsigned int low, high;
-      __asmv ( "rdtsc;" : "=a" (low), "=d" (high) );
-      return ( (low) | ( (unsigned long)(high) << 32 ) );
-      */
+
+      //unsigned int low, high;
+      //__asmv ( "rdtsc;" : "=a" (low), "=d" (high) );
+      //return ( (low) | ( (unsigned long)(high) << 32 ) );
+
       unsigned long val;
       __asmv ( "rdtsc;" : "=A" (val) );
       return val;
@@ -188,6 +221,8 @@ class SCPU {
     //----------
 
 };
+
+*/
 
 //----------------------------------------------------------------------
 #endif

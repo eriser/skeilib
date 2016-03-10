@@ -23,6 +23,8 @@
 #include "skei_widget.h"
 #include "skei_window_base.h"
 
+#include "skei_tablet.h"
+
 //----------------------------------------------------------------------
 //
 //----------------------------------------------------------------------
@@ -136,6 +138,14 @@ class SWindow_Xlib
     //XftDraw*      MXftDraw;
     XftColor      MXftColor;
     bool          font_color_allocated;
+    #endif
+
+    #ifdef SKEI_TABLET
+    STablet       MTablet;
+    bool          tablet_press;
+    bool          tablet_press_prev;
+    int32         tablet_x_prev;
+    int32         tablet_y_prev;
     #endif
 
   //----------------------------------------
@@ -262,6 +272,15 @@ class SWindow_Xlib
       font_color_allocated = false;
       #endif
 
+      #ifdef SKEI_TABLET
+      bool tabl = MTablet.load(MDisplay,MWindow);
+      STrace("tablet.load %i\n",tabl);
+      tablet_press = false;
+      tablet_press_prev = false;
+      tablet_x_prev = 0;
+      tablet_y_prev = 0;
+      #endif
+
     }
 
     //----------
@@ -293,6 +312,10 @@ class SWindow_Xlib
 
     virtual ~SWindow_Xlib() {
 
+      #ifdef SKEI_TABLET
+      MTablet.unload();
+      #endif
+
       #ifdef SKEI_XFT
       if (font_color_allocated)
         XftColorFree(
@@ -314,6 +337,8 @@ class SWindow_Xlib
       XDestroyWindow(MDisplay,MWindow);
       //XFlush(MDisplay);
       XCloseDisplay(MDisplay);
+
+
     }
 
   //----------------------------------------
@@ -349,6 +374,17 @@ class SWindow_Xlib
   //----------------------------------------
 
   private:
+
+    #ifdef SKEI_TABLET
+    void tabletHandler(void) {
+      int32   x = MTablet.xpos();
+      int32   y = MTablet.ypos();
+      float   z = MTablet.pressure();
+      on_tabletEvent(x,y,z);
+    }
+    #endif
+
+    //----------
 
     void eventHandler(XEvent* AEvent) {
 
@@ -928,12 +964,13 @@ class SWindow_Xlib
       while (1) {
         XEvent event;
         XNextEvent(MDisplay, &event);
-
-          //if (EasyTab_HandleEvent(&event) == EASYTAB_OK)
-          //{
-          //  STrace("easytab x=%i, y=%i, z=%i\n",EasyTab->PosX, EasyTab->PosY, EasyTab->Pressure );
-          //}
-
+        #ifdef SKEI_TABLET
+        if (MTablet.handleEvent(&event) == TABLET_OK) {
+          //STrace("tablet x=%i, y=%i, z=%i\n",MTablet.Info->PosX, EasyTab->PosY, EasyTab->Pressure );
+          tabletHandler();
+          continue;
+        }
+        #endif
         uint32 data = event.xclient.data.l[0];
         if ((event.type==ClientMessage) && (data==MDeleteAtom)) break;
         else eventHandler(&event);
@@ -1185,6 +1222,13 @@ void* skei_xlib_threadproc(void* AData) {
     while (win->MEventThreadActive) {
       XEvent ev;
       XNextEvent(win->MDisplay, &ev);
+      #ifdef SKEI_TABLET
+      if (MTablet.handleEvent(&event) == TABLET_OK) {
+        //STrace("tablet x=%i, y=%i, z=%i\n",MTablet.Info->PosX, EasyTab->PosY, EasyTab->Pressure );
+        tabletHandler();
+        continue;
+      }
+      #endif
       //if (ev.xany.display != win->MDisplay || ev.xany.window != win->MWindow) continue;
       if (ev.type == ClientMessage) {
         XClientMessageEvent* cev = (XClientMessageEvent*)&ev;
@@ -1216,6 +1260,13 @@ void* skei_xlib_threadsleepproc(void* AData) {
       while (XPending(win->MDisplay) > 0) {
         XEvent ev;
         XNextEvent(win->MDisplay, &ev);
+        #ifdef SKEI_TABLET
+        if (MTablet.handleEvent(&event) == TABLET_OK) {
+          //STrace("tablet x=%i, y=%i, z=%i\n",MTablet.Info->PosX, EasyTab->PosY, EasyTab->Pressure );
+          tabletHandler();
+          continue;
+        }
+        #endif
         if (ev.type == ClientMessage) {
           XClientMessageEvent* cev = (XClientMessageEvent*)&ev;
           uint32 dta = ev.xclient.data.l[0];

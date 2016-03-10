@@ -28,10 +28,14 @@
 //#define SKEI_CAIRO
 //#define SKEI_OPENGL
 
+//#define SKEI_TABLET
+
 //----------
 
 //#define SKEI_MAIN
 //#define SKEI_REPLACE_STDLIB
+
+
 
 //#define SKEI_NO_AUTODELETE
 //#define SKEI_NO_SHRINK_BACKBUFFER

@@ -923,6 +923,19 @@ class SWidget {
     //void on_idle(void) {
     //}
 
+    //----------
+
+    #ifdef SKEI_TABLET
+    virtual
+    void on_tabletEvent(int32 AXpos, int32 AYpos, float APressure) {
+      SWidget* hover = findSubWidget(AXpos,AYpos);
+      if (hover) {
+        // make sure we don't call ourselves recursively!
+        if (hover != this) hover->on_tabletEvent(AXpos,AYpos,APressure);
+      } // hover
+    }
+    #endif
+
   //----------------------------------------
   // do_
   //----------------------------------------
