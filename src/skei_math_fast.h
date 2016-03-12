@@ -66,6 +66,14 @@ float SCosF(const float x) {
 
 //----------
 
+//inline float fast_cos(float x) {
+//  return fast_sin(x + HALF_PI);
+//}
+
+
+
+//----------
+
 /// approximation of the hyperbolic-cosine function (fpu)
 
 float SCoshF(const float x) {
@@ -246,6 +254,23 @@ float SSinF(float x) {
 
 //----------
 
+//based on Michael Baczynski's sine approximation at http://lab.polygonal.de/?p=205
+
+/*
+inline float fast_sin(float x) {
+  //always wrap input angle to -PI..PI
+  while (fabs(x) > PII) {
+    if (x < -PII) x += TAU;
+    else if (x > PII) x -= TAU;
+  }
+  //compute sine
+  if (x < 0.0f) return (1.27323954f * x) + (0.405284735f * x * x);
+  else return (1.27323954f * x) - (0.405284735f * x * x);
+}
+*/
+
+//----------
+
 /// fast approximation of the hyperbolic-sine function for range [-3.5, 3.5]
 
 float SSinhF(const float x) {
@@ -282,6 +307,13 @@ float STanF(const float x) {
 
 //----------
 
+//inline float fast_tan(float x) {
+//  return common::fast_sin(x) / common::fast_cos(x);
+//}
+
+
+//----------
+
 /// fast approximation of the hyperbolic-tangens function for range [-4.2, 4.2]
 
 float STanhF(const float x) {
@@ -299,6 +331,21 @@ float rational_tanh(x) {
   else if (x>3) return 1;
   else return x * (27+x*x) / (27+9*x*x);
 }
+*/
+
+//----------
+
+// cschueler's rational tanh approximation
+// from http://www.musicdsp.org/showone.php?id=238
+
+/*
+
+inline float rational_tanh(float x) {
+  if (x < -3.0f) return -1.0f;
+  else if (x > 3.0f) return 1.0f;
+  else return x * (27.0f + x * x) / (27.0f + 9.0f * x * x);
+}
+
 */
 
 //----------------------------------------------------------------------
