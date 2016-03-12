@@ -20,6 +20,9 @@
   #include "extern/upng/upng.c"
 #endif // SKEI_NO_PNG
 
+//----------
+
+#include "skei_color.h"
 #include "skei_rect.h"
 
 
@@ -45,6 +48,10 @@ class SBitmap {
     /*inline*/ int32 height(void) { return MHeight; }
     // /*inline*/ uint32 depth(void)  { return MDepth; }
     /*inline*/ uint32* buffer(void) { return (uint32*)MBuffer; }
+
+  //----------------------------------------
+  //
+  //----------------------------------------
 
   public:
 
@@ -97,44 +104,13 @@ class SBitmap {
       if (MBufferAllocated && MBuffer) SFree(MBuffer);
     }
 
-    //----------------------------------------
-    // todo: move these out of SBitmap
-    // to skei_color.h ???
-    //----------------------------------------
+  //----------------------------------------
+  //
+  //----------------------------------------
 
-    /*
+  public:
 
-    //inline
-    uint32 makeColor(uint8 r, uint8 g, uint8 b, uint8 a) {
-      return   ((uint32)a<<24)
-             + ((uint32)r<<16)
-             + ((uint32)g<<8)
-             + b;
-    }
-
-    //----------
-
-    //inline
-    uint8 alpha(uint32 c, uint32 a) {
-      uint32 ret = (c*a) >> 8;
-      return ret & 0xff;
-    }
-
-    //----------
-
-    //inline
-    uint8 scale(uint8 c, float n ) {
-      float nc = n * (float)c;
-      return (uint8)SMin(255,nc);
-    }
-
-    */
-
-    //----------------------------------------
-    //
-    //----------------------------------------
-
-    void clearBuffer(uint8 AValue) {
+    void clearBuffer(uint8 AValue=0) {
       int32 size = MWidth*MHeight*4;
       SMemset(MBuffer,AValue,size);
     }
@@ -159,12 +135,18 @@ class SBitmap {
       }
     }
 
-    //----------------------------------------
-    //
-    //----------------------------------------
+    //----------
 
     //inline
     uint32 getPixel(uint32 x, uint32 y) {
+
+      //SAssert( x >= 0 );
+      //SAssert( y >= 0 );
+      //SAssert( x < (uint32)MWidth );
+      //SAssert( y < (uint32)MHeight );
+      if (x>=(uint32)MWidth) x = MWidth - 1;
+      if (y>=(uint32)MHeight) y = MHeight - 1;
+
       uint32* ptr = (uint32*)MBuffer;
       return ptr[y*MWidth+x];
     }
@@ -173,13 +155,23 @@ class SBitmap {
 
     //inline
     void setPixel(uint32 x, uint32 y, uint32 c) {
+
+      //SAssert( x >= 0 );
+      //SAssert( y >= 0 );
+      //SAssert( x < (uint32)MWidth );
+      //SAssert( y < (uint32)MHeight );
+      if (x>=(uint32)MWidth) x = MWidth - 1;
+      if (y>=(uint32)MHeight) y = MHeight - 1;
+
       uint32* ptr = (uint32*)MBuffer;
       ptr[y*MWidth+x] = c;
     }
 
-    //----------------------------------------
-    //
-    //----------------------------------------
+  //----------------------------------------
+  //
+  //----------------------------------------
+
+  public:
 
     void convertRgbaBgra(void) {
       if (MBuffer) {
@@ -319,10 +311,65 @@ class SBitmap {
       } //mBuffer
     }
 
-    //----------------------------------------
-    //
-    //----------------------------------------
+  //----------------------------------------
+  //
+  //----------------------------------------
 
+  public:
+
+    /*
+    void greyScale(void) {
+      double r_scaler = 0.299;
+      double g_scaler = 0.587;
+      double b_scaler = 0.114;
+      for (unsigned char* itr = data_; itr < (data_ + length_); ) {
+        unsigned char gray_value = static_cast<unsigned char>((r_scaler * (*(itr + 2))) +
+                                                              (g_scaler * (*(itr + 1))) +
+                                                              (b_scaler * (*(itr + 0))) );
+        *(itr++) = gray_value;
+        *(itr++) = gray_value;
+        *(itr++) = gray_value;
+      }
+    }
+    */
+
+    //----------
+    //----------
+
+    void flipHorizontal(void) {}
+    void flipVertical(void) {}
+
+    // http://lodev.org/cgtutor/filtering.html
+
+  //----------------------------------------
+  //
+  //----------------------------------------
+
+  public:
+
+    void blendPixel(uint32 x, uint32 y, uint32 c, uint8 AAlpha) {
+
+      //SAssert( x >= 0 );
+      //SAssert( y >= 0 );
+      //SAssert( x < (uint32)MWidth );
+      //SAssert( y < (uint32)MHeight );
+      if (x>=(uint32)MWidth) x = MWidth-1;
+      if (y>=(uint32)MHeight) y = MHeight-1;
+
+      int32 pos = (y*MWidth + x) * 4;
+      uint8 bb = MBuffer[pos+0];
+      uint8 bg = MBuffer[pos+1];
+      uint8 br = MBuffer[pos+2];
+      uint8 cr = (c >> 16) & 0xff;
+      uint8 cg = (c >> 8 ) & 0xff;
+      uint8 cb = (c      ) & 0xff;
+      MBuffer[pos+0] = alphaColor(cb,AAlpha) + alphaColor(bb,(255-AAlpha));
+      MBuffer[pos+1] = alphaColor(cg,AAlpha) + alphaColor(bg,(255-AAlpha));
+      MBuffer[pos+2] = alphaColor(cr,AAlpha) + alphaColor(br,(255-AAlpha));
+    }
+
+    //#dfine BRESENHAM_INCLUDE
+    #include "skei_bresenham.h"
 
 };
 
