@@ -46,6 +46,7 @@
 
 //----------------------------------------------------------------------
 
+/*
 typedef int8    v4s8  __SKEI_VECTOR(16);
 typedef int16   v4s16 __SKEI_VECTOR(16);
 typedef int32   v4s32 __SKEI_VECTOR(16);
@@ -58,6 +59,7 @@ typedef uint64  v4u64 __SKEI_VECTOR(16);
 
 typedef float   v4f32 __SKEI_VECTOR(16);
 typedef double  v4f64 __SKEI_VECTOR(16);
+*/
 
 //----------------------------------------------------------------------
 

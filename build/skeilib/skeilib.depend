@@ -1,6 +1,6 @@
 # depslib dependency file v1.0
-1457679257 source:/home/skei/git/skeilib/build/skeilib/skeilib.cpp
-	"test_image.h"
+1457776881 source:/home/skei/git/skeilib/build/skeilib/skeilib.cpp
+	"dev.h"
 
 1457539394 /home/skei/git/skeilib/src/skei.h
 	"skei_config.h"
@@ -28,7 +28,7 @@
 
 1457417482 /home/skei/git/skeilib/src/skei_flags.h
 
-1457557274 /home/skei/git/skeilib/src/skei_debug.h
+1457778287 /home/skei/git/skeilib/src/skei_debug.h
 	"skei_debug_socket.h"
 	"skei_debug_trace.h"
 	"skei_debug_memtrace.h"
@@ -306,9 +306,9 @@
 	"skei_plugin_base.h"
 	"skei_editor.h"
 
-1457678068 /home/skei/git/skeilib/plugins/dev.h
+1457781013 /home/skei/git/skeilib/plugins/dev.h
 	"skei.h"
-	"skei_bitmap.h"
+	"skei_debug_test.h"
 
 1451224900 /home/skei/git/skeilib/plugins/fx_cutter.h
 	"skei.h"
@@ -922,4 +922,10 @@
 	"skei_bresenham.h"
 
 1457764468 /home/skei/git/skeilib/src/skei_bresenham.h
+
+1457781111 /home/skei/git/skeilib/src/skei_debug_test.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
 

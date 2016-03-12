@@ -1,5 +1,5 @@
 
-//#include "dev.h"
+#include "dev.h"
 //#include "minimal.h"
 //#include "template.h"
 
@@ -68,7 +68,7 @@
 //#include "test_buffering.h"
 //#include "test_gain.h"
 //#include "test_gui1.h"
-#include "test_image.h"
+//#include "test_image.h"
 //#include "test_module.h"
 
 //----------------------------------------------------------------------

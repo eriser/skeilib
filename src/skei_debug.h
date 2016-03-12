@@ -9,6 +9,7 @@
   #undef SKEI_DEBUG_SOCKET
   #undef SKEI_DEBUG_CALLSTACK
   #undef SKEI_DEBUG_CRASHHANDLER
+  #under SKEI_DEBUG_TEST
 #endif
 
 //----------

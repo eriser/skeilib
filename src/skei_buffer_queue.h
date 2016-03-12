@@ -2,6 +2,13 @@
 #define skei_buffer_queue_included
 //----------------------------------------------------------------------
 
+/*
+  class to keep track of last buffer sent from another thread..
+  for example, the last audio block during processing..
+
+  todo: all blocks instead of just latest?
+*/
+
 #include "skei_queue.h"
 
 //----------------------------------------------------------------------
