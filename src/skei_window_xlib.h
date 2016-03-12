@@ -705,7 +705,13 @@ class SWindow_Xlib
 
 
     void stopThreads(void) {
+      //flush();
       void* ret = SKEI_NULL;
+      if (MIdleThreadActive) {
+        MIdleThreadActive = false;
+        pthread_cancel(MIdleThread);
+        pthread_join(MIdleThread,&ret);
+      }
       #ifdef SKEI_LIB
       if (MEventThreadActive) {
         MEventThreadActive = false;
@@ -713,11 +719,6 @@ class SWindow_Xlib
         pthread_join(MEventThread,&ret);
       }
       #endif
-      if (MIdleThreadActive) {
-        MIdleThreadActive = false;
-        pthread_cancel(MIdleThread);
-        pthread_join(MIdleThread,&ret);
-      }
     }
 
 
@@ -979,7 +980,7 @@ class SWindow_Xlib
 
     //virtual
     void eventLoop(void) {
-      startThreads();
+      //startThreads();
       while (1) {
         XEvent event;
         XNextEvent(MDisplay, &event);
@@ -994,7 +995,7 @@ class SWindow_Xlib
         if ((event.type==ClientMessage) && (data==MDeleteAtom)) break;
         else eventHandler(&event);
       } // while
-      stopThreads();
+      //stopThreads();
     }
 
     //----------
