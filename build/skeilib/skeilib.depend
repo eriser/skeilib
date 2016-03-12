@@ -1,6 +1,6 @@
 # depslib dependency file v1.0
-1457605688 source:/home/skei/git/skeilib/build/skeilib/skeilib.cpp
-	"syn_test1.h"
+1457679257 source:/home/skei/git/skeilib/build/skeilib/skeilib.cpp
+	"test_image.h"
 
 1457539394 /home/skei/git/skeilib/src/skei.h
 	"skei_config.h"
@@ -82,11 +82,11 @@
 	"skei_color.h"
 	"skei_drawable.h"
 
-1454982871 /home/skei/git/skeilib/src/skei_color.h
+1457686304 /home/skei/git/skeilib/src/skei_color.h
 	<math.h>
 	"skei_math.h"
 
-1457450320 /home/skei/git/skeilib/src/skei_math.h
+1457659678 /home/skei/git/skeilib/src/skei_math.h
 	<stdlib.h>
 
 1452451035 /home/skei/git/skeilib/src/skei_drawable.h
@@ -223,8 +223,9 @@
 1439079876 /home/skei/git/skeilib/src/skei_point.h
 	"skei_array.h"
 
-1448921749 /home/skei/git/skeilib/src/skei_rect.h
+1457678081 /home/skei/git/skeilib/src/skei_rect.h
 	"skei_array.h"
+	"skei_point.h"
 
 1450127152 /home/skei/git/skeilib/src/skei_surface.h
 	"skei_surface_xlib.h"
@@ -244,9 +245,11 @@
 1439748426 /home/skei/git/skeilib/src/skei_surface_base.h
 	"skei_drawable.h"
 
-1457465804 /home/skei/git/skeilib/src/skei_bitmap.h
+1457724407 /home/skei/git/skeilib/src/skei_bitmap.h
 	"extern/upng/upng.c"
+	"skei_color.h"
 	"skei_rect.h"
+	"skei_bresenham.h"
 
 1448093122 /home/skei/git/skeilib/src/extern/upng/upng.c
 	<stdio.h>
@@ -271,7 +274,7 @@
 
 1439247806 /home/skei/git/skeilib/src/skei_stack.h
 
-1457567912 /home/skei/git/skeilib/src/skei_widget.h
+1457763839 /home/skei/git/skeilib/src/skei_widget.h
 	"skei_array.h"
 	"skei_edges.h"
 	"skei_painter.h"
@@ -279,7 +282,7 @@
 
 1439140967 /home/skei/git/skeilib/src/skei_edges.h
 
-1457605001 /home/skei/git/skeilib/src/skei_window_xlib.h
+1457723483 /home/skei/git/skeilib/src/skei_window_xlib.h
 	<X11/X.h>
 	<X11/Xlib.h>
 	<X11/Xutil.h>
@@ -303,8 +306,9 @@
 	"skei_plugin_base.h"
 	"skei_editor.h"
 
-1457370019 /home/skei/git/skeilib/plugins/dev.h
+1457678068 /home/skei/git/skeilib/plugins/dev.h
 	"skei.h"
+	"skei_bitmap.h"
 
 1451224900 /home/skei/git/skeilib/plugins/fx_cutter.h
 	"skei.h"
@@ -559,9 +563,8 @@
 
 1451218717 /home/skei/git/skeilib/src/skei_list.h
 
-1457604519 /home/skei/git/skeilib/test/test_animate.h
+1457679060 /home/skei/git/skeilib/test/test_animate.h
 	"skei.h"
-	"skei_lock.h"
 	"skei_editor.h"
 	"skei_plugin.h"
 	"skei_random.h"
@@ -807,7 +810,7 @@
 1457449142 /home/skei/git/skeilib/src/skei_debug_assert.h
 	<iostream>
 
-1457543958 /home/skei/git/skeilib/src/skei_debug_callstack.h
+1457679811 /home/skei/git/skeilib/src/skei_debug_callstack.h
 	<execinfo.h>
 	<stdio.h>
 	<stdlib.h>
@@ -818,7 +821,7 @@
 
 1457545069 /home/skei/git/skeilib/src/skei_dialogs.h
 
-1457543227 /home/skei/git/skeilib/src/skei_debug_crashhandler.h
+1457680151 /home/skei/git/skeilib/src/skei_debug_crashhandler.h
 	<signal.h>
 
 1457549356 /home/skei/git/skeilib/src/skei_cpu.h
@@ -905,4 +908,18 @@
 1453674214 /home/skei/git/skeilib/src/skei_filter_dc.h
 
 1451166896 /home/skei/git/skeilib/src/skei_interpolate.h
+
+1457608099 /home/skei/git/skeilib/src/skei_filter_linkwitzriley.h
+
+1457764491 /home/skei/git/skeilib/test/test_image.h
+	"skei.h"
+	"skei_plugin.h"
+	"skei_editor.h"
+	"skei_widget.h"
+	"skei_bitmap.h"
+	"skei_image.h"
+	"skei_random.h"
+	"skei_bresenham.h"
+
+1457764468 /home/skei/git/skeilib/src/skei_bresenham.h
 

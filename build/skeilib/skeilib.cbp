@@ -222,6 +222,7 @@
 		<Unit filename="../../src/skei_basepath.h" />
 		<Unit filename="../../src/skei_beat_detector.h" />
 		<Unit filename="../../src/skei_bitmap.h" />
+		<Unit filename="../../src/skei_bresenham.h" />
 		<Unit filename="../../src/skei_buffer.h" />
 		<Unit filename="../../src/skei_buffer_queue.h" />
 		<Unit filename="../../src/skei_color.h" />
@@ -257,6 +258,7 @@
 		<Unit filename="../../src/skei_filter_downsample.h" />
 		<Unit filename="../../src/skei_filter_hiir.h" />
 		<Unit filename="../../src/skei_filter_karlsen.h" />
+		<Unit filename="../../src/skei_filter_linkwitzriley.h" />
 		<Unit filename="../../src/skei_filter_moog.h" />
 		<Unit filename="../../src/skei_filter_onepole.h" />
 		<Unit filename="../../src/skei_filter_rbj.h" />
@@ -388,6 +390,7 @@
 		<Unit filename="../../test/test_buffering.h" />
 		<Unit filename="../../test/test_gain.h" />
 		<Unit filename="../../test/test_gui1.h" />
+		<Unit filename="../../test/test_image.h" />
 		<Unit filename="../../test/test_module.h" />
 		<Unit filename="../../test/test_painter.h" />
 		<Unit filename="../../tools/bin2h.c">
