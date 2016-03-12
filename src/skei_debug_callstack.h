@@ -258,6 +258,15 @@ void skei_debug_callstack_print(void** AAddresses=SKEI_NULL, int ANumAddresses=0
   skip first f and last l entries..
 */
 
+/*
+#define SDumpCallStackAll                     \
+  {                                           \
+    void* adr[256];                           \
+    int num = callstack(0,adr,256);           \
+    skei_debug_callstack_print(adr,num);      \
+  }
+*/
+
 #define SDumpCallStack                        \
   {                                           \
     void* adr[256];                           \
