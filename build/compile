@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# todo:
+# - better handling of xlib, xrender, xft, xinput, etc..
+
+# --------------------------------------------------
+#
+# --------------------------------------------------
+
 # FULLPATH=../plugins/fx_pitch.h
 # FILENAME=${FULLPATH##*/}
 # BASENAME=${FILENAME%%.*}
@@ -27,7 +34,24 @@ GUI="nogui"
 FLAGS="-Wall "
 DEF=""
 INC="-I../src "
+
 # INC+="-I../src/extern "
+
+# INC+="-I../src/common "
+# INC+="-I../src/common/debug "
+# INC+="-I../src/common/types "
+# INC+="-I../src/common/containers "
+# INC+="-I../src/common/utilities "
+# INC+="-I../src/plugin "
+# INC+="-I../src/plugin/parameters "
+# INC+="-I../src/gui "
+# INC+="-I../src/gui/widgets "
+# INC+="-I../src/audio "
+# INC+="-I../src/audio/filters "
+# INC+="-I../src/audio/oscillators "
+# INC+="-I../src/gfx "
+# INC+="-I../src/gfx/render "
+
 INC+="-I../plugins "
 INC+="-I../test "
 LIB="-L../lib "
@@ -124,13 +148,13 @@ if [ "$GUI" = "xlib" ]; then
 #  FLAGS+="-lx11 "
   DEF+="-DSKEI_XLIB "
 #  LIB+="-lx11 -lxft "
-  LIB+="-lx11 -lxft -lxrender "
+  LIB+="-lx11 -lxrender -lxft "
 fi
 
 if [ "$GUI" = "xrender" ]; then
 #  FLAGS+="-lx11 -lxrender "
   DEF+="-DSKEI_XLIB -DSKEI_XRENDER "
-  LIB+="-lx11 -lxft -lxrender "
+  LIB+="-lx11 -lxrender -lxft "
 fi
 
 # --------------------------------------------------

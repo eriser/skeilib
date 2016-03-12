@@ -17,24 +17,27 @@ struct SColor {
   }
 
   SColor(float ac) {
-    r = ac;
-    g = ac;
-    b = ac;
-    a = 1; // 0
+    //r = ac;
+    //g = ac;
+    //b = ac;
+    //a = 1; // 0
+    set(ac,ac,ac);
   }
 
   SColor(float ar, float ag, float ab) {
-    r = ar;
-    g = ag;
-    b = ab;
-    a = 1; // 0
+    //r = ar;
+    //g = ag;
+    //b = ab;
+    //a = 1; // 0
+    set(ar,ag,ab);
   }
 
   SColor(float ar, float ag, float ab, float aa) {
-    r = ar;
-    g = ag;
-    b = ab;
-    a = aa;
+    //r = ar;
+    //g = ag;
+    //b = ab;
+    //a = aa;
+    set(ar,ag,ab,aa);
   }
 
   void set(float ac) {
@@ -192,7 +195,17 @@ uint32 SRgba(uint8 r, uint8 g, uint8 b, uint8 a) {
 
 //----------
 
-uint32 SRgba(SColor AColor) {
+//inline
+uint32 SRgba(uint8 r, uint8 g, uint8 b) {
+  return   0 //((uint32)a<<24)
+         + ((uint32)r<<16)
+         + ((uint32)g<<8)
+         + b;
+}
+
+//----------
+
+inline uint32 SRgba(SColor AColor) {
   return SRgba(AColor.r*255,AColor.g*255,AColor.b*255,AColor.a*255);
 }
 
@@ -232,6 +245,49 @@ SColor blendColor(float value, SColor AColor1, SColor AColor2) {
   return blendColor(value,AColor1.r,AColor1.g,AColor1.b,AColor2.r,AColor2.g,AColor2.b);
 }
 
+
+//----------------------------------------------------------------------
+//
+//----------------------------------------------------------------------
+
+/*
+inline void rgb_to_ycbcr(const unsigned int& length, double* red, double* green, double* blue,
+                                                     double* y,   double* cb,    double* cr)
+{
+  unsigned int i = 0;
+  while (i < length)
+  {
+    ( *y) =   16.0 + (  65.481 * (*red) +  128.553 * (*green) +  24.966 * (*blue));
+    (*cb) =  128.0 + ( -37.797 * (*red) +  -74.203 * (*green) + 112.000 * (*blue));
+    (*cr) =  128.0 + ( 112.000 * (*red) +  -93.786 * (*green) -  18.214 * (*blue));
+    ++i;
+    ++red; ++green; ++blue;
+    ++y;   ++cb;    ++cr;
+  }
+}
+*/
+
+//----------
+
+/*
+inline void ycbcr_to_rgb(const unsigned int& length, double* y,   double* cb,    double* cr,
+                                                     double* red, double* green, double* blue)
+{
+  unsigned int i = 0;
+  while (i < length)
+  {
+    double y_  =  (*y) -  16.0;
+    double cb_ = (*cb) - 128.0;
+    double cr_ = (*cr) - 128.0;
+    (*red) = 0.000456621 * y_                    + 0.00625893 * cr_;
+    (*green) = 0.000456621 * y_ - 0.00153632 * cb_ - 0.00318811 * cr_;
+    (*blue) = 0.000456621 * y_                    + 0.00791071 * cb_;
+    ++i;
+    ++red; ++green; ++blue;
+    ++y;   ++cb;    ++cr;
+  }
+}
+*/
 
 //----------------------------------------------------------------------
 #endif

@@ -24,13 +24,17 @@
 */
 
 void __skei_crash_handler(int sig) {
-  DTrace("\n...crash...\n");
+  DTrace("\nskei_crash_handler(%i)\n",sig);
   SDumpCallStackSkip(2);
   // You can't call exit() safely from a signal handler.
   // Use _exit() or _Exit()
   //exit(1);
   _exit(1);
 }
+
+//----------------------------------------------------------------------
+
+// http://www.yolinux.com/TUTORIALS/C++Signals.html
 
 //----------------------------------------------------------------------
 
