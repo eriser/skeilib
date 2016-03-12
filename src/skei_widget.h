@@ -385,6 +385,14 @@ class SWidget {
             int32 widgetwidth  = widget->MRect.w;  // current widget width
             int32 widgetheight = widget->MRect.h;  // height
 
+            //TODO: if width or height is negative, treat is as percentage
+            // of available client space..
+
+            /*
+            if (widgetwidth<0)  widgetwidth  = client.w * -widgetwidth  / 100;
+            if (widgetheight<0) widgetheight = client.h * -widgetheight / 100;
+            */
+
             switch (widget->MWidgetLayout.alignment) {
 
               //  _____
@@ -393,6 +401,10 @@ class SWidget {
               // |_____|
               //
               case swa_none:
+                  /*
+                    should this one be called swa_relative or something?
+                    swa_parentRelative
+                  */
                   widget->on_setPos(widget->MInitialRect.x+parent.x, widget->MInitialRect.y+parent.y);
                   break;
 
@@ -475,8 +487,13 @@ class SWidget {
               // |X|
               // |_.___
               //
+
+
               case swa_left:
-                widget->on_setPos(client.x,client.y);
+                /*
+                  two widget->on_sePos ???
+                */
+                //widget->on_setPos(client.x,client.y);
                 widget->on_setPos(client.x,widget->MInitialRect.y+parent.y); // setsize ???
                 client.x = client.x + (widgetwidth+MContainerLayout./*padding.left*/padding.x);
                 client.w = client.w - (widgetwidth+MContainerLayout./*padding.left*/padding.x);
@@ -694,6 +711,7 @@ class SWidget {
 
   //----------------------------------------
   // on_
+  // parent -> children
   //----------------------------------------
 
   public:
@@ -770,20 +788,20 @@ class SWidget {
 
     virtual
     void on_paint(SPainter* APainter, SRect ARect, uint32 AMode=0) {
-
       if (ARect.isEmpty()) return;
       if (MRect.isEmpty()) return;
-
       // these has already been checked by parent widget (in on_paint)
       //if hasFlag(swf_visible) then
       //if FRect.intersect(ARect) then
+
       /* clip */
       if (MFlags&swf_clip) APainter->pushClip(MRect);
+
       /* paint children */
+
       for (int32 i=0; i<MSubWidgets.size(); i++) {
         SWidget* wdg = MSubWidgets[i];
         if (wdg->hasFlag(swf_visible)) {
-          //STrace("visible\n");
           //vis = ACanvas.visibleIntersection(wdg.FRect);
           //if not vis.empty then;
           if (wdg->MRect.isNotEmpty()) {
@@ -793,8 +811,10 @@ class SWidget {
           } // not empty
         } // subwdg.visible
       } // for subwdg
+
       /* un-clip */
       if (MFlags&swf_clip) APainter->popClip();
+
     }
 
     //----------
@@ -851,6 +871,12 @@ class SWidget {
           MCapturedWidget->on_mouseMove(AXpos,AYpos,AState);
         }
         else {
+
+          /*
+            why is this commented away?
+            we don't want mouse move events for inactive widgets, do we?
+          */
+
           //if (hasFlag(swf_active) {
             SWidget* hover = findSubWidget(AXpos,AYpos);
             //if (hover) {
@@ -871,6 +897,17 @@ class SWidget {
 
     virtual
     void on_mouseDoubleClick(int32 AXpos, int32 AYpos, int32 AButton, int32 AState) {
+      /*
+        we need time stamp for events to make this work..
+        if we get another click event within a specific time frame
+        and maybe if mouse hasn't moved (more than a specific amount?)
+        we consider it a double click..
+        which means, when we receive the first, initial click, we have wait and
+        see if we get another one soon, before we know it is a single click,
+        or the first one of a double clock..
+        or should we just send both types of events, and make the widget
+        responsible for handling the difference?
+      */
     }
 
     //----------
@@ -925,6 +962,14 @@ class SWidget {
 
     //----------
 
+    /*
+      this worked, but seems to be a bit tricky..
+      we receive both normal mouse move/up/down messages, and the tablet
+      messages.. there should be a way of separating the events,
+      so we could optionally ignore the tablet when handling the mouse..
+      and/or vice versa..
+    */
+
     #ifdef SKEI_TABLET
     virtual
     void on_tabletEvent(int32 AXpos, int32 AYpos, float APressure) {
@@ -938,6 +983,7 @@ class SWidget {
 
   //----------------------------------------
   // do_
+  // children -> parent
   //----------------------------------------
 
   public:
