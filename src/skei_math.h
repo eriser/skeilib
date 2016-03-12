@@ -398,6 +398,20 @@ float SWindowingBartlett(float pos) {
 }
 
 //----------------------------------------------------------------------
+//
+//----------------------------------------------------------------------
+
+// denormalization killing with dc as presented by Laurent de Soras in
+// http://ldesoras.free.fr/doc/articles/denormal-en.pdf
+
+float SAddDc(float val) {
+  // static const float antidenormal_dc = 1e-20;
+  static const float antidenormal_dc = 0.000000000000000001f;
+  return val + antidenormal_dc;
+}
+
+
+//----------------------------------------------------------------------
 // https://github.com/Ixox/preenFM2/blob/master/src/third/wirish_math.h
 //----------------------------------------------------------------------
 
