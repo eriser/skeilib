@@ -134,4 +134,114 @@ float SInterpolate_CatmullRom(float t, float p0, float p1, float p2, float p3) {
 }
 
 //----------------------------------------------------------------------
+//
+//----------------------------------------------------------------------
+
+// http://music.columbia.edu/pipermail/music-dsp/2000-August/038440.html
+
+/*
+  (Dave/Muon Software Ltd has some 4-point spline thing?)
+  Thanks Bram (and Dave), got that one too now, works ok!
+  --------------------
+  const double L1 = floor[-1];
+  const double L0 = floor[ 0];
+  const double H0 = floor[+1];
+  const double H1 = floor[+2];
+  const double x = fractpos;
+  return (float)(L0 + .5f* x*(H0-L1 + x*(H0 + L0*(-2) + L1 + x*( (H0
+  - L0)*9 + (L1 - H1)*3 + x*((L0 - H0)*15 + (H1 -  L1)*5 + x*((H0 -
+  L0)*6 + (L1 - H1)*2))))));
+  --------------------------
+  -olli
+*/
+
+//----------
+
+// http://music.columbia.edu/pipermail/music-dsp/2000-August/038442.html
+
+/*
+  Here's the three point version of the 5-point interpolation I posted the
+  other week. Credit for these goes to Josuha Scholar of comp.dsp
+  (neonfish99 at aol.com).
+  I haven't had any time to turn this into a niftier function yet so just the
+  raw code straight from Josh:
+
+  // interpolates between L0 and H0 taking the previous (L1) and next (H1) points into account
+
+  inline float ThirdInterp(const float x,const float L1,const float L0,const float H0,const float H1) {
+    return
+    L0 +
+    .5f*
+    x*(H0-L1 +
+      x*(H0 + L0*(-2) + L1 +
+          x*( (H0 - L0)*9 + (L1 - H1)*3 +
+            x*((L0 - H0)*15 + (H1 -  L1)*5 +
+                x*((H0 - L0)*6 + (L1 - H1)*2 )))));
+  }
+
+*/
+
+//----------
+
+/*
+  http://music.columbia.edu/pipermail/music-dsp/2000-August/038455.html
+
+  Now my interpolator collection has grown, and i need to ask if you know
+  some of the missing/uncertain names, if there are agreed ones. Is any of
+  these possibly "b-spline", which i've heard mentioned occasionally?
+
+  // 1-point flat (didn't bother to copy all routines)
+  // 2-point linear
+  // 2-point raised cosine
+
+  // 4-point spline (Joshua Scholar) (name???)
+  const double L1 = floor[-1];
+  const double L0 = floor[ 0];
+  const double H0 = floor[+1];
+  const double H1 = floor[+2];
+  const double x = fractpos;
+  return (float)(L0 + .5f* x*(H0-L1 + x*(H0 + L0*(-2) + L1 + x*( (H0
+  - L0)*9 + (L1 - H1)*3 +
+  x*((L0 - H0)*15 + (H1 -  L1)*5 + x*((H0 - L0)*6 + (L1 - H1)*2
+  ))))));
+
+  // 4-point spline (name???)
+  const double ym1 = floor[-1];
+  const double  y0 = floor[ 0];
+  const double  y1 = floor[+1];
+  const double  y2 = floor[+2];
+  const double   x = fractpos;
+  return(float)(x*x*x*(y0-y1+y2-ym1)+x*x*(-2.0*y0+y1-y2+2.0*ym1)+x*(y1-ym1)+y0);
+
+  // 4-point geometric average spline (correct???) (name???)
+  const double y0 = floor[-1];
+  const double y1 = floor[ 0];
+  const double y2 = floor[+1];
+  const double y3 = floor[+2];
+  const double yd = fractpos;
+  return (float)((y1 + (y1-y0)*yd)*(1-yd)/2 + (y1 + (y2-y1)*yd)/2 +
+  (y2 + (y3-y2)*(yd-1))*yd/2);
+
+  // 6-point expanded Hermite (linear ramp between two 4th degree
+  // polynomials both going through 5 points) (Is there a name for this
+  // already???) UNOPTIMIZED
+  const double ym2 = floor[-2];
+  const double ym1 = floor[-1];
+  const double  y0 = floor[ 0];
+  const double  y1 = floor[+1];
+  const double  y2 = floor[+2];
+  const double  y3 = floor[+3];
+  const double   x = fractpos;
+  return (float) (
+  x*x*x*x*x*(-5.0/12.0*y0+5.0/12.0*y1-5.0/24.0*y2+1.0/24.0*y3+5.0/24.0*ym1-
+  1.0/24.0*ym2)+
+  x*x*x*x*(13.0/12.0*y0-y1+11.0/24.0*y2-1.0/12.0*y3-7.0/12.0*ym1+0.125*ym2)+
+  x*x*x*(5.0/12.0*y0-7.0/12.0*y1+7.0/24.0*y2-1.0/24.0*y3-1.0/24.0*ym1-
+  1.0/24.0*ym2)+
+  x*x*(-25.0/12.0*y0+1.5*y1-11.0/24.0*y2+1.0/12.0*y3+13.0/12.0*ym1-0.125*ym2)+
+  x*(2.0/3.0*y1-1.0/12.0*y2-2.0/3.0*ym1+1.0/12.0*ym2)+
+  y0);
+*/
+
+//----------------------------------------------------------------------
 #endif
