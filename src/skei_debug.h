@@ -9,7 +9,8 @@
   #undef SKEI_DEBUG_SOCKET
   #undef SKEI_DEBUG_CALLSTACK
   #undef SKEI_DEBUG_CRASHHANDLER
-  #under SKEI_DEBUG_TEST
+  #undef SKEI_DEBUG_TEST
+  #undef SKEI_DEBUG_XLIB
 #endif
 
 //----------
@@ -20,6 +21,7 @@
 
 #ifndef SKEI_LINUX
   #undef SKEI_DEBUG_SOCKET
+  #undef SKEI_DEBUG_XLIB
 #endif
 
 #ifdef SKEI_DEBUG_MEM_PRINT
@@ -41,6 +43,8 @@
 #include "skei_debug_assert.h"
 #include "skei_debug_callstack.h"
 #include "skei_debug_crashhandler.h"
+
+#include "skei_debug_xlib.h"
 
 //----------------------------------------------------------------------
 //
