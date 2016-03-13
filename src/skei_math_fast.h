@@ -116,6 +116,25 @@ float SExpF(const float v) {
 
 //----------
 
+// http://music.columbia.edu/pipermail/music-dsp/2014-September/072873.html
+
+/*
+  I'm hoping to find a fast approximation for exp2(), which I can
+  implement in 32 bit fixed point.  So far, the best I've turned up by
+  searching is this from the archives.
+  http://www.musicdsp.org/showone.php?id=106
+    n = input + 1.0;
+    n = n * n;
+    n = n * 2.0 / 3.0;
+    n = n + 4.0 / 3.0;
+    n = n / 2.0;
+  Some quick tests show the error gets to about 0.34% (not including small
+  errors I'll add with 32 bit fixed point representation) when the input
+  around 0.72.
+*/
+
+//----------
+
 /// invert of x: (1/x) - fast / inaccurate
 
 float SInverseF(float x) {
@@ -245,6 +264,28 @@ float SPowF(float x, unsigned long n) {
 
 //----------
 
+/*
+  Paul Mineiro have some nice code which uses some dirty, but fully working,
+  tricks:
+  http://fastapprox.googlecode.com/svn/trunk/fastapprox/src/fastonebigheader.h
+
+  static inline float fastpow2 (float p) {
+    float offset = (p < 0) ? 1.0f : 0.0f;
+    float clipp = (p < -126) ? -126.0f : p;
+    int w = clipp;
+    float z = clipp - w + offset;
+    union { uint32_t i; float f; } v = {
+      cast_uint32_t ( (1 << 23) *  (clipp + 121.2740575f + 27.7280233f / (4.84252568f - z) - 1.49012907f * z) ) };
+    return v.f;
+  }
+
+  The accuracy is "fastpow2 relative accuracy (positive p) = 1.58868e-05":
+*/
+
+
+
+//----------
+
 /// fast approximation of the sine function for range [-pi, pi]
 
 float SSinF(float x) {
@@ -346,6 +387,42 @@ inline float rational_tanh(float x) {
   else return x * (27.0f + x * x) / (27.0f + 9.0f * x * x);
 }
 
+*/
+
+//----------------------------------------------------------------------
+//
+//----------------------------------------------------------------------
+
+// http://music.columbia.edu/pipermail/music-dsp/2002-April/048411.html
+
+//Fast logarithm (2-based) approximation:
+
+//#include <assert.h>
+
+/*
+int floorOfLn2( float f ) {
+  assert( f > 0. );
+  assert( sizeof(f) == sizeof(int) );
+  assert( sizeof(f) == 4 );
+  return (((*(int *)&f)&0x7f800000)>>23)-0x7f;
+}
+*/
+
+//----------
+
+/*
+  You could make it not truncate to integer, and be monotonic, but still only a
+  rough approximation (lower than or equal to the actual value):
+*/
+
+/*
+float approxLn2( float f ) {
+  assert( f > 0. );
+  assert( sizeof(f) == sizeof(int) );
+  assert( sizeof(f) == 4 );
+  int i = (*(int *)&f);
+  return (((i&0x7f800000)>>23)-0x7f)+(i&0x007fffff)/(float)0x800000;
+}
 */
 
 //----------------------------------------------------------------------
