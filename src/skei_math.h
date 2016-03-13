@@ -5,26 +5,26 @@
 //#include <math.h>
 #include <stdlib.h> // abs
 
-float   SAverage(const unsigned int n, const float* ar);
-float   SClamp(const float input, const float limit);
-float   SClamp(const float input, const float minval, const float maxval);
-float   SClip(float x, float l, float h);
-float   SCurve(float x, float t);
-float   SDbToAmp(float g);
-float   SFract(const float value);
-float   SFract(const float value, float* intpart);
-float   SKillDenorm(float n);
-float   SMax(const float a, const float b);
-float   SMin(const float a, const float b);
-float   SModulo(float x, float y);
-float   SNoteToHz(float ANote);
-float   SRms(const unsigned int n, const float* ar);
-float   SRound(const float v);
-float   SSigmoid(float x);
-float   SSign(const float v);
-double  SSinc(double x);
-float   SSqr(float x);
-float   STrunc(const float v);
+float SAverage(const unsigned int n, const float* ar);
+float SClamp(const float input, const float limit);
+float SClamp(const float input, const float minval, const float maxval);
+float SClip(float x, float l, float h);
+float SCurve(float x, float t);
+float SDbToAmp(float g);
+float SFract(const float value);
+float SFract(const float value, float* intpart);
+float SKillDenorm(float n);
+float SMax(const float a, const float b);
+float SMin(const float a, const float b);
+float SModulo(float x, float y);
+float SNoteToHz(float ANote);
+float SRms(const unsigned int n, const float* ar);
+float SRound(const float v);
+float SSigmoid(float x);
+float SSign(const float v);
+float SSinc(float x);
+float SSqr(float x);
+float STrunc(const float v);
 
 float SWindowingRect(float pos);
 float SWindowingHann(float pos);
@@ -223,6 +223,26 @@ float SMin(const float a, const float b) {
 
 //----------
 
+// http://music.columbia.edu/pipermail/music-dsp/2002-July/049893.html
+//
+// there is an ANSI function (math.h):
+// double fmod(double x,double y)
+// returns the floating-point remainder of x / y. Or NaN if y==0.0.
+
+//----------
+
+// http://music.columbia.edu/pipermail/music-dsp/2002-July/049899.html
+//
+// Use fmod() rather than % for floating point values.
+// Or use something like this:
+//    fractional = phase / strive; // shouldn't this be "stride" ?
+//    fractional -= floorf( fractional );
+// Which is what you ended up with, but using an explicit floating
+// point floorf() (which usually gets intrinsic-ed) rather than the
+// casts.
+
+//----------
+
 float SModulo(float x, float y) {
   return x - (y * float(floor(x / y)));
 }
@@ -326,13 +346,22 @@ float SSign(const float v) {
   1.0 = 0
 */
 
-double SSinc(double x) {
+//double SSinc(double x) {
+//  if (x==0) return 1;
+//  else {
+//    double pix = SKEI_PI * x;
+//    return sin(pix) / pix;
+//  }
+//}
+
+float SSinc(float x) {
   if (x==0) return 1;
   else {
-    double pix = SKEI_PI * x;
+    float pix = SKEI_PI * x;
     return sin(pix) / pix;
   }
 }
+
 
 //----------
 
