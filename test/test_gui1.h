@@ -24,9 +24,14 @@
 //----- debug -----
 
 //#define SKEI_DEBUG
-#define SKEI_DEBUG_MEM
+//#define SKEI_DEBUG_MEM
 //#define SKEI_DEBUG_MEM_PRINT
-#define SKEI_DEBUG_VST
+//#define SKEI_DEBUG_VST
+//#define SKEI_DEBUG_CALLSTACK
+//#define SKEI_DEBUG_CRASHHANDLER
+//#define SKEI_DEBUG_XLIB
+
+//
 
 #ifdef SKEI_VST
   #define SKEI_DEBUG_SOCKET
@@ -238,11 +243,14 @@ class myEditor
       //  }
       //}
       //bitmap->premultAlpha();
+
+//----------
+
       surface1 = new SSurface(this,256,256,32);
       uploadBitmap(this,surface1,bitmap);
       delete bitmap;
 
-      //
+//----------
 
       bitmap = new SBitmap(256,256);
       for (int32 y=0; y<256; y++) {

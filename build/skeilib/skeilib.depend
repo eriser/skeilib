@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1457776881 source:/home/skei/git/skeilib/build/skeilib/skeilib.cpp
+1457888451 source:/home/skei/git/skeilib/build/skeilib/skeilib.cpp
 	"dev.h"
 
 1457539394 /home/skei/git/skeilib/src/skei.h
@@ -28,13 +28,14 @@
 
 1457417482 /home/skei/git/skeilib/src/skei_flags.h
 
-1457778287 /home/skei/git/skeilib/src/skei_debug.h
+1457868614 /home/skei/git/skeilib/src/skei_debug.h
 	"skei_debug_socket.h"
 	"skei_debug_trace.h"
 	"skei_debug_memtrace.h"
 	"skei_debug_assert.h"
 	"skei_debug_callstack.h"
 	"skei_debug_crashhandler.h"
+	"skei_debug_xlib.h"
 
 1457548818 /home/skei/git/skeilib/src/skei_string.h
 	<string.h>
@@ -86,7 +87,7 @@
 	<math.h>
 	"skei_math.h"
 
-1457659678 /home/skei/git/skeilib/src/skei_math.h
+1457876703 /home/skei/git/skeilib/src/skei_math.h
 	<stdlib.h>
 
 1452451035 /home/skei/git/skeilib/src/skei_drawable.h
@@ -282,7 +283,7 @@
 
 1439140967 /home/skei/git/skeilib/src/skei_edges.h
 
-1457723483 /home/skei/git/skeilib/src/skei_window_xlib.h
+1457877403 /home/skei/git/skeilib/src/skei_window_xlib.h
 	<X11/X.h>
 	<X11/Xlib.h>
 	<X11/Xutil.h>
@@ -306,9 +307,8 @@
 	"skei_plugin_base.h"
 	"skei_editor.h"
 
-1457781013 /home/skei/git/skeilib/plugins/dev.h
+1457876683 /home/skei/git/skeilib/plugins/dev.h
 	"skei.h"
-	"skei_debug_test.h"
 
 1451224900 /home/skei/git/skeilib/plugins/fx_cutter.h
 	"skei.h"
@@ -668,7 +668,7 @@
 	"skei.h"
 	"skei_plugin.h"
 
-1452464753 /home/skei/git/skeilib/test/test_gui1.h
+1457887978 /home/skei/git/skeilib/test/test_gui1.h
 	"skei.h"
 	"skei_plugin.h"
 	"skei_editor.h"
@@ -810,7 +810,7 @@
 1457449142 /home/skei/git/skeilib/src/skei_debug_assert.h
 	<iostream>
 
-1457679811 /home/skei/git/skeilib/src/skei_debug_callstack.h
+1457877201 /home/skei/git/skeilib/src/skei_debug_callstack.h
 	<execinfo.h>
 	<stdio.h>
 	<stdlib.h>
@@ -923,9 +923,16 @@
 
 1457764468 /home/skei/git/skeilib/src/skei_bresenham.h
 
-1457781111 /home/skei/git/skeilib/src/skei_debug_test.h
+1457807977 /home/skei/git/skeilib/src/skei_debug_test.h
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<time.h>
+
+1457868238 /home/skei/git/skeilib/test/test_test.h
+	"skei.h"
+	"skei_debug_test.h"
+
+1457887900 /home/skei/git/skeilib/src/skei_debug_xlib.h
+	<X11/Xlib.h>
 

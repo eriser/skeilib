@@ -239,6 +239,7 @@
 		<Unit filename="../../src/skei_debug_crashhandler.h" />
 		<Unit filename="../../src/skei_debug_memtrace.h" />
 		<Unit filename="../../src/skei_debug_socket.h" />
+		<Unit filename="../../src/skei_debug_test.h" />
 		<Unit filename="../../src/skei_debug_trace.h" />
 		<Unit filename="../../src/skei_defines.h" />
 		<Unit filename="../../src/skei_dialogs.h" />
