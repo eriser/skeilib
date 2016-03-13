@@ -12,12 +12,6 @@
 
 //----------------------------------------------------------------------
 
-//#ifdef __cplusplus
-//extern "C" {
-//#endif
-
-//----------
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -36,7 +30,6 @@
 //----------------------------------------------------------------------
 
 static struct skei_debug_test {
-  //FILE *out;
   char  initialized;
   struct skei_debug_test_overall {
     unsigned long checks;
@@ -83,7 +76,7 @@ static struct skei_debug_test {
 #define _skei_debug_test_die_unless_suite_set()                                                       \
   if (! __skei_debug_test.suite.name)                                                                 \
   {                                                                                                   \
-    DTrace("STest_EnterSuite() omitted\n");                                     \
+    DTrace("STest_EnterSuite() omitted\n");                                                           \
     exit(EXIT_FAILURE);                                                                               \
   }
 
@@ -104,9 +97,9 @@ static struct skei_debug_test {
     _skei_debug_test_die_unless_suite_set();                                                          \
     __skei_debug_test.suite.nok++;                                                                    \
     DTrace( "  [%lu:%lu]  %s:#%lu  '%s'  FAIL\n"                                                      \
-            "  - Type:      %s\n"                                                                    \
-            "  - Condition: %s\n"                                                                    \
-            "  - Line:      %lu\n",                                                                  \
+            "  - Type:      %s\n"                                                                     \
+            "  - Condition: %s\n"                                                                     \
+            "  - Line:      %lu\n",                                                                   \
             __skei_debug_test.suite.nr, __skei_debug_test.suite.checks, __skei_debug_test.test.name,  \
             __skei_debug_test.test.nr, __skei_debug_test.check.name, __skei_debug_test.check.type,    \
             __skei_debug_test.check.cond, __skei_debug_test.check.line);                              \
@@ -135,9 +128,9 @@ static struct skei_debug_test {
     memset(&__skei_debug_test, 0, sizeof(__skei_debug_test));                                         \
     __skei_debug_test.time.start  = time(NULL);                                                       \
     __skei_debug_test.initialized = SKEI_DEBUG_TEST_INITIALIZED;                                      \
-    DTrace("\n--------------------------------------------------\n"); \
-    DTrace("STest\n"); \
-    DTrace("--------------------------------------------------\n\n"); \
+    DTrace("\n--------------------------------------------------\n");                                 \
+    DTrace("STest\n");                                                                                \
+    DTrace("--------------------------------------------------\n\n");                                 \
   } while (0)
 
 //----------
@@ -176,7 +169,7 @@ static struct skei_debug_test {
     __skei_debug_test.suite.name = _name != NULL ?                                                    \
                         _name : SKEI_DEBUG_TEST_DEFAULT_SUITE_NAME;                                   \
     __skei_debug_test.suite.nr = ++__skei_debug_test.overall.suites;                                  \
-    DTrace("* Entering suite #%lu:\n  '%s'\n\n",                                                           \
+    DTrace("* Entering suite #%lu:\n  '%s'\n\n",                                                      \
             __skei_debug_test.suite.nr, __skei_debug_test.suite.name);                                \
   } while (0)
 
@@ -194,10 +187,10 @@ static struct skei_debug_test {
               ((__skei_debug_test.overall.nok * 100.0) / __skei_debug_test.overall.checks) :          \
               0.0f;                                                                                   \
     __skei_debug_test.time.end = time(NULL);                                                          \
-  DTrace("  ----------\n\n");                                     \
+  DTrace("  ----------\n\n");                                                                         \
   DTrace( "  %lu check(s) in %lu suite(s) finished after %.2f second(s),\n"                           \
           "  %lu succeeded, %lu failed (%.2f%%)\n"                                                    \
-          "\n  [%s]\n\n",                                                                                 \
+          "\n  [%s]\n\n",                                                                             \
           __skei_debug_test.overall.checks, __skei_debug_test.overall.suites,                         \
           difftime(__skei_debug_test.time.end, __skei_debug_test.time.start),                         \
           __skei_debug_test.overall.ok, __skei_debug_test.overall.nok, failpft,                       \
@@ -205,13 +198,6 @@ static struct skei_debug_test {
           "SUCCESS" : "FAILURE");                                                                     \
   DTrace("--------------------------------------------------\n");                                     \
   } while (0);
-
-//----------
-
-#define STest_SetOutputStreamm(_fp)                                                                   \
-  do {                                                                                                \
-    __skei_debug_test.out = _fp != NULL ? _fp : stdout;                                               \
-  } while (0)
 
 //----------
 
@@ -280,14 +266,13 @@ static struct skei_debug_test {
 
 #else // SKEI_DEBUG_TEST
 
-  #define STest_StartTesting() {}
-  #define STest_LeaveSuite() {}
-  #define STest_GetReturnValue() {}
-  #define STest_EnterSuite(_name) {}
-  #define STest_FinishTesting() {}
-  #define STest_SetOutputStreamm(_fp) {}
-  #define STest_FailIf(_cond, _name) {}
-  #define STest_FailUnless(_cond, _name) {}
+  #define STest_StartTesting()            {}
+  #define STest_LeaveSuite()              {}
+  #define STest_GetReturnValue()          (0)
+  #define STest_EnterSuite(_name)         {}
+  #define STest_FinishTesting()           {}
+  #define STest_FailIf(_cond, _name)      {}
+  #define STest_FailUnless(_cond, _name)  {}
   #define STest_RunTest(_func) {}
 
 #endif // SKEI_DEBUG_TEST
