@@ -196,6 +196,18 @@ class SWindow_Xlib
       //MWidget         = SKEI_NULL;
 
       MDisplay    = XOpenDisplay(SKEI_NULL);
+
+      #ifdef SKEI_DEBUG_XLIB
+      /*
+        If your application generates protocol errors during debugging, it is
+        easier to locate the error if you turn off Xlib's request buffering
+        (described in “Buffering”). This is done with the XSynchronize() call
+        placed immediately after the call to connect with the sever
+        (XOpenDisplay()).
+      */
+      XSynchronize(MDisplay,True);
+      #endif // SKEI_DEBUG_XLIB
+
       MRootWindow = DefaultRootWindow(MDisplay);
 
       //if (AParent) MParentWindow = (Window)AParent;
@@ -342,6 +354,11 @@ class SWindow_Xlib
       if (MWindowCursor >= 0) XFreeCursor(MDisplay,MWindowCursor);
       XDestroyWindow(MDisplay,MWindow);
       //XFlush(MDisplay);
+
+      #ifdef SKEI_DEBUG_XLIB
+      XSynchronize(MDisplay,False);
+      #endif // SKEI_DEBUG_XLIB
+
       XCloseDisplay(MDisplay);
 
 
@@ -1332,7 +1349,21 @@ void* skei_xlib_idleproc(void* AData) {
   if (win) {
     //Atom atom = XInternAtom(dsp,"idle",true);
     //Display* dsp = win->MDisplay;
+
     Display* dsp = XOpenDisplay(SKEI_NULL);
+
+    #ifdef SKEI_DEBUG_XLIB
+    /*
+      If your application generates protocol errors during debugging, it is
+      easier to locate the error if you turn off Xlib's request buffering
+      (described in “Buffering”). This is done with the XSynchronize() call
+      placed immediately after the call to connect with the sever
+      (XOpenDisplay()).
+    */
+    XSynchronize(dsp,True);
+    #endif // SKEI_DEBUG_XLIB
+
+
     while (win->MIdleThreadActive) {
       if (win->MWindowMapped && win->MWindowExposed) {
         XClientMessageEvent* event = &win->MIdleEvent;
@@ -1350,6 +1381,11 @@ void* skei_xlib_idleproc(void* AData) {
       SSleep(SKEI_LINUX_IDLE_MS);
     } // while active
     //XSync(dsp,false);
+
+    #ifdef SKEI_DEBUG_XLIB
+    XSynchronize(dsp,False);
+    #endif // SKEI_DEBUG_XLIB
+
     XCloseDisplay(dsp);
   } // win
   return SKEI_NULL;
