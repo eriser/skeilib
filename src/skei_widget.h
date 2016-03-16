@@ -249,7 +249,7 @@ class SWidget {
 
     virtual
     void deleteWidgets(void) {
-      for (int32 i=0; i<MSubWidgets.size(); i++) {
+      for (uint32 i=0; i<MSubWidgets.size(); i++) {
         SWidget* w = MSubWidgets[i];
         delete w;
       }
@@ -378,7 +378,7 @@ class SWidget {
 
         //if (MSubWidgets.size() > 0) {
 
-          for (int32 i=0; i<MSubWidgets.size(); i++) {
+          for (uint32 i=0; i<MSubWidgets.size(); i++) {
 
             SWidget* widget = MSubWidgets[i];
 
@@ -718,7 +718,7 @@ class SWidget {
 
     virtual
     void on_reset(int32 AMode=0) {
-      for (int i=0; i<MSubWidgets.size(); i++) {
+      for (uint32 i=0; i<MSubWidgets.size(); i++) {
         MSubWidgets[i]->on_reset(AMode);
       }
     }
@@ -729,7 +729,7 @@ class SWidget {
     void on_setPos(int32 AXpos, int32 AYpos) {
       int32 dx = AXpos - MRect.x;
       int32 dy = AYpos - MRect.y;
-      for (int32 i=0; i<MSubWidgets.size(); i++) {
+      for (uint32 i=0; i<MSubWidgets.size(); i++) {
         SWidget* widget = MSubWidgets[i];
         int32 wx = widget->MRect.x;
         int32 wy = widget->MRect.y;
@@ -757,7 +757,7 @@ class SWidget {
 
     virtual
     void on_scroll(int32 ADeltaX, int32 ADeltaY) {
-      for (int32 i=0; i<MSubWidgets.size(); i++) {
+      for (uint32 i=0; i<MSubWidgets.size(); i++) {
         SWidget* wdg = MSubWidgets[i];
         int32 wx = wdg->MRect.x;
         int32 wy = wdg->MRect.y;
@@ -799,7 +799,7 @@ class SWidget {
 
       /* paint children */
 
-      for (int32 i=0; i<MSubWidgets.size(); i++) {
+      for (uint32 i=0; i<MSubWidgets.size(); i++) {
         SWidget* wdg = MSubWidgets[i];
         if (wdg->hasFlag(swf_visible)) {
           //vis = ACanvas.visibleIntersection(wdg.FRect);
