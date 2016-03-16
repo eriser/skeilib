@@ -2,7 +2,7 @@
 #define skei_osc1_included
 //----------------------------------------------------------------------
 
-#include "skei_phase.h"
+//#include "skei_phasor.h"
 #include "skei_waveform_polyblep.h"
 //#include "skei_filter_dc.h"
 
