@@ -272,7 +272,7 @@ class SPlugin_Base
 
     virtual
     void deleteParameters(void) {
-      for (int32 i=0; i<MParameterArray.size(); i++) {
+      for (uint32 i=0; i<MParameterArray.size(); i++) {
         delete MParameterArray[i];
       }
     }
@@ -339,7 +339,7 @@ class SPlugin_Base
 
     //virtual
     void setDefaultParameterValues(void) {
-      for (int32 i=0; i<MParameterArray.size(); i++) {
+      for (uint32 i=0; i<MParameterArray.size(); i++) {
         float v = MParameterArray[i]->defaultValue();
         //STrace("%i = %f\n",i,v);
         MParameterValues[i] = v;       // FParameters[i].to01(v);
@@ -376,7 +376,7 @@ class SPlugin_Base
 
     //virtual
     void distributeParameterValues(void) {
-      for (int32 i=0; i<MParameterArray.size(); i++) {
+      for (uint32 i=0; i<MParameterArray.size(); i++) {
         float v = MParameterValues[i];
 
         //STrace("%i = %f\n",i,v);
@@ -423,7 +423,7 @@ class SPlugin_Base
         // if items are pushed onto the queue after this, they will be handled next round
         MProcessValuesDirty = false;
         // if flag is set to true after this (from  another thread?), we will do this again next round
-        for (int32 i=0; i<MParameterArray.size(); i++) {
+        for (uint32 i=0; i<MParameterArray.size(); i++) {
           float v = MParameterValues[i];
           if (v != MProcessValues[i]) {
             MProcessValues[i] = v;
@@ -472,7 +472,7 @@ class SPlugin_Base
 
     virtual
     void deletePrograms(void) {
-      for (int32 i=0; i<MProgramArray.size(); i++) {
+      for (uint32 i=0; i<MProgramArray.size(); i++) {
         delete MProgramArray[i];
       }
     }
@@ -516,7 +516,7 @@ class SPlugin_Base
     //----------
 
     virtual
-    void loadProgram(int32 AIndex) {
+    void loadProgram(uint32 AIndex) {
       if (AIndex < MProgramArray.size()) {
         int32 num = MParameterArray.size();
         SProgram* prog = MProgramArray[AIndex];
@@ -619,7 +619,7 @@ class SPlugin_Base
       if (MEditorValuesDirty) {
         MEditorValueQueue.clear();
         MEditorValuesDirty = false;
-        for (int32 i=0; i<MParameterArray.size(); i++) {
+        for (uint32 i=0; i<MParameterArray.size(); i++) {
           float v = MParameterValues[i];
           if (v != MEditorValues[i]) {
             MEditorValues[i] = v;
