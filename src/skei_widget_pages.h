@@ -33,10 +33,10 @@ class SWidget_Pages
       return appendWidget(APage);
     }
 
-    void setPage(int32 APage/*, bool ARedraw=false*/) {
+    void setPage(uint32 APage/*, bool ARedraw=false*/) {
       if ( APage >= MSubWidgets.size() ) APage = MSubWidgets.size() - 1;
       //if (APage!=MActivePage) {
-        for (int32 i=0; i<MSubWidgets.size(); i++) {
+        for (uint32 i=0; i<MSubWidgets.size(); i++) {
           SWidget* wdg = MSubWidgets[i];
           if (i == APage) {
             wdg->setFlag(swf_active);
