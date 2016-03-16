@@ -3,6 +3,23 @@
 //----------------------------------------------------------------------
 
 /*
+  see also:
+  http://developer.bostjan-cigan.com/simd-sse-instructions-in-c-part-1/
+*/
+
+// compile with -msse3
+
+typedef float v4sf __SKEI_VECTOR(16);
+
+void simd_test1(void) {
+  v4sf a = {1,2,3,4};
+  v4sf b = {3,2,1,4};
+  v4sf c;
+  c = a + b;
+  STrace("c = {%.2f,%.2f,%.2f,%.2f}\n", c[0], c[1], c[2], c[3]);
+}
+
+/*
   https://gcc.gnu.org/onlinedocs/gcc/Vector-Extensions.html#Vector-Extensions
 
   //https://gcc.gnu.org/onlinedocs/gcc/x86-Built-in-Functions.html#x86-Built-in-Functions
