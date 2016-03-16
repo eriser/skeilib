@@ -63,6 +63,8 @@
 class SVoiceManager;
 
 //----------------------------------------------------------------------
+// voice
+//----------------------------------------------------------------------
 
 class SVoice : public SListNode
 {
@@ -89,13 +91,13 @@ class SVoice : public SListNode
     void setState(uint32 AState) {
       MState = AState;
     }
-    void setSampleRate(float ARate) {
-      MSampleRate = ARate;
-    }
     uint32 getState(void) {
       return MState;
     }
   public:
+    void on_setSampleRate(float ARate) {
+      MSampleRate = ARate;
+    }
     virtual void  on_noteOn(int ANote, int AVel) {
       MMidiNote = ANote;
       MMidiVel = AVel;
@@ -113,12 +115,20 @@ class SVoice : public SListNode
       outs[0] = 0;
       outs[1] = 0;
     }
+    //virtual void  on_processBlock(SSample** AInputs, SSample** AOutputs, uint32 ALength) {
+    //}
+    //virtual void  on_processSample(SSample** AInputs, SSample** AOutputs) {
+    //  *AInputs[0] = 0;
+    //  *AInputs[1] = 0;
+    //}
 };
 
 //----------
 
 typedef SArray<SVoice*> SVoiceArray;
 
+//----------------------------------------------------------------------
+// voice event
 //----------------------------------------------------------------------
 
 struct SVoiceEvent {
@@ -129,7 +139,9 @@ struct SVoiceEvent {
 
 #define MAX_EVENTS 1024
 
-//----------
+//----------------------------------------------------------------------
+// voice manager
+//----------------------------------------------------------------------
 
 class SVoiceManager {
   private:
@@ -192,7 +204,7 @@ class SVoiceManager {
 
   private:
 
-    void noteOn(int32 ANote, int32 AVel) {
+    void handle_noteOn(int32 ANote, int32 AVel) {
       SVoice* V = (SVoice*)MFreeVoices.tail();
       if (V) {
         MFreeVoices.removeTail();
@@ -212,7 +224,7 @@ class SVoiceManager {
 
     //----------
 
-    void noteOff(int ANote, int AVel) {
+    void handle_noteOff(int ANote, int AVel) {
       SVoice* V = MNoteMap[ANote];
       if (V) {
         MNoteMap[ANote] = NULL;
@@ -226,23 +238,80 @@ class SVoiceManager {
 
     //----------
 
-    void pitchBend(int32 ABend) {
+    void handle_pitchBend(int32 ABend) {
       MPitchBend = (float)ABend - 8192.0f;
       MPitchBend *= SKEI_INV8192F; //(1/8192);
       MPitchBend *= MPitchBendRange;
-      if (MAllVoices.size() > 0) {
-        for (int32 i=0; i<MAllVoices.size(); i++) MAllVoices[i]->on_pitchBend(MPitchBend);
-      }
+      for (uint32 i=0; i<MAllVoices.size(); i++) MAllVoices[i]->on_pitchBend(MPitchBend);
     }
 
-  public:
+  //public:
 
-    void control(int AIndex, float AVal) {
-      for (int i=0; i<MAllVoices.size(); i++) {
-        MAllVoices[i]->on_control(AIndex,AVal);
-      }
+    void handle_control(int AIndex, float AVal) {
+      for (uint i=0; i<MAllVoices.size(); i++) MAllVoices[i]->on_control(AIndex,AVal);
     }
 
+  //----------------------------------------
+  //
+  //----------------------------------------
+
+  //public:
+  private:
+
+    void process_events(void) {
+      while (MOffset==MNextEvent) {
+        //int chn  = mEvents[mCurrEvent].msg1 & 0x0f;
+        int msg  = MEvents[MCurrEvent].msg1 & 0xf0;
+        int note = MEvents[MCurrEvent].msg2;
+        int vel  = MEvents[MCurrEvent].msg3;
+        switch(msg) {
+          case 0x90: // note on
+            if (vel==0) handle_noteOff(note,vel);
+            else handle_noteOn(note,vel);
+            break;
+          case 0x80: // note off
+            note = MEvents[MCurrEvent].msg2;
+            vel  = MEvents[MCurrEvent].msg3;
+            handle_noteOff(note,vel);
+            break;
+          case 0xE0: // pitch bend
+            int32 bend = MEvents[MCurrEvent].msg2 + (MEvents[MCurrEvent].msg3 * 128);
+            handle_pitchBend( bend );
+            break;
+        }
+        MCurrEvent++;
+        if (MCurrEvent<MNumEvents) MNextEvent = MEvents[MCurrEvent].ofs;
+        else MNextEvent = 999999;
+      }
+      MOffset++;
+    }
+
+    //----------
+
+    void process_voices(float* spl0, float*spl1) {
+      float _outs[2];
+      // playing voices
+      SVoice* V = (SVoice*)MPlayingVoices.head();
+      while (V) {
+        //out += V->process();
+        V->on_process(&_outs[0]);
+        *spl0 += _outs[0];
+        *spl1 += _outs[1];
+        V = (SVoice*)V->next();
+      }
+      // released voices
+      V = (SVoice*)MReleasedVoices.head();
+      while (V) {
+        //if (V->MState!=svs_off) {
+        if (V->getState()!=svs_off) {
+          //out += V->process();
+          V->on_process(&_outs[0]);
+          *spl0 += _outs[0];
+          *spl1 += _outs[1];
+        }
+        V = (SVoice*)V->next();
+      }
+    }
   //----------------------------------------
   //
   //----------------------------------------
@@ -260,7 +329,7 @@ class SVoiceManager {
 
     //virtual
     void deleteVoices(void) {
-      for (int i=0; i<MAllVoices.size(); i++) {
+      for (uint i=0; i<MAllVoices.size(); i++) {
         delete MAllVoices[i];
       }
     }
@@ -274,13 +343,11 @@ class SVoiceManager {
 
     //virtual
     void setSampleRate( float ARate ) {
-
       MSampleRate = ARate;// * OVERSAMPLE;
-
-      for (int i=0; i<MAllVoices.size(); i++) {
-        MAllVoices[i]->setSampleRate(MSampleRate);
-      }
+      for (uint i=0; i<MAllVoices.size(); i++) MAllVoices[i]->on_setSampleRate(MSampleRate);
     }
+
+    //----------
 
     void setPitchBendRange(float ARange) {
       MPitchBendRange = ARange;
@@ -292,7 +359,7 @@ class SVoiceManager {
 
   public:
 
-    void midi(int ofs, unsigned char msg1, unsigned char msg2, unsigned char msg3) {
+    void midiEvent(int ofs, unsigned char msg1, unsigned char msg2, unsigned char msg3) {
       //trace(" ofs "<<ofs << " msg1 "<<msg1 << " msg2 "<<msg2 << " msg3 "<<msg3);
       if (MNumEvents<MAX_EVENTS) {
         MEvents[MNumEvents].ofs  = ofs;
@@ -302,6 +369,13 @@ class SVoiceManager {
         MNumEvents++;
       }
     }
+
+    //----------
+
+    void parameterChange(int AIndex, float AVal) {
+      handle_control(AIndex,AVal);
+    }
+
 
     //----------
 
@@ -317,65 +391,16 @@ class SVoiceManager {
     void processBlock(SSample** AInputs, SSample** AOutputs, int32 ANumSamples) {
     }
 
-    void processSample(SSample** AInputs, SSample** AOutputs) {
-    }
+    //----------
 
-    // stereo
-    void process(float* outs) {
-      // events
-      while (MOffset==MNextEvent) {
-        //int chn  = mEvents[mCurrEvent].msg1 & 0x0f;
-        int msg  = MEvents[MCurrEvent].msg1 & 0xf0;
-        int note = MEvents[MCurrEvent].msg2;
-        int vel  = MEvents[MCurrEvent].msg3;
-        switch(msg) {
-          case 0x90:
-            if (vel==0) noteOff(note,vel);
-            else noteOn(note,vel);
-            break;
-          case 0x80:
-            note = MEvents[MCurrEvent].msg2;
-            vel  = MEvents[MCurrEvent].msg3;
-            noteOff(note,vel);
-            break;
-          case 0xE0:
-            int32 bend = MEvents[MCurrEvent].msg2 + (MEvents[MCurrEvent].msg3 * 128);
-            pitchBend( bend );
-            break;
-        }
-        MCurrEvent++;
-        if (MCurrEvent<MNumEvents) MNextEvent = MEvents[MCurrEvent].ofs;
-        else MNextEvent = 999999;
-      }
-      MOffset++;
-      //float out = 0;
-      float left = 0;
-      float right = 0;
-      float _outs[2];
-      // playing voices
-      SVoice* V = (SVoice*)MPlayingVoices.head();
-      while (V) {
-        //out += V->process();
-        V->on_process(&_outs[0]);
-        left += _outs[0];
-        right += _outs[1];
-        V = (SVoice*)V->next();
-      }
-      // released voices
-      V = (SVoice*)MReleasedVoices.head();
-      while (V) {
-        //if (V->MState!=svs_off) {
-        if (V->getState()!=svs_off) {
-          //out += V->process();
-          V->on_process(&_outs[0]);
-          left += _outs[0];
-          right += _outs[1];
-        }
-        V = (SVoice*)V->next();
-      }
-      //return out;
-      outs[0] = left;
-      outs[1] = right;
+    void processSample(SSample** AInputs, SSample** AOutputs) {
+      float spl0 = 0; // *AOutputs[0];
+      float spl1 = 0; // *AOutputs[1];
+      process_events();
+      process_voices(&spl0,&spl1);
+      *AOutputs[0] = spl0;
+      *AOutputs[1] = spl1;
+
     }
 
     //----------
@@ -394,6 +419,21 @@ class SVoiceManager {
       }
       MNumEvents = 0;
     }
+
+
+    // stereo
+    //void process(float* outs) {
+    //  float spl0 = 0;
+    //  float spl1 = 0;
+    //  process_events();
+    //  process_voices(&spl0,&spl1);
+    //  outs[0] = spl0;
+    //  outs[1] = spl1;
+    //}
+
+    //----------
+
+
 
 };
 

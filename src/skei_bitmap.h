@@ -368,6 +368,12 @@ class SBitmap {
       MBuffer[pos+2] = alphaColor(cr,AAlpha) + alphaColor(br,(255-AAlpha));
     }
 
+  //----------------------------------------
+  //
+  //----------------------------------------
+
+  public:
+
     //#dfine BRESENHAM_INCLUDE
     #include "skei_bresenham.h"
 

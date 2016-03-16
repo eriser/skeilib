@@ -149,7 +149,7 @@ float SInverseF(float x) {
 
 //----------
 
-/**
+/*
   returns 1/x
   http://bits.stephan-brumme.com/inverse.html
 */

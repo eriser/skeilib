@@ -2,6 +2,24 @@
 #define skei_flags_included
 //----------------------------------------------------------------------
 
+/*
+  enum
+    rename to skei_enums.h
+
+    instead of:
+      #define V_TRUCK  1
+      #define V_CAR    2
+      #define V_BIKE   3
+    do:
+      typedef enum {
+        V_TRUCK = 1,
+        V_CAR,
+        V_BIKE
+      } Vehicle;
+*/
+
+//----------------------------------------------------------------------
+
 // envelope stages
 
 #define ses_off       0

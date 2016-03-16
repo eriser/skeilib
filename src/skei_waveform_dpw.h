@@ -171,6 +171,20 @@ class SWaveform_Saw_DPW3 {
 
 //----------------------------------------------------------------------
 
+//http://mac.kaist.ac.kr/pubs/ValimakiNamSmithAbel-taslp2010.pdf
+/*
+  N   scaling
+  1   1
+  2   p / 4
+  3   p^2 / 24
+  4   p^3 / 192
+  5   p^4 / 1920
+  6   p^5 / 23040
+
+*/
+
+//----------
+
 // http://users.spa.aalto.fi/vpv/DAFX13-keynote-slides.pdf
 
 /*
@@ -178,11 +192,6 @@ class SWaveform_Saw_DPW3 {
   something is wrong with the scale (the /224... stuff)
   around c7, this looks very promising in a spectrum analyzer
   but lower frequencies have waaayy to high amplitude
-
-  2: / (4.0f * dt)        // 4
-  3: / (24.0f * dt*dt)    // 16 + 4 (4^2 + 4^1) + 2
-  3: / (24.0f * dt*dt)    // 64 + 12 (4^3 + 4^2) 64 + 16 = 80 + 24 = 104??
-  4^3 + 4^2 + 4^1 + 4 = 64 + 16 + 4 + 4 = 88
 */
 
 /*
