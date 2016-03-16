@@ -45,7 +45,7 @@ class SWidget_Menu
   public:
 
     void deselect(void) {
-      if ((MSelected >= 0) && (MSelected < MSubWidgets.size())) {
+      if ((MSelected >= 0) && (MSelected < (int32)MSubWidgets.size())) {
         //SWidget_MenuItem* menuitem = (SWidget_MenuItem*)MSubWidgets[MSelected];
         SWidget_MenuItem* menuitem = (SWidget_MenuItem*)MSelectedWidget;
         menuitem->hovering(false);
