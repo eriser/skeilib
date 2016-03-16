@@ -36,9 +36,9 @@ class SArray {
 	private:
 
     _T*          MBuffer;
-    /*unsigned int*/ int32 MTsize;
-    /*unsigned int*/ int32 MSize;
-    /*unsigned int*/ int32 MRealSize;
+    uint32 MTsize;
+    uint32 MSize;
+    uint32 MRealSize;
 
   public:
 
@@ -86,7 +86,7 @@ class SArray {
     //----------
 
     void deleteItems(void) {
-      for (int32 i=0; i<MSize; i++) delete MBuffer[i];
+      for (uint32 i=0; i<MSize; i++) delete MBuffer[i];
     }
 
     //----------
@@ -95,7 +95,7 @@ class SArray {
       x = SArray[n];
     */
 
-    _T& operator [] (const /*unsigned int*/ int32 AIndex) {
+    _T& operator [] (const /*unsigned int*/ uint32 AIndex) {
       return MBuffer[AIndex];
     }
 
@@ -105,7 +105,7 @@ class SArray {
       x = item(n);
     */
 
-    _T& item(const /*unsigned int*/ int32 AIndex) {
+    _T& item(const /*unsigned int*/ uint32 AIndex) {
       return MBuffer[AIndex];
     }
 
@@ -115,7 +115,7 @@ class SArray {
       returns size of array (number of items)
     */
 
-    /*int*/ int32 size() {
+    /*int*/ uint32 size() {
       return MSize;
     }
 
@@ -178,7 +178,7 @@ class SArray {
       set size of buffer
     */
 
-    void setSize(const /*unsigned int*/ int32 ASize) {
+    void setSize(const /*unsigned int*/ uint32 ASize) {
       if (ASize != 0) {
         if ( (ASize>MRealSize) || (ASize<MRealSize/SKEI_ARRAY_SIZE_MULT) ) {
           MRealSize = ASize;
@@ -195,10 +195,10 @@ class SArray {
       remove item from buffer
     */
 
-    void remove(const /*unsigned int*/ int32 APos) {
+    void remove(const /*unsigned int*/ uint32 APos) {
       if (MSize==1) clear();
       else {
-        for(/*unsigned int*/ int32 i=APos; i<MSize-1; i++ ) MBuffer[i] = MBuffer[i+1];
+        for(/*unsigned int*/ uint32 i=APos; i<MSize-1; i++ ) MBuffer[i] = MBuffer[i+1];
         MSize--;
       }
     }
@@ -239,12 +239,12 @@ class SArray {
 // standard/predefined array types
 //----------------------------------------------------------------------
 
-typedef SArray<char>  SCharArray;
-typedef SArray<char*> SStringArray;
-typedef SArray<int32> SIntegerArray;
-typedef SArray<float> SFloatArray;
-typedef SArray<void>  SPointerArray;
-typedef SArray<bool>  SBoolArray;
+//typedef SArray<char>  SCharArray;
+//typedef SArray<char*> SStringArray;
+//typedef SArray<int32> SIntegerArray;
+//typedef SArray<float> SFloatArray;
+//typedef SArray<void>  SPointerArray;
+//typedef SArray<bool>  SBoolArray;
 
 //----------------------------------------------------------------------
 #endif
