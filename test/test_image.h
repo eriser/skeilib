@@ -68,26 +68,21 @@ class myWidget : public SWidget {
 
     void on_paint(SPainter* APainter, SRect ARect, uint32 AMode=0) {
       MBitmap->clearBuffer();
-
+      MBitmap->fillBuffer( SRgba(128,64,64) );
       #define NUM 64
-
       int x[NUM];
       int y[NUM];
-
       for (int32 i=0; i<NUM; i++) {
         x[i] = SRandomRangeInt(0,MBitmap->width()-1 );
         y[i] = SRandomRangeInt(0,MBitmap->height()-1);
       }
-
-      MBitmap->drawQuadSpline( NUM-4, x,y );
+      //SColor col = SColor( SRandom(), SRandom(), SRandom() );
+      MBitmap->drawQuadSpline( NUM-4, x,y, SWhite); //col );
       //MBitmap->drawCubicSpline( NUM-4, x,y );
-
       for (int32 j=0; j<NUM-4; j++) {
-        MBitmap->drawCircle(x[j],y[j],5);
+        MBitmap->drawCircle( x[j], y[j], 5, SBlack );
       }
-
       #undef NUM
-
       /*
       MBitmap->drawLine(                    10,     10,     110,  40    );
       MBitmap->drawLineAA(                  10,     50,     110,  80    );
@@ -112,7 +107,6 @@ class myWidget : public SWidget {
       //MBitmap->drawQuadSpline(int n, int x[], int y[]);
       //MBitmap->drawCubicSpline(int n, int x[], int y[]);
       */
-
       APainter->drawImage(0,0,MImage,0,0,1024,512);
     }
 

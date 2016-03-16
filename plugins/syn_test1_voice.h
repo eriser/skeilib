@@ -7,6 +7,19 @@
 #include "skei_filter_dc.h"
 #include "skei_interpolate.h"
 
+#include "skei_phasor.h"
+#include "skei_envelope.h"
+#include "skei_waveform_naive.h"
+#include "skei_waveform_dpw.h"
+#include "skei_waveform_ptr.h"
+#include "skei_waveform_eptr.h"
+#include "skei_waveform_polyblep.h"
+#include "skei_waveform_polyblamp.h"
+#include "skei_filter_decimator.h"
+#include "skei_filter_hiir.h"
+//#include "skei_filter_downsample.h"
+//#include "skei_filter_svf.h"
+
 //----------------------------------------------------------------------
 
 
@@ -22,7 +35,7 @@ class myVoice : public SVoice {
     //uint32                decimator2;
 
     uint32                waveform1;
-    SPhase                phase1;
+    SPhasor                phasor1;
     SEnvelope_ADSR        adsr1;
     SOsc1                 osc1;
 
@@ -163,7 +176,7 @@ class myVoice : public SVoice {
       }
       float change = (float)oversample / (float)over;
       oversample = over;
-      phase1.dt *= change;
+      phasor1.dt *= change;
       //phase2.dt *= change;
     }
 
@@ -183,7 +196,7 @@ class myVoice : public SVoice {
     void on_noteOn(int ANote, int AVel) {
       SVoice::on_noteOn(ANote,AVel);
       float hz = SNoteToHz(ANote+MPitchBend);
-      phase1.setFreq(hz,MSampleRate*oversample);
+      phasor1.setFreq(hz,MSampleRate*oversample);
       osc1.setFreq(hz,MSampleRate*oversample);
       adsr1.noteOn();
       hz = SNoteToHz(ANote+MPitchBend+oct+semi+cent);
@@ -245,7 +258,7 @@ class myVoice : public SVoice {
     void on_pitchBend(float ABend) {
       SVoice::on_pitchBend(ABend);
       float hz = SNoteToHz((float)MMidiNote + MPitchBend);
-      phase1.setFreq(hz, MSampleRate * oversample );
+      phasor1.setFreq(hz, MSampleRate * oversample );
       osc1.setFreq(hz, MSampleRate * oversample );
       hz = SNoteToHz((float)MMidiNote + MPitchBend +oct+semi+cent);
       //phase2.setFreq(hz, MSampleRate * oversample );
@@ -277,8 +290,8 @@ class myVoice : public SVoice {
       float buffer[256];
 
       for (uint32 i=0; i<oversample; i++) {
-        phase1.process();
-        buffer[i] = _getOsc(phase1.t,phase1.dt);
+        phasor1.process();
+        buffer[i] = _getOsc(phasor1.t,phasor1.dt);
       }
 
       // decimate

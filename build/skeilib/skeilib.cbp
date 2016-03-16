@@ -176,6 +176,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-m64" />
+			<Add option="-msse3" />
 			<Add directory="../../src" />
 			<Add directory="../../plugins" />
 			<Add directory="../../test" />
@@ -219,6 +220,12 @@
 		<Unit filename="../../src/skei.h" />
 		<Unit filename="../../src/skei_array.h" />
 		<Unit filename="../../src/skei_atomic.h" />
+		<Unit filename="../../src/skei_audio_channel.h" />
+		<Unit filename="../../src/skei_audio_effect.h" />
+		<Unit filename="../../src/skei_audio_instrument.h" />
+		<Unit filename="../../src/skei_audio_mixer.h" />
+		<Unit filename="../../src/skei_audio_utils.h" />
+		<Unit filename="../../src/skei_audio_voice.h" />
 		<Unit filename="../../src/skei_basepath.h" />
 		<Unit filename="../../src/skei_beat_detector.h" />
 		<Unit filename="../../src/skei_bitmap.h" />
@@ -301,7 +308,7 @@
 		<Unit filename="../../src/skei_painter_xlib.h" />
 		<Unit filename="../../src/skei_parameter.h" />
 		<Unit filename="../../src/skei_parser.h" />
-		<Unit filename="../../src/skei_phase.h" />
+		<Unit filename="../../src/skei_phasor.h" />
 		<Unit filename="../../src/skei_plugin.h" />
 		<Unit filename="../../src/skei_plugin_base.h" />
 		<Unit filename="../../src/skei_plugin_exe.h" />
@@ -334,12 +341,14 @@
 		<Unit filename="../../src/skei_voice_manager.h" />
 		<Unit filename="../../src/skei_waveform_dpw.h" />
 		<Unit filename="../../src/skei_waveform_druttis.h" />
+		<Unit filename="../../src/skei_waveform_dsf.h" />
 		<Unit filename="../../src/skei_waveform_eptr.h" />
 		<Unit filename="../../src/skei_waveform_ltr.h" />
 		<Unit filename="../../src/skei_waveform_naive.h" />
 		<Unit filename="../../src/skei_waveform_polyblamp.h" />
 		<Unit filename="../../src/skei_waveform_polyblep.h" />
 		<Unit filename="../../src/skei_waveform_ptr.h" />
+		<Unit filename="../../src/skei_waveform_rochebois.h" />
 		<Unit filename="../../src/skei_waveform_sinc.h" />
 		<Unit filename="../../src/skei_widget.h" />
 		<Unit filename="../../src/skei_widget_.h" />
@@ -389,6 +398,7 @@
 		<Unit filename="../../test/test_animate.h" />
 		<Unit filename="../../test/test_audio.h" />
 		<Unit filename="../../test/test_buffering.h" />
+		<Unit filename="../../test/test_channel.h" />
 		<Unit filename="../../test/test_gain.h" />
 		<Unit filename="../../test/test_gui1.h" />
 		<Unit filename="../../test/test_image.h" />

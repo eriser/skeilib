@@ -66,6 +66,7 @@
 //#include "test_animate.h"
 //#include "test_audio.h"
 //#include "test_buffering.h"
+//#include "test_channel.h"
 //#include "test_gain.h"
 //#include "test_gui1.h"
 //#include "test_image.h"

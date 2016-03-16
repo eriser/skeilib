@@ -146,6 +146,9 @@
   
 * redo xlib, xrender, xft, xinput support
 
+  - better handling of xlib, xrender, xft, xinput
+  - better compiler script
+  
 * src directories
 
   ../src
@@ -166,7 +169,6 @@
   ../src/gfx/raytrace
   ../src/gfx/render
   ../src/gfx/software
-
   
 //----------------------------------------------------------------------
 //
@@ -174,8 +176,9 @@
 //
 //----------------------------------------------------------------------
 
-* compile script
+* more containers
 
-  - better handling of xlib, xrender, xft, xinput
-  
+  - SMap
+  - SHash
+
 

@@ -25,9 +25,10 @@
 //----------------------------------------------------------------------
 
 #define SKEI_DEBUG_MEM
+
 #ifdef SKEI_VST
   #define SKEI_DEBUG_SOCKET
-  #define SKEI_DEBUG_VST
+  //#define SKEI_DEBUG_VST
 #endif
 
 #define SKEI_PLUGIN_PER_SAMPLE
@@ -49,7 +50,8 @@
 #include "skei_editor.h"
 
 #include "skei_voice_manager.h"
-#include "skei_phase.h"
+/*
+#include "skei_phasor.h"
 #include "skei_envelope.h"
 #include "skei_waveform_naive.h"
 #include "skei_waveform_dpw.h"
@@ -61,6 +63,7 @@
 #include "skei_filter_hiir.h"
 #include "skei_filter_downsample.h"
 //#include "skei_filter_svf.h"
+*/
 
 #include "skei_widget_slider.h"
 
@@ -177,14 +180,14 @@ class myPlugin
     void on_parameterChange(int32 AIndex, float AValue) {
       if (AIndex==0) master = AValue*AValue*AValue;
       //else MVoiceManager.control(AIndex-1,AValue);
-      else MVoiceManager.control(AIndex,AValue);
+      else MVoiceManager.parameterChange(AIndex,AValue);
     }
 
     //----------
 
     //virtual
     void on_midiEvent(int32 AOffset, uint8 AMsg1, uint8 AMsg2, uint8 AMsg3) {
-      MVoiceManager.midi(AOffset,AMsg1,AMsg2,AMsg3);
+      MVoiceManager.midiEvent(AOffset,AMsg1,AMsg2,AMsg3);
     }
 
     //------------------------------------------------------------
@@ -194,17 +197,16 @@ class myPlugin
     //virtual
     void on_processBlock(SSample** AInputs, SSample** AOutputs, int32 ANumSamples) {
       MVoiceManager.preProcess();
-      //MVoiceManager.process(AInputs,AOutputs,ANumSamples);
+      MVoiceManager.processBlock(AInputs,AOutputs,ANumSamples);
     }
 
     //----------
 
     //virtual
     void on_processSample(SSample** AInputs, SSample** AOutputs) {
-      float synth[2];
-      MVoiceManager.process(synth);
-      *AOutputs[0] = synth[0] * master;
-      *AOutputs[1] = synth[1] * master;
+      MVoiceManager.processSample(AInputs,AOutputs);
+      *AOutputs[0] *= master;
+      *AOutputs[1] *= master;
     }
 
     //----------
@@ -277,8 +279,8 @@ class myPlugin
     //----------
 
     //virtual
-    void on_idleEditor(void* AEditor) {
-    }
+    //void on_idleEditor(void* AEditor) {
+    //}
 
     //----------
 

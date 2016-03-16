@@ -2,9 +2,7 @@
 #define template_included
 //----------------------------------------------------------------------
 
-/*
-  nc -U -l -k /tmp/skei.sock
-*/
+// nc -U -l -k /tmp/skei.sock
 
 //----------------------------------------------------------------------
 // config
@@ -13,7 +11,7 @@
 //----- plugins -----
 
 //#define SKEI_PLUGIN_PER_SAMPLE
-#define SKEI_PLUGIN_HAS_EDITOR
+//#define SKEI_PLUGIN_HAS_EDITOR
 //#define SKEI_PLUGIN_IS_SYNTH
 //#define SKEI_PLUGIN_SEND_MIDI
 //#define SKEI_PLUGIN_RECEIVE_MIDI
@@ -29,7 +27,7 @@
 
 //----- debug -----
 
-#define SKEI_DEBUG_MEM
+//#define SKEI_DEBUG_MEM
 
 #ifdef SKEI_VST
   //#define SKEI_DEBUG_VST
@@ -42,7 +40,10 @@
 
 #include "skei.h"
 #include "skei_plugin.h"
-#include "skei_editor.h"
+
+#ifdef SKEI_PLUGIN_HAS_EDITOR
+  #include "skei_editor.h"
+#endif
 
 //----------------------------------------------------------------------
 // plugin
@@ -87,6 +88,7 @@ class myPlugin
 
     //virtual
     void on_stateChange(uint32 AState) {
+      /*
       switch(AState) {
         case sps_open: break;
         case sps_close: break;
@@ -99,23 +101,28 @@ class myPlugin
         case sps_bypass: break;
         case sps_bypassOff: break;
       }
+      */
     }
 
     //virtual
     void on_transportChange(uint32 ATransport) {
+      /*
       if (ATransport & spt_changed) {}  // play, cycle or record state has changed
       if (ATransport & spt_play) {}     // Host sequencer is currently playing
       if (ATransport & spt_cycle) {}    // Host sequencer is in cycle mode
       if (ATransport & spt_record) {}   // Host sequencer is in record mode
       if (ATransport & spt_awrite) {}   // automation write mode active (record parameter changes)
       if (ATransport & spt_aread) {}    // automation read mode active (play parameter changes)
+      */
     }
 
     //virtual
     void on_parameterChange(int32 AIndex, float AValue) {
+      /*
       switch(AIndex) {
         case 0: break;
       }
+      */
     }
 
     //virtual
@@ -140,16 +147,16 @@ class myPlugin
 
     //virtual
     void on_processBlock(SSample** AInputs, SSample** AOutputs, int32 ANumSamples) {
-      SMemcpy(AOutputs[0],AInputs[0],ANumSamples*sizeof(SSample));
-      SMemcpy(AOutputs[1],AInputs[1],ANumSamples*sizeof(SSample));
+      //SMemcpy(AOutputs[0],AInputs[0],ANumSamples*sizeof(SSample));
+      //SMemcpy(AOutputs[1],AInputs[1],ANumSamples*sizeof(SSample));
     }
 
     //virtual
     void on_processSample(SSample** AInputs, SSample** AOutputs) {
-      float spl0 = *AInputs[0];
-      float spl1 = *AInputs[1];
-      *AOutputs[0] = spl0;
-      *AOutputs[1] = spl1;
+      //float spl0 = *AInputs[0];
+      //float spl1 = *AInputs[1];
+      //*AOutputs[0] = spl0;
+      //*AOutputs[1] = spl1;
     }
 
     //virtual
@@ -165,8 +172,8 @@ class myPlugin
     //virtual
     void* on_openEditor(void* AParent) {
       SEditor* editor = new SEditor(this,MEditorRect.w,MEditorRect.h,AParent);
-      editor->fillColor( SLightGrey );
-      editor->fillBackground(true);
+      //editor->fillColor( SLightGrey );
+      //editor->fillBackground(true);
       return editor;
     }
 
