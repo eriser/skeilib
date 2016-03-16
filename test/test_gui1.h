@@ -425,8 +425,8 @@ class myEditor
 
       unloadFont(MFont);
 
-      delete buffer1;
-      delete buffer2;
+      SFree(buffer1); //delete buffer1;
+      SFree(buffer2); //delete buffer2;
       //delete bitmap;
       //delete image;
       delete surface1;
