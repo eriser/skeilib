@@ -43,6 +43,9 @@ class SWidget_Value
       MSensitivity2 = 1.0f / 2000.0f;
       MCursor       = smc_arrowUpDown;
       MTextBuf[0]   = 0;
+
+      MClickVal = 0;
+
     }
 
     //----------
