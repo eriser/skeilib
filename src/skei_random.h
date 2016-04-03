@@ -43,12 +43,14 @@ class KRandom_Rand {
 //
 //----------------------------------------------------------------------
 
+static __SKEI_UNUSED
 float SRandom(void) {
   return (float)rand() / (float)RAND_MAX;
 }
 
 //----------
 
+static __SKEI_UNUSED
 float SRandomSigned(void) {
   float r = (float)rand() / (float)RAND_MAX;
   return r * 2 - 1;
@@ -56,24 +58,28 @@ float SRandomSigned(void) {
 
 // inclusive
 
+static __SKEI_UNUSED
 float SRandomRange(float minval, float maxval) {
   return minval + (SRandom() * (maxval - minval) );
 }
 
 //----------
 
+static __SKEI_UNUSED
 uint32 SRandomInt(void) {
   return rand();// & 0x7fffffff;
 }
 
 // -KRandomMax..KRandomMax
 
+static __SKEI_UNUSED
 int32 SRandomSignedInt(void) {
   return rand();
 }
 
 // inclusive
 
+static __SKEI_UNUSED
 int32 SRandomRangeInt(int32 minval, int32 maxval) {
   int32 range = maxval-minval+1;
   if (range <= 0) return minval;

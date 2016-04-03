@@ -9,6 +9,7 @@
 
   works in:
   - bitwig studio
+  
   doesn't work in:
   - qtractor: crashes (reports "sizeWindow");
   - carla: resizes back?
@@ -18,8 +19,7 @@
 * clipping
 
   there's something fishy with the clipping.. if i default all widgets to do
-  clipping, something is wrong..
-  probably: initial cliprect + push/pop
+  clipping, something is wrong.. probably: initial cliprect + push/pop
   
 //----------------------------------------------------------------------
 //
@@ -27,12 +27,11 @@
 //
 //----------------------------------------------------------------------
   
-* most gfx/bitmap stuff assumes 32 bit, rgba..
+* most gfx/bitmap stuff assumes 32 bit, rgba order..
 
 * (multiple) display connections..
 
 * keyboard
-
   - ascii..
   - todo: utf?
 
@@ -45,6 +44,8 @@
 * audio/midi io for standalone executables
 
   - RtAudio, RtMidi
+  - portaudio/midi
+  - jack
 
 //----------------------------------------------------------------------
 //
@@ -55,20 +56,17 @@
 * skin
 
   - generic gui if user is not creating editor
-  - automatic disabled colors (fade towards background color)
+    (returning SKEI_NULL from on_openEditor, the default implementation in
+    SPlugin_Base)
+    
+  - automatic disabled colors (fade towards background color) for inactive
+    widgets
   
 * tileSurface
 
-  move from SPainter to SPainter_** (platform), to allow 'optimized'
-  (xcopyarea, etc) tiling..
-  - xlib: xcopyarea
-  - cairo:
+  move from SPainter "down to" SPainter_** (platform), to allow 'optimized'
+  tiling.. cairo has some tiling and gradients, i think?
 
-* flexSurface
-
-  - allow use of tilemaps
-  - move to (xlib/cairo specific -> 'optimized' versions)
-  
 * gradient
 
   - gui-specific?
@@ -76,10 +74,15 @@
     - xrender
     - cairo
   
+* flexSurface
+
+  - allow use of tilemaps
+  - move to (xlib/cairo specific -> 'optimized' versions)
+  
 * backBuffer
 
   move backbuffer stuff to platform specific window class (SWindow_Xlib, etc..)
-  or just blitBuffer()
+  or just the blitBuffer() function
   - xlib = xcopyarea
   - cairo = draw w/cairo
   
@@ -138,7 +141,7 @@
 
 * one global static class/object..
 
-  initialize all static stuff in constructor
+  initialize all static stuff in constructor, in specific order,
   cleanup in destructor
   - debugging
   - win32: register window class (?)
@@ -149,26 +152,12 @@
   - better handling of xlib, xrender, xft, xinput
   - better compiler script
   
-* src directories
+* split up src directory
 
-  ../src
-  ../src/extern
-  ../src/common
-  ../src/common/debug
-  ../src/common/types
-  ../src/common/containers
-  ../src/common/utilities
-  ../src/plugin
-  ../src/plugin/parameters
-  ../src/gui
-  ../src/gui/widgets
-  ../src/audio
-  ../src/audio/filters
-  ../src/audio/oscillators
-  ../src/gfx
-  ../src/gfx/raytrace
-  ../src/gfx/render
-  ../src/gfx/software
+* gpl
+
+  setup specific gpl directories
+  add gpl flag to compile scripts
   
 //----------------------------------------------------------------------
 //
@@ -176,9 +165,18 @@
 //
 //----------------------------------------------------------------------
 
-* more containers
+* containers
 
+  - more templated containers.. don't always rely on inheritance..
+    for example: SList could have both intrusive (inheritance) and
+    non-intrusive (templates) versions..
+    also, both single- and doubly-linked lists
+
+
+  * new containers
+  
   - SMap
   - SHash
-
+  - SSparseArray
+  
 

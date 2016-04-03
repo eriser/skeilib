@@ -57,6 +57,14 @@ class SWidget_Value
 
   public:
 
+    void backColor(SColor AColor) { MBackColor = AColor; }
+    void valueColor(SColor AColor) { MValueColor = AColor; }
+    void textColor(SColor AColor) { MTextColor = AColor; }
+    void horizontal(bool AHoriz) { MHorizontal = AHoriz; }
+
+
+  public:
+
     //virtual
     void on_paint(SPainter* APainter, SRect ARect, uint32 AMode=0) {
       APainter->setFillColor(MBackColor);

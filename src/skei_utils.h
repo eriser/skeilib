@@ -33,16 +33,19 @@
 // strings
 //----------------------------------------
 
+/*
 void        SCreateUniqueName(const char* ABuffer, const char* APrefix, void* APtr);
 const char* SGetFileExt(char* APath);
 const char* SGetPath(char* APath);
 char*       SStripFileExt(char* APath);
 const char* SStripPath(const char* APath);
+*/
 
 //----------------------------------------
 // chars
 //----------------------------------------
 
+/*
 int         SIsAlnum(int c);
 int         SIsAlpha(int c);
 int         SIsDigit(int c);
@@ -52,12 +55,15 @@ int         SIsUpper(int c);
 int         SIsXdigit(int c);
 int         SToLower(int c);
 int         SToUpper(int c);
+*/
 
 //----------------------------------------
 // buffer
 //----------------------------------------
 
+/*
 void        SRadixSort(long *source, long *dest, uint32 N, int byte);
+*/
 
 //----------------------------------------------------------------------
 // sizeof
@@ -211,6 +217,7 @@ end;
 
 // ptr to (reversed) hex
 
+static __SKEI_UNUSED
 void SCreateUniqueName(const char* ABuffer, const char* APrefix, void* APtr) {
   static char _int2hex[17] = "0123456789abcdef";    // +'\0' = 17
   char* buf = (char*)ABuffer;
@@ -230,6 +237,7 @@ void SCreateUniqueName(const char* ABuffer, const char* APrefix, void* APtr) {
 
 // returns 'exe', not '.exe'
 
+static __SKEI_UNUSED
 const char* SGetFileExt(/*const*/ char* APath) {
   if (APath) {
     char *dot;
@@ -243,6 +251,7 @@ const char* SGetFileExt(/*const*/ char* APath) {
 
 // /home/skei/test -> /home/skei/
 
+static __SKEI_UNUSED
 const char* SGetPath(/*const*/ char* APath) {
   if (APath) {
     char *slash, *backslash;
@@ -257,17 +266,18 @@ const char* SGetPath(/*const*/ char* APath) {
 
 //----------
 
-int SIsAlpha(int c)   {return (c>='A' && c<='Z') || (c>='a' && c<='z');}
-int SIsDigit(int c)   {return (c>='0' && c<='9');}
-int SIsPrint(int c)   {return c>=' ';}
-int SIsSpace(int c)   {return ((c>=0x09 && c<=0x0D) || (c==0x20));}
-int SIsUpper(int c)   {return (c>='A' && c<='Z');}
-int SIsXdigit(int c)  {return (c>='0' && c<='9') || (c>='A' && c<='F') || (c>='a' && c<='f');}
+static __SKEI_UNUSED  int SIsAlpha(int c)   {return (c>='A' && c<='Z') || (c>='a' && c<='z');}
+static __SKEI_UNUSED  int SIsDigit(int c)   {return (c>='0' && c<='9');}
+static __SKEI_UNUSED  int SIsPrint(int c)   {return c>=' ';}
+static __SKEI_UNUSED  int SIsSpace(int c)   {return ((c>=0x09 && c<=0x0D) || (c==0x20));}
+static __SKEI_UNUSED  int SIsUpper(int c)   {return (c>='A' && c<='Z');}
+static __SKEI_UNUSED  int SIsXdigit(int c)  {return (c>='0' && c<='9') || (c>='A' && c<='F') || (c>='a' && c<='f');}
 
-int SIsAlnum(int c)   {return SIsAlpha(c) || SIsDigit(c);}
+static __SKEI_UNUSED  int SIsAlnum(int c)   {return SIsAlpha(c) || SIsDigit(c);}
 
 //----------
 
+static __SKEI_UNUSED
 void SRadixSort(long *source, long *dest, uint32 N, int byte) {
   uint32 i;
   long count[256];
@@ -298,6 +308,7 @@ uint32 SRdtsc(void) {
 // problem if there is a dot in the path
 // todo: find last dot..
 
+static __SKEI_UNUSED
 char* SStripFileExt(char* APath) {
   //DTrace("...stripping...");
   if (APath) {
@@ -317,6 +328,7 @@ char* SStripFileExt(char* APath) {
 
 // /home/skei/test -> test
 
+static __SKEI_UNUSED
 const char* SStripPath(const char* APath) {
   if (APath) {
     const char *slash, *backslash;
@@ -330,6 +342,7 @@ const char* SStripPath(const char* APath) {
 
 //----------
 
+static __SKEI_UNUSED
 int SToLower(int c) {
   if (c < 'A' || c > 'Z') return c;
   return c+0x20;
@@ -337,6 +350,7 @@ int SToLower(int c) {
 
 //----------
 
+static __SKEI_UNUSED
 int SToUpper(int c) {
   if (c < 'a' || c > 'z') return c;
   return c-0x20;
@@ -353,6 +367,7 @@ int SToUpper(int c) {
 
 //----------
 
+static __SKEI_UNUSED
 void SInsertChar(char* ABuffer, int32 APos, char AChar) {
 //var
 //  i,len : longint;
@@ -364,6 +379,7 @@ void SInsertChar(char* ABuffer, int32 APos, char AChar) {
 
 //----------
 
+static __SKEI_UNUSED
 void SDeleteChar(char* ABuffer, int32 APos) {
   if (!ABuffer) return;
   int32 len = SStrlen(ABuffer);

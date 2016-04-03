@@ -23,6 +23,7 @@
 
 //----------------------------------------------------------------------
 
+static __SKEI_UNUSED
 char* SGetHomePath(char* ABuffer) {
   //SStrcat(ABuffer, getenv("HOME"));
   ABuffer[0] = '\0';
@@ -39,6 +40,7 @@ char* SGetHomePath(char* ABuffer) {
 //
 //----------------------------------------------------------------------
 
+static __SKEI_UNUSED
 const char* SGetBaseFile(char* ABuffer) {
   ABuffer[0] = '\0';
   #ifdef SKEI_LINUX
@@ -71,6 +73,7 @@ const char* SGetBaseFile(char* ABuffer) {
   #include <dlfcn.h>
   #include <unistd.h>
 
+  static __SKEI_UNUSED
   const char* SGetBasePath(char* ABuffer) {
     #if defined SKEI_LIB
       Dl_info dli;
@@ -114,6 +117,7 @@ const char* SGetBaseFile(char* ABuffer) {
 
   #include <windows.h>
 
+  static __SKEI_UNUSED
   char* SGetBasePath(char* ABuffer) {
     #if defined SKEI_LIB || defined SKEI_EXE
       char filepath[SKEI_MAX_PATH_SIZE] = "";

@@ -51,7 +51,7 @@ class mainClass {
 
           w = colorpanel->appendWidgetW( new SWidget_Panel(SRect(100), swa_fillLeft   ) );
           w->cursor( smc_arrowLeft );
-          //w->sizeLimit( SRect(0,0,999999,300) );
+          //w->sizeLimit( SRect(0,0,SKEI_INT32_MAX,300) );
 
           w = colorpanel->appendWidgetW( new SWidget_Panel(SRect(100), swa_fillTop    ) );
           w->cursor( smc_arrowUp );

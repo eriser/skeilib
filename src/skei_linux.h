@@ -24,6 +24,7 @@
 
 // usleep is deprecated
 
+static __SKEI_UNUSED
 int SSleep(long ms) {
   struct timespec req, rem;
   if (ms > 999) {
@@ -47,6 +48,7 @@ int SSleep(long ms) {
 #include <X11/Xutil.h>
 #include <X11/cursorfont.h>
 
+static __SKEI_UNUSED
 uint32 SRemapKeyboard(uint32 ks) {
   //char c[2];
   //int l;

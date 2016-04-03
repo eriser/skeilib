@@ -28,6 +28,7 @@
 
 // subtract result from naive saw..
 
+static __SKEI_UNUSED
 float SPolyBlep(float t, float dt) {
   // 0 <= t < 1
   if (t < dt) {
@@ -53,6 +54,7 @@ float SPolyBlep(float t, float dt) {
 
 // subtract result from naive saw..
 
+static __SKEI_UNUSED
 float SPolyBlep2(float t, float dt) {
   if (t<dt) return - SSqr(t/dt - 1.0f);
   else if (t > 1.0f - dt) return SSqr((t - 1.0f) / dt + 1.0f);
@@ -74,6 +76,7 @@ float SPolyBlep2(float t, float dt) {
 
 // add result to naive saw..
 
+static __SKEI_UNUSED
 float SPolyBlep3(float t, float dt, float h) {
   float t0,c0;
   if (t > (1-dt)) {             // -- before transition -----------------------

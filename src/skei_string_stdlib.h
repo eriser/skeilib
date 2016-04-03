@@ -21,6 +21,7 @@
 
 //----------------------------------------------------------------------
 
+static __SKEI_UNUSED
 const char* SStrcat(char* s1, const char* s2) {
   while (*s1) s1++;
   while ((*s1++ = *s2++));
@@ -35,6 +36,7 @@ const char* SStrcat(char* s1, const char* s2) {
 //  return (char*) str;
 //}
 
+static __SKEI_UNUSED
 const char *SStrchr(const char *str, int ch) {
   while (*str) {
     if (*str == ch) return str;
@@ -45,6 +47,7 @@ const char *SStrchr(const char *str, int ch) {
 
 //----------
 
+static __SKEI_UNUSED
 int SStrcmp(const char* s1, const char* s2) {
   while (*s1 != '\0' && *s1 == *s2) {
     s1++;
@@ -55,6 +58,7 @@ int SStrcmp(const char* s1, const char* s2) {
 
 //----------
 
+static __SKEI_UNUSED
 char* SStrcpy(char* dest,const char* src) {
   while ((*dest++=*src++));
   return dest;
@@ -71,6 +75,7 @@ char* SStrcpy(char* dest,const char* src) {
 
 //----------
 
+static __SKEI_UNUSED
 unsigned int SStrlen(const char* str) {
   unsigned int num = 0;
   while (*str++) num++;
@@ -79,6 +84,7 @@ unsigned int SStrlen(const char* str) {
 
 //----------
 
+static __SKEI_UNUSED
 char* SStrncat(char* s1, char* s2, unsigned int n) {
   char* s = s1;
   while (*s1) s1++;
@@ -100,6 +106,7 @@ char* SStrncat(char* s1, char* s2, unsigned int n) {
 
 //----------
 
+static __SKEI_UNUSED
 char* SStrncpy(char* dest, const char* src, unsigned int n) {
   while (n-- && (*dest++=*src++) != '\0');
   return dest;
@@ -107,6 +114,7 @@ char* SStrncpy(char* dest, const char* src, unsigned int n) {
 
 //----------
 
+static __SKEI_UNUSED
 char* SStrrchr(const char* s, /*int*/char c) {
   char* p = SKEI_NULL;
   while (*s++) if (*s == c) p = (char*)s;
@@ -118,6 +126,7 @@ char* SStrrchr(const char* s, /*int*/char c) {
 // http://rosettacode.org/wiki/Reverse_a_string#C
 // This function assumes the passed pointer points to a valid, zero-terminated string
 
+static __SKEI_UNUSED
 void SStrrev(char *s) {
   char *t = s;
   while (*t != '\0') t++;
@@ -130,6 +139,7 @@ void SStrrev(char *s) {
 
 //----------
 
+static __SKEI_UNUSED
 const char *SStrstr(/*const*/ char *str, /*const*/ char *substr) {
   int str_len = SStrlen(str);
   int substr_len = SStrlen(substr);

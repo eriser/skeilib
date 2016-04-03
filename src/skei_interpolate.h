@@ -6,13 +6,14 @@
 
 //----------
 
+static __SKEI_UNUSED
 float SInterpolate_Linear(float t, float y1,float y2) {
   return ( y1*(1-t) + y2*t );
 }
 
 //----------------------------------------------------------------------
 
-
+static __SKEI_UNUSED
 float SInterpolate_Cosine(float t, float y1,float y2) {
   float t2;
   t2 = (1-cosf(t*SKEI_PI))/2;
@@ -21,6 +22,7 @@ float SInterpolate_Cosine(float t, float y1,float y2) {
 
 //----------------------------------------------------------------------
 
+static __SKEI_UNUSED
 float SInterpolate_Cubic(float t, float y0,float y1, float y2,float y3) {
   float a0,a1,a2,a3,t2;
   t2 = t*t;
@@ -38,6 +40,7 @@ float SInterpolate_Cubic(float t, float y0,float y1, float y2,float y3) {
   Bias: 0 is even, positive is towards first segment, negative towards the other
 */
 
+static __SKEI_UNUSED
 float SInterpolate_Hermite(float t, float y0, float y1, float y2, float y3, float tension=0, float bias=0) {
   float m0,m1,t2,t3;
   float a0,a1,a2,a3;
@@ -60,6 +63,7 @@ float SInterpolate_Hermite(float t, float y0, float y1, float y2, float y3, floa
 // http://www.musicdsp.org/showone.php?id=93
 
 // original
+static __SKEI_UNUSED
 float SInterpolate_Hermite1(float t, float y0, float y1, float y2, float y3)
 {
   // 4-point, 3rd-order Hermite (x-form)
@@ -73,6 +77,7 @@ float SInterpolate_Hermite1(float t, float y0, float y1, float y2, float y3)
 //----------
 
 // james mccartney
+static __SKEI_UNUSED
 float SInterpolate_Hermite2(float t, float y0, float y1, float y2, float y3)
 {
   // 4-point, 3rd-order Hermite (x-form)
@@ -86,6 +91,7 @@ float SInterpolate_Hermite2(float t, float y0, float y1, float y2, float y3)
 //----------
 
 // james mccartney
+static __SKEI_UNUSED
 float SInterpolate_Hermite3(float t, float y0, float y1, float y2, float y3)
 {
   // 4-point, 3rd-order Hermite (x-form)
@@ -100,6 +106,7 @@ float SInterpolate_Hermite3(float t, float y0, float y1, float y2, float y3)
 //----------
 
 // laurent de soras
+static __SKEI_UNUSED
 float SInterpolate_Hermite4(float t, float xm1, float x0, float x1, float x2)
 {
   float c = (x1 - xm1) * 0.5f;
@@ -127,6 +134,7 @@ float SInterpolate_Hermite4(float t, float xm1, float x0, float x1, float x2)
 
 // https://code.google.com/p/nxpascal/source/browse/trunk/src/nxMath.pas#87
 
+static __SKEI_UNUSED
 float SInterpolate_CatmullRom(float t, float p0, float p1, float p2, float p3) {
   return 0.5 * ( 2*p1 + (p2-p0)*t +
                ( 2*p0 - 5*p1 + 4*p2 - p3) * t*t +

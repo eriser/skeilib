@@ -148,6 +148,7 @@ class SString {
 
 // remove specified characters from a string
 
+static __SKEI_UNUSED
 void SRemoveChars(char *str, char c) {
 	char *pos;
 	while( ( pos = SStrchr(str,c) ) ) {
@@ -157,6 +158,7 @@ void SRemoveChars(char *str, char c) {
 
 // remove specified chunks from a string
 
+static __SKEI_UNUSED
 void SRemoveChunks(char *str, char *cnk) {
 	char *pos;
 	int clen = SStrlen(cnk);
@@ -167,6 +169,7 @@ void SRemoveChunks(char *str, char *cnk) {
 
 // replace specified characters in a string
 
+static __SKEI_UNUSED
 void SReplaceChars(char *str, char c1, char c2) {
 	char *pos;
 	while( ( pos = SStrchr(str, c1) ) ) {
@@ -177,6 +180,7 @@ void SReplaceChars(char *str, char c1, char c2) {
 // replace specified chunks in a string
 // (size-independent, just remember about memory)
 
+static __SKEI_UNUSED
 void SReplaceChunks(char *str, char *cnk1, char *cnk2)
 {
 	char *pos;
@@ -190,6 +194,7 @@ void SReplaceChunks(char *str, char *cnk1, char *cnk2)
 
 //reverse a string
 
+static __SKEI_UNUSED
 void SReverse(char *str) {
 	int i;
 	int len = SStrlen(str) - 1;

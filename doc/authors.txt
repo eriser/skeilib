@@ -1,0 +1,16 @@
+
+name:   tor-helge skei
+role:   majority of code, main project leader/maintainer..
+email:  tor.helge.skei@gmail.com
+links:  http://torhelgeskei.blogspot.no/
+        https://www.facebook.com/torhelge.skei
+
+----------------------------------------------------------------------
+
+name:   lubomir i. ivanov
+role:   additional code (axonlib/holos)
+email:  neolit123@gmail.com
+links:  http://neolit123.blogspot.com/
+
+----------------------------------------------------------------------
+

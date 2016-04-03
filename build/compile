@@ -26,6 +26,7 @@
 
 DEBUG="off"
 EXTRA="off"
+GPL="off"
 TYPE="vst"
 GUI="nogui"
 
@@ -71,6 +72,7 @@ function print_help {
   echo "  -h this help"
   echo "  -E use extra features"
   echo "  -F additional gcc flags"
+  echo "  -G use gpl"
   echo "  -D additional defines"
   echo "  -I additional include directories"
   echo "  -L additional linked libraries"
@@ -85,7 +87,7 @@ if [ "$#" -eq 0 ]; then
   print_help
 fi
 
-while getopts i:o:t:g:dheF:D:I:L: opt
+while getopts i:o:t:g:dheF:GD:I:L: opt
 do
   case "$opt" in
     i) INPUT="$OPTARG";;
@@ -96,6 +98,7 @@ do
     h) print_help;;
     e) EXTRA="on";;
     F) FLAGS+="$OPTARG ";;
+    G) GPL="on";;
     D) DEF+="-D$OPTARG ";;
     I) INC+="-I$OPTARG ";;
     L) LIB+="-l$OPTARG ";;
@@ -125,6 +128,12 @@ fi
 
 if [ "$EXTRA" = "on" ]; then
   INC+="-I../extra -I../plugins_extra "
+fi
+
+# ----------
+
+if [ "$GPL" = "on" ]; then
+  INC+="-I../plugins/gpl "
 fi
 
 # ----------

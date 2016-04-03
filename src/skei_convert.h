@@ -27,6 +27,7 @@
   allocated memory for 'string' should be >= 'maximumchars'
 */
 
+static __SKEI_UNUSED
 char* SIntToString(char* _st, int n, unsigned int maxlen = 10, unsigned int base = 10, unsigned int fg = 0)  {
   if (!_st || maxlen > 33) return (char*)"0";
   unsigned int v, p = 1;
@@ -71,6 +72,7 @@ char* SIntToString(char* _st, int n, unsigned int maxlen = 10, unsigned int base
 // string to int
 //----------------------------------------------------------------------
 
+static __SKEI_UNUSED
 int SStringToInt(const char* s)
 {
   if (!s) return 0;
@@ -114,6 +116,7 @@ int SStringToInt(const char* s)
  *
  */
 
+static __SKEI_UNUSED
 char* SFloatToString(char* st, double f, int maxlen = 5, const unsigned int fg = 0) { //, const bool e = false)
   if (!st) return (char*)"0";
   char* ret = st;
@@ -195,6 +198,7 @@ char* SFloatToString(char* st, double f, int maxlen = 5, const unsigned int fg =
 // string to float
 //----------------------------------------------------------------------
 
+static __SKEI_UNUSED
 float SStringToFloat(char* s) {
   if (!s) return 0.f;
   register float a = 0.f;

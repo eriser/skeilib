@@ -49,6 +49,7 @@ static uint32 xrender_argb_templ_mask =
   Avoid using XRenderFindStandardFormat as older libraries don't have it
 */
 
+static __SKEI_UNUSED
 XRenderPictFormat* xrender_find_format(Display* ADisplay, int32 ADepth) {
   //case ADepth of
   //  24: result := XRenderFindStandardFormat(FDisplay,PictStandardRGB24);
@@ -63,6 +64,7 @@ XRenderPictFormat* xrender_find_format(Display* ADisplay, int32 ADepth) {
 
 //----------------------------------------------------------------------
 
+static __SKEI_UNUSED
 //void create_picture(Drawable ADrawable) {
 Picture xrender_create_picture(Display* ADisplay, Drawable ADrawable, int32 ADepth) {
   XRenderPictFormat*        fmt;
@@ -91,12 +93,14 @@ Picture xrender_create_picture(Display* ADisplay, Drawable ADrawable, int32 ADep
 
 //----------
 
+static __SKEI_UNUSED
 void xrender_delete_picture(Display* ADisplay, Picture APicture) {
   XRenderFreePicture(ADisplay,APicture);
 }
 
 //----------------------------------------------------------------------
 
+static __SKEI_UNUSED
 XRenderColor xrender_make_color(SColor AColor) {
   XRenderColor col;
   col.red   = (int)((AColor.r*AColor.a) * 255) << 8;
@@ -114,6 +118,7 @@ XRenderColor xrender_make_color(SColor AColor) {
 
 //----------
 
+static __SKEI_UNUSED
 Picture xrender_make_brush(SDrawable* ADrawable, SColor AColor)
 {
   Display* display  = ADrawable->display();

@@ -20,7 +20,7 @@
 #include "skei_widget_color.h"
 #include "skei_widget_panel.h"
 
-#include "skei_voice_manager.h"
+//#include "skei_voice_manager.h"
 
 //----------------------------------------------------------------------
 

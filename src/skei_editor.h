@@ -55,8 +55,14 @@ class SEditor
 
   public:
 
-    void fillColor(SColor AColor) { MFillColor = AColor; }
-    void fillBackground(bool AFill=true) { MFillBackground = AFill; }
+    void fillColor(SColor AColor)         { MFillColor = AColor; }
+    void fillBackground(bool AFill=true)  { MFillBackground = AFill; }
+
+  //----------------------------------------
+  //
+  //----------------------------------------
+
+  public:
 
   public:
 

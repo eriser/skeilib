@@ -246,6 +246,18 @@ class SArray {
 //typedef SArray<void>  SPointerArray;
 //typedef SArray<bool>  SBoolArray;
 
+typedef SArray<char>    SCharArray;
+typedef SArray<int32>   SInt32Array;
+typedef SArray<uint32>  SUInt32Array;
+typedef SArray<float>   SFloatArray;
+typedef SArray<bool>    SBoolArray;
+
+typedef SArray<void*>   SPtrArray;
+typedef SArray<char*>   SCharPtrArray;
+typedef SArray<float*>  SFloatPtrArray;
+
+
+
 //----------------------------------------------------------------------
 #endif
 

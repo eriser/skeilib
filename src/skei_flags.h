@@ -173,6 +173,34 @@
 #define smb_backward  8
 #define smb_forward   9
 
+// midi control change (AMsg2)
+
+#define smc_modWheel            1
+#define smc_breathControl       2
+#define smc_footController      4
+#define smc_portamentoTime      5
+#define smc_dataEntry           6
+#define smc_mainVolume          7
+#define smc_msb                 0
+#define smc_lsb                 32
+#define smc_modWheel_lsb        (smc_modWheel + smc_lsb)
+#define smc_breathControl_lsb   (smc_breathControl + smc_lsb)
+#define smc_footController_lsb  (smc_footController + smc_lsb)
+#define smc_portamentoTime_lsb  (smc_portamentoTime + smc_lsb)
+#define smc_dataEntry_lsb       (smc_dataEntry + smc_lsb)
+#define smc_mainVolume_lsb      (smc_mainVolume + smc_lsb)
+#define smc_damperPedal         64 /* 0=off, 127=on */
+#define smc_portamento          65 /* 0=off, 127=on */
+#define smc_sustenuto           66 /* 0=off, 127=on */
+#define smc_dataEntryPlus       96 /* 127 */
+#define smc_dataEntryMinus      97 /* 127 */
+#define smc_localControl        122 /* 0=off, 127=on */
+#define smc_allNotesOff         123 /* 0 */
+#define smc_omniModeOff         124 /* 0 */
+#define smc_omniModeOn          125 /* 0 */
+#define smc_polyModeOnOff       126 /* !! */
+#define smc_polyModeOn          127 /* 0 */
+
 // mouse cursors (window)
 
 #define smc_default         0
@@ -196,6 +224,17 @@
 #define smc_question        18
 #define smc_ibeam           19
 
+// midi event event
+
+#define sme_noteOff         8   /* note, vel */
+#define sme_noteOn          9   /* note, vel */
+#define sme_polyAfterTouch  10  /* note, aftertouch */
+#define sme_controlChange   11  /* ctrl, value */
+#define sme_programChange   12  /* program, - */
+#define sme_chanAfterTouch  13  /* aftertouch, - */
+#define sme_pitchBend       14  /* lsb, msb */
+#define sme_system          15  /* lsb, msb */
+
 // module event
 
 #define sme_none      0
@@ -212,7 +251,7 @@
 
 #define smf_none      0
 #define smf_active    1     // driver, library
-#define smf_single    256   // driver, library
+//#define smf_single    256   // driver, library
 
 // modifier keys (window)
 
@@ -223,6 +262,31 @@
 #define smk_alt       8
 #define smk_altgr     16
 
+// midi system messages (chan, AMsg1 & 15)
+
+#define sms_sysex           0   /* !! */
+//#define sms_common        1
+#define sms_songPos         2   /* lsb, msb */
+#define sms_songSelect      3   /* song, - */
+//#define sms_common        4
+//#define sms_common        5
+#define sms_tuneRequest     6
+#define sms_endSysex        7
+#define sms_clock           8
+//#define sms_undefined     9
+#define sms_start           10
+#define sms_continue        11
+#define sms_stop            12
+//#define sms_undefined     13
+#define sms_activeSensing   14
+#define sms_reset           15
+
+// module states
+
+#define sms_off       0   /* silent */
+#define sms_active    1   /* playing */
+#define sms_finished  2   /* released */
+
 // pin direction (module)
 
 #define spd_output    0
@@ -230,8 +294,9 @@
 
 // parameter flags
 
-#define spf_none      0  // name 'conflict' with plugin flags
-#define spf_automate  1
+#define spf_none        0  // name 'conflict' with plugin flags
+#define spf_automate    1
+#define spf_interpolate 2
 
 // plugin flags
 
@@ -274,8 +339,8 @@
 // pin type (module)
 
 #define spt_none      0
-#define spt_signal    1
-#define spt_data      2
+#define spt_audio     1
+#define spt_signal    2
 #define spt_int       3
 #define spt_float     4
 #define spt_ptr       5
@@ -341,9 +406,9 @@
 
 // voice states
 
-#define svs_off       0
-#define svs_playing   1
-#define svs_released  2
+//#define svs_off       0
+//#define svs_playing   1
+//#define svs_released  2
 
 // widget alignment
 

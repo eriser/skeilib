@@ -251,13 +251,6 @@ void skei_debug_callstack_print(void** AAddresses=SKEI_NULL, int ANumAddresses=0
   DTrace("----------------------------------------------------------------------\n\n");
 }
 
-//----------
-
-/*
-  macro, so that the callstack is generated from the place we put the macro
-  skip first f and last l entries..
-*/
-
 /*
 #define SDumpCallStackAll                     \
   {                                           \
@@ -290,11 +283,12 @@ void skei_debug_callstack_print(void** AAddresses=SKEI_NULL, int ANumAddresses=0
 
   struct callstack_symbol {};
   struct callstack_string_buffer {};
-  int callstack(int skip_frames, void** addresses, int num_addresses) { return 0; }
-  int callstack_symbols(void** addresses, callstack_symbol* out_syms, int num_addresses, char* memory, int mem_size) { return 0; }
-  void SPrintCallStack(void** AAddresses=SKEI_NULL, int ANumAddresses=0) {}
+  __SKEI_ALWAYS_INLINE int callstack(int skip_frames, void** addresses, int num_addresses) { return 0; }
+  __SKEI_ALWAYS_INLINE int callstack_symbols(void** addresses, callstack_symbol* out_syms, int num_addresses, char* memory, int mem_size) { return 0; }
+  __SKEI_ALWAYS_INLINE void SPrintCallStack(void** AAddresses=SKEI_NULL, int ANumAddresses=0) {}
 
   #define SDumpCallStack {}
+  #define SDumpCallStackSkip(s) {}
 
 #endif // SKEI_DEBUG_CALLSTACK
 

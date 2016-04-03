@@ -31,17 +31,21 @@ class SPhasor {
 
     // AFrreq = hz
 
-    void setFreq(float AFreq, float ASampleRate) {
-      dt = AFreq / ASampleRate;
+    void setFreq(float AFreq/*, float ASampleRate*/) {
+      dt = AFreq / srate;
     }
 
-    void addFreq(float AFreq, float ASampleRate) {
-      dt += AFreq / ASampleRate;
+    void addFreq(float AFreq/*, float ASampleRate*/) {
+      dt += AFreq / srate;
     }
 
-    void setPhase(float APhase) {
-      t = 0;
-    }
+    //void setPhase(float APhase) {
+    //  t = APhase;
+    //}
+
+    //void setPhaseAdd(float APhaseAdd) {
+    //  dt = 0;
+    //}
 
     /*
       todo: negative frequency (t%1)

@@ -104,7 +104,8 @@ class SWidget {
       //MOwner                  = SKEI_NULL;
       MRect                   = ARect;
       MWidgetLayout.alignment = AAlignment;
-      MWidgetLayout.sizeLimit = SRect(0,0,999999,999999);
+      //MWidgetLayout.sizeLimit = SRect(0,0,999999,999999);
+      MWidgetLayout.sizeLimit = SRect(0,0,SKEI_INT32_MAX,SKEI_INT32_MAX);
       MValue                  = 0.0f;
       MFlags                  = swf_active
                               + swf_autoalign

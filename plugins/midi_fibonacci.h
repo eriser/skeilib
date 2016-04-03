@@ -15,18 +15,18 @@
 // config
 //----------------------------------------------------------------------
 
-#define SKEI_PLUGIN_HAS_EDITOR
+//#define SKEI_PLUGIN_HAS_EDITOR
 //#define SKEI_PLUGIN_IS_SYNTH
 //#define SKEI_PLUGIN_PER_SAMPLE
 #define SKEI_PLUGIN_SEND_MIDI
 #define SKEI_PLUGIN_RECEIVE_MIDI
 #define SKEI_PLUGIN_AUTOSYNC
 
-#ifdef SKEI_PLUGIN_HAS_EDITOR
-  #define SKEI_XLIB
-  #define SKEI_XRENDER
-  #define SKEI_XFT
-#endif
+//#ifdef SKEI_PLUGIN_HAS_EDITOR
+//  #define SKEI_XLIB
+//  #define SKEI_XRENDER
+//  #define SKEI_XFT
+//#endif
 
 //#define SKEI_DEBUG_MEM
 #ifdef SKEI_VST
@@ -40,8 +40,9 @@
 
 #include "skei.h"
 #include "skei_plugin.h"
-#include "skei_editor.h"
-#include "skei_widget_slider.h"
+
+//#include "skei_editor.h"
+//#include "skei_widget_slider.h"
 
 //----------------------------------------------------------------------
 
@@ -160,9 +161,9 @@ class myPlugin
       MInfo.numInputs  = 2;
       MInfo.numOutputs = 2;
 
-      #ifdef SKEI_PLUGIN_HAS_EDITOR
-      MEditorRect.set(220+90+40,100);
-      #endif
+      //#ifdef SKEI_PLUGIN_HAS_EDITOR
+      //MEditorRect.set(220+90+40,100);
+      //#endif
 
       appendParameter( new SParamInt( "num1", 0,  -24, 24 ));
       appendParameter( new SParamInt( "num2", 1,  -24, 24 ));
@@ -244,6 +245,8 @@ class myPlugin
 
     #ifdef SKEI_PLUGIN_HAS_EDITOR
 
+    /*
+
     //virtual
     void* on_openEditor(void* AParent) {
       SEditor* editor = new SEditor(this,MEditorRect.w,MEditorRect.h,AParent);
@@ -265,6 +268,8 @@ class myPlugin
       SEditor* editor = (SEditor*)AEditor;
       delete editor;
     }
+
+    */
 
     #endif // SKEI_PLUGIN_HAS_EDITOR
 

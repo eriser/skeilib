@@ -8,6 +8,7 @@
 #include <windows.h>
 
 
+static __SKEI_UNUSED
 BOOL SDetectWine(void) {
     BOOL ret = 0;
     HINSTANCE hLib = LoadLibrary(TEXT("ntdll.dll"));
@@ -30,6 +31,7 @@ BOOL SDetectWine(void) {
 
 #ifdef SKEI_LINUX
 
+static __SKEI_UNUSED
 bool SDetectWine(void) {
   return false;
 }

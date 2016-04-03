@@ -28,22 +28,31 @@
 
 //----------------------------------------------------------------------
 
-// AAlignment = power of 2
+// we can't assert here.. debug is ont oncluded yet (it needs to do some
+// #define tricks with memory stuff..
+//SAssert( SIsPowerOfTwo(AAlignment) );
 
-/*
-void* SMalloc_Aligned(uint32 ASize, uint32 AAlignment=16) {
-  // we can't assert here.. debug is ont oncluded yet (it needs to do some
-  // #define tricks with memory stuff..
-  //SAssert( SIsPowerOfTwo(AAlignment) );
-  if (AAlignment < sizeof(intptr)*2) AAlignment = sizeof(intptr)*2;
-  uint32 alignmask = AAlignment-1;
-  void* mem = SMalloc(ASize + AAlignment*2 - 1 );
-  intptr ma = (intptr)mem & alignmask;
-  ma +=
-  return (void*)ma;
+//----------------------------------------------------------------------
+
+#include <stdlib.h>
+#include <stdio.h>
+
+void* SMalloc_Aligned(uint32 ASize, uint32 AAlignment) {
+  void* p1; // original block
+  void** p2; // aligned block
+  int offset = AAlignment - 1 + sizeof(void*);
+  if ((p1 = (void*)SMalloc(ASize + offset)) == SKEI_NULL) return SKEI_NULL;
+  p2 = (void**)(((size_t)(p1) + offset) & ~(AAlignment - 1));
+  p2[-1] = p1;
+  return p2;
 }
-*/
 
+//----------
+
+void SFree_Aligned(void *p)
+{
+  SFree(((void**)p)[-1]);
+}
 //----------------------------------------------------------------------
 #endif
 

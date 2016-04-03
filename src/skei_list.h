@@ -5,12 +5,12 @@
 /*
   a templates (ala array)data-container)
   b multiple inheritance (ala widgetListener)
-  
+
   todo: (?)
   - sort
   - find
   - swap two items
-  - move item to head/tail  
+  - move item to head/tail
 */
 
 class SListNode
@@ -21,13 +21,13 @@ class SListNode
     SListNode* MPrev;
     SListNode* MNext;
   public:
-    inline SListNode* next(void) { return MNext; }
-    inline SListNode* prev(void) { return MPrev; }
-    inline void next(SListNode* ANode) { MNext = ANode; }
-    inline void prev(SListNode* ANode) { MPrev = ANode; }
+    __SKEI_ALWAYS_INLINE /*inline*/ SListNode* next(void) { return MNext; }
+    __SKEI_ALWAYS_INLINE /*inline*/ SListNode* prev(void) { return MPrev; }
+    __SKEI_ALWAYS_INLINE /*inline*/ void next(SListNode* ANode) { MNext = ANode; }
+    __SKEI_ALWAYS_INLINE /*inline*/ void prev(SListNode* ANode) { MPrev = ANode; }
 };
 
-//----------
+//----------------------------------------------------------------------
 
 class SList
 {
@@ -45,17 +45,17 @@ class SList
       reset();
     }
 
-    inline SListNode* head(void) { return MHead; }
-    inline SListNode* tail(void) { return MTail; }
-    inline void head(SListNode* ANode) { MHead = ANode; }
-    inline void tail(SListNode* ANode) { MTail = ANode; }
+    __SKEI_ALWAYS_INLINE /*inline*/ SListNode* head(void) { return MHead; }
+    __SKEI_ALWAYS_INLINE /*inline*/ SListNode* tail(void) { return MTail; }
+    __SKEI_ALWAYS_INLINE /*inline*/ void head(SListNode* ANode) { MHead = ANode; }
+    __SKEI_ALWAYS_INLINE /*inline*/ void tail(SListNode* ANode) { MTail = ANode; }
 
-    inline SListNode* next(SListNode* ANode) { return ANode->MNext; }
-    inline SListNode* prev(SListNode* ANode) { return ANode->MPrev; }
+    __SKEI_ALWAYS_INLINE /*inline*/ SListNode* next(SListNode* ANode) { return ANode->MNext; }
+    __SKEI_ALWAYS_INLINE /*inline*/ SListNode* prev(SListNode* ANode) { return ANode->MPrev; }
 
     //----------
 
-    inline void reset(void) {
+    __SKEI_ALWAYS_INLINE /*inline*/ void reset(void) {
       MHead = SKEI_NULL;
       MTail = SKEI_NULL;
     }

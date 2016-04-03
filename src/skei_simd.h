@@ -9,6 +9,12 @@
 
 // compile with -msse3
 
+
+
+
+
+/*
+
 typedef float v4sf __SKEI_VECTOR(16);
 
 void simd_test1(void) {
@@ -18,6 +24,12 @@ void simd_test1(void) {
   c = a + b;
   STrace("c = {%.2f,%.2f,%.2f,%.2f}\n", c[0], c[1], c[2], c[3]);
 }
+
+*/
+
+
+
+
 
 /*
   https://gcc.gnu.org/onlinedocs/gcc/Vector-Extensions.html#Vector-Extensions

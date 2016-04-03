@@ -25,7 +25,7 @@ class SDebug_Socket {
       sockaddr_un address;
       memset(&address, 0, sizeof(sockaddr_un));
       address.sun_family = AF_UNIX;
-      snprintf(address.sun_path,108,"/tmp/skei.sock");
+      snprintf(address.sun_path,108,"/tmp/skeilib.socket");
       connect(skei_socket_out,reinterpret_cast<sockaddr*>(&address),sizeof(sockaddr_un));
     }
 

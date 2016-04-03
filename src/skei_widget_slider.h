@@ -11,7 +11,14 @@ class SWidget_Slider
 
   protected:
     SColor  MBarColor;
-    bool    MDrawName;
+    //SColor  MValueNameColor;
+    //SColor  MValueTextColor;
+    bool    MDrawValueName;
+    bool    MDrawValueText;
+
+  //----------------------------------------
+  //
+  //----------------------------------------
 
   public:
 
@@ -19,18 +26,35 @@ class SWidget_Slider
     : SWidget_Value(ARect,AValue,AAlignment) {
       MName  = "SWidget_Slider";
       MHint = "slider";
-      MBackColor = SGrey;
+      MBackColor = SDarkGrey;
       MBarColor = SDarkGrey;
+      MValueColor = SDarkGrey;
       MTextColor = SLightYellow;
-      MValueColor = SLightGrey;
-      MDrawName = true;
+      //MValueNameColor = SLightGrey;
+      //MValueTextColor = SLightGrey;
+      MDrawValueName = true;
+      MDrawValueText = true;
       //MCursor = smc_arrowUpDown;
     }
 
     virtual ~SWidget_Slider() {
     }
 
-    //----------
+  //----------------------------------------
+  //
+  //----------------------------------------
+
+  public:
+
+    void drawValueName(bool ADraw)  { MDrawValueName = ADraw; }
+    void drawValueText(bool ADraw)  { MDrawValueText = ADraw; }
+    void barColor(SColor AColor)    { MBarColor = AColor; }
+
+  //----------------------------------------
+  //
+  //----------------------------------------
+
+  public:
 
     //virtual
     void on_paint(SPainter* APainter, SRect ARect, uint32 AMode=0) {
@@ -75,15 +99,18 @@ class SWidget_Slider
       //ACanvas.drawRect(FRect.x,FRect.y,FRect.x2,FRect.y2);
 
       // name
-      if (MDrawName) {
+      if (MDrawValueName) {
         //nt = MName;
         APainter->setTextColor(MTextColor);
         APainter->drawText(MRect.x+4,MRect.y,MRect.x2(),MRect.y2(),nt/*FName*/, sta_left);
       }
 
       // value
-      APainter->setTextColor(MValueColor);
-      APainter->drawText(MRect.x,MRect.y,MRect.x2()-4,MRect.y2(),vt/*FTextBuf*/, sta_right/*center*/);
+      if (MDrawValueText) {
+        APainter->setTextColor(MValueColor);
+        APainter->drawText(MRect.x,MRect.y,MRect.x2()-4,MRect.y2(),vt/*FTextBuf*/, sta_right/*center*/);
+      }
+
     }
 
 };

@@ -7,6 +7,7 @@
 
 #include <math.h> // expf, log2
 
+/*
 float SAcosF(const float x);
 float SAsinF(const float x);
 float SAtanF(const float x);
@@ -25,6 +26,7 @@ float SSinhF(const float x);
 float SSqrtF(const float x);
 float STanF(const float x);
 float STanhF(const float x);
+*/
 
 //----------------------------------------------------------------------
 //
@@ -32,6 +34,7 @@ float STanhF(const float x);
 
 /// fast approximation of the arc-cosine function for range [-1, 1]
 
+static __SKEI_UNUSED
 float SAcosF(const float x) {
   const float x2 = x*x;
   return x*(x2*(-0.55*x2 + 0.097) - 1.008) + 1.571;
@@ -41,6 +44,7 @@ float SAcosF(const float x) {
 
 /// fast approximation of the arc-sine function for range [-1, 1]
 
+static __SKEI_UNUSED
 float SAsinF(const float x) {
   return SKEI_PI05 - SSqrtF(1 - x)*(1.5707288 - x*(0.2121144 + x*(0.0742610 -
   x*(0.0187293 + 0.395*x))));
@@ -50,6 +54,7 @@ float SAsinF(const float x) {
 
 /// fast approximation of the arc-tangens function for range [-2, 2]
 
+static __SKEI_UNUSED
 float SAtanF(const float x) {
   const float x2 = x*x;
   return (x*(105 + 55*x2)) / (105 + x2*(90 + 9*x2));
@@ -59,6 +64,7 @@ float SAtanF(const float x) {
 
 /// fast approximation of the cosine function for range [-pi, pi]
 
+static __SKEI_UNUSED
 float SCosF(const float x) {
   const float x2 = x*x;
   return (15120 + x2*(-6900 + 313*x2)) / (15120 + x2*(660 + 13*x2));
@@ -76,6 +82,7 @@ float SCosF(const float x) {
 
 /// approximation of the hyperbolic-cosine function (fpu)
 
+static __SKEI_UNUSED
 float SCoshF(const float x) {
   const float _e = expf(abs(x));
   return (_e + 1.0f/_e)*0.5f;
@@ -83,6 +90,7 @@ float SCoshF(const float x) {
 
 /// fast approximation of the hyperbolic-cosine function for range [-3.5, 3.5]
 
+static __SKEI_UNUSED
 float SCoshF2(const float x) {
   const float x2 = x*x;
   return x2*(0.065*x2 + 0.428) + 1.025;
@@ -98,6 +106,7 @@ float SCoshF2(const float x) {
 
 // is SKEI_LITTLE_ENDIAN defined?
 
+static __SKEI_UNUSED
 float SExpF(const float v) {
   union {
     double d;
@@ -137,6 +146,7 @@ float SExpF(const float v) {
 
 /// invert of x: (1/x) - fast / inaccurate
 
+static __SKEI_UNUSED
 float SInverseF(float x) {
   union {
     uint32 i;
@@ -154,6 +164,7 @@ float SInverseF(float x) {
   http://bits.stephan-brumme.com/inverse.html
 */
 
+static __SKEI_UNUSED
 float SInverse2(float x) {
   unsigned int *i = (unsigned int*)&x; // re-interpret as a 32 bit integer
   // warning: dereferencing pointer \91i\92 does break strict-aliasing rules|
@@ -169,6 +180,7 @@ float SInverse2(float x) {
   based on code found in 'quake 3 arena' by 'id software'
 */
 
+static __SKEI_UNUSED
 float SInvSqrtF(const float x) {
   // const float halfx = 0.5f*x;
   union {
@@ -186,6 +198,7 @@ float SInvSqrtF(const float x) {
 
 /// http://bits.stephan-brumme.com/invSquareRoot.html
 
+static __SKEI_UNUSED
 float SInvSqrtF2(float x) {
   float xHalf = 0.5f*x;                 // for Newton iteration
   unsigned int *i = (unsigned int*) &x; // same as above
@@ -196,6 +209,7 @@ float SInvSqrtF2(float x) {
 
 //----------
 
+static __SKEI_UNUSED
 float SInvSqrtF3(float x) {
   unsigned int *i = (unsigned int*) &x; // access float with integer logic
   // warning: dereferencing pointer \91i\92 does break strict-aliasing rules|
@@ -210,6 +224,7 @@ float SInvSqrtF3(float x) {
   based on code from http://www.flipcode.com/archives/Fast_log_Function.shtml
 */
 
+static __SKEI_UNUSED
 float SLog2F(const float val) {
   if (val > 0.f) {
     union {
@@ -229,6 +244,7 @@ float SLog2F(const float val) {
 
 /// calculates the logarithm base 10 of a floating point number
 
+static __SKEI_UNUSED
 float SLog10F(const float x) {
   // log10(e) = 0.4342945239647
   // also: log10(x) = log2(x) - ln(x)
@@ -244,6 +260,7 @@ float SLog10F(const float x) {
   based on code from http://www.flipcode.com/archives/Fast_log_Function.shtml
 */
 
+static __SKEI_UNUSED
 float SLogF(const float &val) {
   return (log2(val)*0.69314718f);
 }
@@ -252,6 +269,7 @@ float SLogF(const float &val) {
 
 /// performs fast pow(float, integer)
 
+static __SKEI_UNUSED
 float SPowF(float x, unsigned long n) {
   float res = 1;
   while (n > 0) {
@@ -288,6 +306,7 @@ float SPowF(float x, unsigned long n) {
 
 /// fast approximation of the sine function for range [-pi, pi]
 
+static __SKEI_UNUSED
 float SSinF(float x) {
   x *= (1.2732395447f - 0.4052847345f * abs(x));
   return 0.225f * (x * abs(x) - x) + x;
@@ -314,6 +333,7 @@ inline float fast_sin(float x) {
 
 /// fast approximation of the hyperbolic-sine function for range [-3.5, 3.5]
 
+static __SKEI_UNUSED
 float SSinhF(const float x) {
   const float x2 = x*x;
   return x*(x2*(0.012*x2 + 0.156) + 1.004);
@@ -326,6 +346,7 @@ float SSinhF(const float x) {
   based on: http://www.azillionmonkeys.com/qed/sqroot.html
 */
 
+static __SKEI_UNUSED
 float SSqrtF(const float x) {
   const float halfx = x*0.5;
   union {
@@ -341,6 +362,7 @@ float SSqrtF(const float x) {
 
 /// fast approximation of the tangens function for range [-pi, pi]
 
+static __SKEI_UNUSED
 float STanF(const float x) {
   const float x2 = x*x;
   return (x*(105 - 10*x2)) / (105 - x2*(45 - x2));
@@ -357,6 +379,7 @@ float STanF(const float x) {
 
 /// fast approximation of the hyperbolic-tangens function for range [-4.2, 4.2]
 
+static __SKEI_UNUSED
 float STanhF(const float x) {
   const float x2 = x*x;
   return x*(27 + x2) / (27 + 9*x2);

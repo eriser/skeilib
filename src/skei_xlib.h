@@ -136,10 +136,11 @@
 
 static bool need_xinitthreads_call = true;
 
+static __SKEI_UNUSED
 bool skei_init_xlib() {
   //static bool need_xinitthreads_call = true;
   if (need_xinitthreads_call) {
-    STrace("calling XInitThreads\n");
+    //STrace("calling XInitThreads\n");
     XInitThreads();
     need_xinitthreads_call = false;
   }

@@ -10,8 +10,8 @@ class SWidget_Knob
 : public SWidget_Value {
 
   protected:
-    SColor MBarColor;
-    SColor MClearColor;
+    //SColor MBarColor;
+    SColor MCenterColor;
 
   public:
 
@@ -19,15 +19,22 @@ class SWidget_Knob
     : SWidget_Value(ARect,AValue,AAlignment) {
       MName = "SWidget_Knob";
       MHint = "knob";
-      MBarColor = SLightGrey;
-      MBackColor = SDarkGrey;
-      //MValueColor = SWhite;
-      MClearColor = SGrey;
+      MBackColor = SGrey;
+      //MBarColor = SWhite;
+      MValueColor = SWhite;
+      MCenterColor = SLightGrey;
       MCursor = smc_arrowUpDown;
     }
 
     virtual ~SWidget_Knob() {
     }
+
+  public:
+
+    //void barColor(SColor AColor) { MBarColor = AColor; }
+    void centerColor(SColor AColor) { MCenterColor = AColor; }
+
+
 
   public:
 
@@ -39,15 +46,22 @@ class SWidget_Knob
       //APainter->fillRect(MRect);
       //APainter->setDrawColor(FBorderColor);
       //APainter->drawRect(FRect.x,FRect.y,FRect.x2,FRect.y2);
+
       // background arc
+
       APainter->setFillColor(MBackColor);
       APainter->fillArc(MRect.x+3,MRect.y+3,MRect.x2()-3,MRect.y2()-3,-0.4,0.8);
+
       // value arc
-      APainter->setFillColor(MBarColor);
+
+      APainter->setFillColor(MValueColor);
       APainter->fillArc(MRect.x+3,MRect.y+3,MRect.x2()-3,MRect.y2()-3,-0.4,MValue*0.8);
+
       // clear center
-      APainter->setFillColor(MClearColor);
+
+      APainter->setFillColor(MCenterColor);
       APainter->fillArc(MRect.x+3+s,MRect.y+3+s,MRect.x2()-3-s,MRect.y2()-3-s,0,1);
+
     }
 
 };

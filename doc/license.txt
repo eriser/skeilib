@@ -1,54 +1,78 @@
-not decided yet..
+
+[ preliminary, temporary, work in progress ]
+
+not 100% decided..
+for the current version (v0.0.0) assume gpl3..
+(we will fix this when/if it becomes an issue)
+
+
+
+
+
+----------------------------------------------------------------------
+triple license.. choose one
+----------------------------------------------------------------------
+
+1. opensource
+
+   * gpl3
+   
+2. closed source, free
+
+   * treat all platforms equal
+     no windows-only plugins, please.. neither any "works best in linux",
+     or "that feature is only available on mac versions"..
+   * make the plugins easily available
+     not for just a limited time.. consider 'bitrot', 10 years ahead..
+     let other people distribute your plugins..
+   * no gpl
+     you can't use any of the gpl parts of the library
+   * promotion
+     plugins need to have the "powered by skeilib" logo somewhere on the gui
+     (could be hidden away in an 'about' window or similar),
+     and/or in the documentation, readme-files, etc..
+     to make it very obvious that your plugins are based on skeilib
+
+3. closed source, commercial
+
+   * discouraged
+   * costs $$$ (contact us)
+   * code creator licenses
+     give author(s) of the code you use licenses to your plugin, and/or free
+     versions (including updates, just as if they had bought your plugin)
+   * you can't use any of the gpl parts of the library
+   
+   commercial doesn't just mean sold for money.. if you want anything in
+   return for your plugin, no matter what it is, money, facebook likes, an
+   email, twitter retweets, website registration, or whatever,
+   it's considered commercial..
 
 ----------------------------------------------------------------------
 
-* vst: not compatible with opensource licenses that require redistribution of
-       all required files..
-* gpl: need to be gpl ourselves
-* gpl: can't release closed source
+general guidelines:
+(what we hope to achieve with the licensing mess)
 
-----------
+* we want to promote linux as a good music production platform, so linux
+  versions of plugins is very important for us..
+  (if you can't compile linux versions, we can help you with that..)
 
-"GPL requires to include all of the required source code which implies to
-include ('re-distribute') the VST-SDK which the VST license not allows"
-
-"As the first author of the software, you can actually just release your
-source, and have the users get the SDK them selves. As the first authour, you
-can do what ever you want. The problem is that this basically makes the GPL
-pointless since the recipients can't redistribute the software in turn. It also
-means you can't rely on any gpl'ed libs and such. So essentially, you are only
-pushing the problem on to your users."
-
-"Steinberg has terms in their VST SDK license that forbids anyone to
-redistribute it. In order to build this project, you need some header files
-from the SDK. Under the terms of the GPL, if you distribute a binary built from
-GPL'ed code then you must distribute the source. This would involve
-redistributing the SDK which would violate the terms of Steinberg's license."
-
-----------
-
-so, maybe..
-triple license?
-
-a) free, opensource
-
-  gpl
+* you shouldn't run off with other people's work, to earn money, fame,
+  reputation, etc, without giving something back:
   
-b) free, closed source
-
-  require updated and equal binaries for all platforms
-  or contribution back to lib/project..
-
-c) commercial
-
-  $
-
+  - gpl: you contribute the possibility for us to take your code, and bring
+    some of it back into skeilib, and thus improving it..
+  - closed/free: you help us with promoting the library
+  - closed/commercial: you need to compensate the us in other ways
+  
+  and always remember: credit where credit's due..
+  
+* don't try to be sneaky and find loopholes or whatever..
+ 
 ----------------------------------------------------------------------
 
-do we need/want additional clause for vst, or whatever?
-"you are allowed to..."
+notes to self:
 
-----------
-
-argh..
+* add a "-gpl" or similar switch to the compile scripts, and put all gpl
+  related code in specific /gpl directories, so that people have to actively
+  choose to use it.. we don't want any "sorry, i didn't know!" excuses :-)
 

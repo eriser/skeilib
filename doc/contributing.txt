@@ -1,0 +1,69 @@
+we need, want, wishes, hopes, are looking for:
+
+----------------------------------------------------------------------
+code / general
+----------------------------------------------------------------------
+
+* general
+
+  we're always in need of more code, of course..
+  or people that can look at existing code to find flaws, bugs, problems,
+  or ways to improve it..
+
+  also, we've just started to make everything more uniform and similar,
+  at least we have started to think about it :-) but it's a tedious task,
+  and as long as there's a bunch of other interesting things to code,
+  it's difficult to gt started.. so, help with that could be nice..
+  
+* windows
+
+  we have code for windows versions available, but we're not able to
+  maintain it ourselves, so it would be nice to have somebody using windows
+  as their main os taking care of that part, and make sure it's up to date,
+  and working..
+  
+* mac
+
+  some os-specific stuff have to be ported to mac.. nobody here at the
+  skeilib hq have a mac, or is interested in getting one, so we would need
+  expernal personnel to help us with that..
+  
+* todo
+
+  see /docs/todo.txt for a longer list of things that needs to be done
+  
+* example plugins
+
+  the more example plugins, the better..
+  shows that the library actually works, gives people some nice starting
+  points for their own plugins,
+  
+  also, the more people that use the library to make their own plugins,
+  the more bugs and problems could be found and fixed..
+  
+----------------------------------------------------------------------
+* gfx
+----------------------------------------------------------------------
+
+* logo
+
+  we need a good logo.. we have a sketch (http://www...), but it needs to be
+  finalized properly..  we're open to suggestions for other logos, of course..
+  
+  a cool "powered by skeilib" symbol
+  
+* gui
+
+  knobs, backgrounds, etc, etc..
+  some good tools are knobman and skinman (links)
+  
+----------------------------------------------------------------------
+* txt
+----------------------------------------------------------------------
+
+* documentation
+
+  as usual, us coders are not good documentation writers.. so, somebody
+  helping with that would be of tremendous value, both for us, and other
+  (potential) users of the library
+

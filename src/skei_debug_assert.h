@@ -37,8 +37,6 @@
   #define SAssert(e) _SAssert((e), __FILE__, __LINE__, #e)
 
   //----------------------------------------
-  //
-  //----------------------------------------
 
   /*
     SStaticAssert()
@@ -61,9 +59,13 @@
 
 #else // SKEI_DEBUG
 
-  SKEI_STATIC_ASSERT_INLINE unsigned int _SKEI_STATIC_ASSERT (void) { return 0; }
-  #define SAssert(e)       _SKEI_STATIC_ASSERT()
-  #define SStaticAssert(e) _SKEI_STATIC_ASSERT()
+  //SKEI_STATIC_ASSERT_INLINE unsigned int _SKEI_STATIC_ASSERT (void) { return 0; }
+  //#define SAssert(e)       _SKEI_STATIC_ASSERT()
+  //#define SStaticAssert(e) _SKEI_STATIC_ASSERT()
+
+  #define SAssert(e)       {}
+  #define SStaticAssert(e) {}
+
 
 #endif // SKEI_DEBUG
 

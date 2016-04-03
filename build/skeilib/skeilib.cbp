@@ -35,7 +35,9 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-O2" />
+					<Add option="-march=core2" />
+					<Add option="-O3" />
+					<Add option="-ffast-math" />
 					<Add option="-DSKEI_EXE" />
 					<Add directory="/usr/include/freetype2" />
 				</Compiler>
@@ -80,10 +82,12 @@
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-O2" />
+					<Add option="-march=core2" />
+					<Add option="-O3" />
 					<Add option="-fPIC" />
 					<Add option="-rdynamic" />
 					<Add option="-Wl,-Bsymbolic" />
+					<Add option="-ffast-math" />
 					<Add option="-DSKEI_VST" />
 					<Add directory="/usr/include/freetype2" />
 				</Compiler>
@@ -122,7 +126,9 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-O2" />
+					<Add option="-march=core2" />
+					<Add option="-O3" />
+					<Add option="-ffast-math" />
 					<Add option="-DSKEI_EXE" />
 					<Add option="-DSKEI_NOGUI" />
 				</Compiler>
@@ -159,10 +165,12 @@
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-O2" />
+					<Add option="-march=core2" />
+					<Add option="-O3" />
 					<Add option="-fPIC" />
 					<Add option="-rdynamic" />
 					<Add option="-Wl,-Bsymbolic" />
+					<Add option="-ffast-math" />
 					<Add option="-DSKEI_VST" />
 					<Add option="-DSKEI_NOGUI" />
 				</Compiler>
@@ -177,11 +185,14 @@
 			<Add option="-Wall" />
 			<Add option="-m64" />
 			<Add option="-msse3" />
+			<Add option="-fdata-sections" />
+			<Add option="-ffunction-sections" />
 			<Add directory="../../src" />
 			<Add directory="../../plugins" />
 			<Add directory="../../test" />
 		</Compiler>
 		<Linker>
+			<Add option="-Wl,--gc-sections" />
 			<Add library="pthread" />
 		</Linker>
 		<Unit filename="../../README.md" />
@@ -201,37 +212,51 @@
 		<Unit filename="../../plugins/dev.h" />
 		<Unit filename="../../plugins/fx_cutter.h" />
 		<Unit filename="../../plugins/fx_cutter2.h" />
+		<Unit filename="../../plugins/fx_eventhorizon.h" />
 		<Unit filename="../../plugins/fx_fracdelay.h" />
 		<Unit filename="../../plugins/fx_freeze.h" />
 		<Unit filename="../../plugins/fx_grains.h" />
+		<Unit filename="../../plugins/fx_hallreverb.h" />
 		<Unit filename="../../plugins/fx_jungle.h" />
 		<Unit filename="../../plugins/fx_looper.h" />
 		<Unit filename="../../plugins/fx_looper2.h" />
 		<Unit filename="../../plugins/fx_mute.h" />
 		<Unit filename="../../plugins/fx_pitch.h" />
 		<Unit filename="../../plugins/fx_repeater.h" />
+		<Unit filename="../../plugins/fx_saturation.h" />
+		<Unit filename="../../plugins/fx_simpverb.h" />
+		<Unit filename="../../plugins/fx_sonicmaximizer.h" />
 		<Unit filename="../../plugins/fx_stutter.h" />
 		<Unit filename="../../plugins/fx_stutter2.h" />
+		<Unit filename="../../plugins/gpl/fx_cabinet.h" />
+		<Unit filename="../../plugins/gpl/fx_moog24db.h" />
+		<Unit filename="../../plugins/gpl/fx_sonicenhancer.h" />
+		<Unit filename="../../plugins/gpl/fx_transient.h" />
+		<Unit filename="../../plugins/gpl/fx_vocoder.h" />
 		<Unit filename="../../plugins/midi_fibonacci.h" />
 		<Unit filename="../../plugins/minimal.h" />
+		<Unit filename="../../plugins/syn_1.h" />
+		<Unit filename="../../plugins/syn_1/skei_voice_manager2.h" />
+		<Unit filename="../../plugins/syn_1/syn_1_editor.h" />
+		<Unit filename="../../plugins/syn_1/syn_1_voice.h" />
 		<Unit filename="../../plugins/syn_test1.h" />
 		<Unit filename="../../plugins/syn_test1_voice.h" />
 		<Unit filename="../../plugins/template.h" />
 		<Unit filename="../../src/skei.h" />
 		<Unit filename="../../src/skei_array.h" />
 		<Unit filename="../../src/skei_atomic.h" />
-		<Unit filename="../../src/skei_audio_channel.h" />
-		<Unit filename="../../src/skei_audio_effect.h" />
-		<Unit filename="../../src/skei_audio_instrument.h" />
-		<Unit filename="../../src/skei_audio_mixer.h" />
+		<Unit filename="../../src/skei_audio_driver.h" />
+		<Unit filename="../../src/skei_audio_driver_jack.h" />
+		<Unit filename="../../src/skei_audio_driver_portaudio.h" />
+		<Unit filename="../../src/skei_audio_driver_rtaudio.h" />
 		<Unit filename="../../src/skei_audio_utils.h" />
-		<Unit filename="../../src/skei_audio_voice.h" />
 		<Unit filename="../../src/skei_basepath.h" />
 		<Unit filename="../../src/skei_beat_detector.h" />
 		<Unit filename="../../src/skei_bitmap.h" />
 		<Unit filename="../../src/skei_bresenham.h" />
 		<Unit filename="../../src/skei_buffer.h" />
 		<Unit filename="../../src/skei_buffer_queue.h" />
+		<Unit filename="../../src/skei_channel.h" />
 		<Unit filename="../../src/skei_color.h" />
 		<Unit filename="../../src/skei_complex.h" />
 		<Unit filename="../../src/skei_config.h" />
@@ -278,6 +303,7 @@
 		<Unit filename="../../src/skei_font.h" />
 		<Unit filename="../../src/skei_global.h" />
 		<Unit filename="../../src/skei_goertzel.h" />
+		<Unit filename="../../src/skei_graph.h" />
 		<Unit filename="../../src/skei_host_sync.h" />
 		<Unit filename="../../src/skei_id.h" />
 		<Unit filename="../../src/skei_image.h" />
@@ -302,7 +328,9 @@
 		<Unit filename="../../src/skei_module.h" />
 		<Unit filename="../../src/skei_note_manager.h" />
 		<Unit filename="../../src/skei_object.h" />
+		<Unit filename="../../src/skei_operator.h" />
 		<Unit filename="../../src/skei_osc1.h" />
+		<Unit filename="../../src/skei_osc2.h" />
 		<Unit filename="../../src/skei_painter.h" />
 		<Unit filename="../../src/skei_painter_base.h" />
 		<Unit filename="../../src/skei_painter_xlib.h" />
@@ -312,6 +340,8 @@
 		<Unit filename="../../src/skei_plugin.h" />
 		<Unit filename="../../src/skei_plugin_base.h" />
 		<Unit filename="../../src/skei_plugin_exe.h" />
+		<Unit filename="../../src/skei_plugin_id.h" />
+		<Unit filename="../../src/skei_plugin_jesusonic.h" />
 		<Unit filename="../../src/skei_plugin_listener.h" />
 		<Unit filename="../../src/skei_plugin_vst.h" />
 		<Unit filename="../../src/skei_png.h" />
@@ -369,6 +399,7 @@
 		<Unit filename="../../src/skei_widget_number.h" />
 		<Unit filename="../../src/skei_widget_pages.h" />
 		<Unit filename="../../src/skei_widget_panel.h" />
+		<Unit filename="../../src/skei_widget_popup.h" />
 		<Unit filename="../../src/skei_widget_scrollbar.h" />
 		<Unit filename="../../src/skei_widget_scrollbox.h" />
 		<Unit filename="../../src/skei_widget_sizer.h" />
@@ -403,7 +434,10 @@
 		<Unit filename="../../test/test_gui1.h" />
 		<Unit filename="../../test/test_image.h" />
 		<Unit filename="../../test/test_module.h" />
+		<Unit filename="../../test/test_operators.h" />
 		<Unit filename="../../test/test_painter.h" />
+		<Unit filename="../../test/test_test.h" />
+		<Unit filename="../../test/test_voice.h" />
 		<Unit filename="../../tools/bin2h.c">
 			<Option compilerVar="CC" />
 			<Option compile="0" />

@@ -2,192 +2,105 @@
 #define skei_voice_manager_included
 //----------------------------------------------------------------------
 
-/*
-  polyphonic voice manager
-  - max block size: 999999 samples
-    a biiig offset that we will hopefully never reach
-  - max events per block: #define MAX_EVENTS 1024
-      a static buffer for the incoming events, to avoid runtime memory juggling
-  - very basic nna/note-stealing (works ok-ish)
-  - currently only note on/off
-  - converts events in processSample
-      could be done in processBlock (does it matter?)
-  - not optimized
-      but 16 basic saw voices uses only around 0.8% cpu (reaper/wine)
-      so i've postponed that until it gets problematic
-  - bugs?
-*/
-
-//----------
+#if 0
 
 /*
+  * wouldn't it be better if MAllVoices was set up from sub-modules?
+  * MPE - 16 channels
+  * and, should SModule have noteOn, noteOff, pitchBend ?
 
-  [assume events in buffer are sorted by their offset in the audiobuffer]
-
-  we have:
-  - an array with all available voices (allocated at startup)
-  - a list of available voices (initially containing ptr to all available voices)
-  - a list of playing voices
-  - a list of released (decaying) voices
-  note on:
-  - grab a voice from the free voices list, and append it to the playing list
-  - if no voice available in the free list, take the oldest voice from decaying voices
-  note off:
-  - move the voice from the playing to the released list
-  process:
-  - process both playing and released lists,
-    call process for each voice, and add their outputs
-    voices can set their mState to vs_Off to shut themselves off (see post-process)
-  post-process:
-  - move all voices with mState == vs_Off from released to free voices list
-  - cleanup buffers and counters
-
-  midi:
-  we copy all incoming midi events to a buffer.
-  during sample processing:
-  keep track of current offset (position in buffer), and next event to process
-  when offset reaches next event, we fire off note on/ff etc events
-  and continue, looking at the next event and its offset
-
-
-  after the block has finished, we reset the buffers and offset
-  and prepare for next block
+  * midi is not sample accurate..
+    currently sent directly to the modules when we receive them in the plugin.
+    a) sample accurate (events and counting samples)
+    b) at the start of each tick..
 
 */
 
+//----------------------------------------------------------------------
+
+#include "skei_module.h"
+#include "skei_audio_utils.h"
 #include "skei_list.h"
-//#include "skei_voice.h"
-
-//#define OVERSAMPLE 4
-
-class SVoiceManager;
+#include "skei_voice.h"
 
 //----------------------------------------------------------------------
-// voice
-//----------------------------------------------------------------------
 
-class SVoice : public SListNode
+template <typename _V, int _N>
+class SVoiceManager
+: public SModule
 {
-  //friend class SVoiceManager;
-  protected:
-    SVoiceManager*  MManager;
-    uint32          MState;
-    float           MSampleRate;
-    int32           MMidiNote;
-    int32           MMidiVel;
-    float           MPitchBend;
-  public:
-    SVoice(SVoiceManager* AManager) {
-      MManager    = AManager;
-      MState      = svs_off;
-      MSampleRate = 0;
-      MMidiNote   = 0;
-      MMidiVel    = 0;
-      MPitchBend  = 0;
-    }
-    virtual ~SVoice() {
-    }
-  public:
-    void setState(uint32 AState) {
-      MState = AState;
-    }
-    uint32 getState(void) {
-      return MState;
-    }
-  public:
-    void on_setSampleRate(float ARate) {
-      MSampleRate = ARate;
-    }
-    virtual void  on_noteOn(int ANote, int AVel) {
-      MMidiNote = ANote;
-      MMidiVel = AVel;
-    }
-    virtual void  on_noteOff(int ANote, int AVel) {
-      MMidiNote = -1;
-      MMidiVel = 0;
-    }
-    virtual void  on_pitchBend(float ABend) {
-      MPitchBend = ABend;
-    }
-    virtual void  on_control(int AIndex, float AVel) {
-    }
-    virtual void  on_process(float* outs) {
-      outs[0] = 0;
-      outs[1] = 0;
-    }
-    //virtual void  on_processBlock(SSample** AInputs, SSample** AOutputs, uint32 ALength) {
-    //}
-    //virtual void  on_processSample(SSample** AInputs, SSample** AOutputs) {
-    //  *AInputs[0] = 0;
-    //  *AInputs[1] = 0;
-    //}
-};
 
-//----------
-
-typedef SArray<SVoice*> SVoiceArray;
-
-//----------------------------------------------------------------------
-// voice event
-//----------------------------------------------------------------------
-
-struct SVoiceEvent {
-  int ofs;
-  unsigned char msg1,msg2,msg3;
-  char padding;
-};
-
-#define MAX_EVENTS 1024
-
-//----------------------------------------------------------------------
-// voice manager
-//----------------------------------------------------------------------
-
-class SVoiceManager {
   private:
-    int         MOffset;              // current audio buffer offset
-    int         MNextEvent;           // next event offset in audio buffer
-    int         MCurrEvent;           // current event (in MEvents buffer)
-    int         MNumEvents;           // number of events in buffer
-    SVoiceEvent MEvents[MAX_EVENTS];  // events
-    int         MNumPlaying;          // number of plauing voices
-    float       MSampleRate;
-  protected:
-    SVoice*     MNoteMap[128];        // map midi-note -> voice (for note-off, etc)
-    SVoiceArray MAllVoices;           // all available (pre-allocated) voices
-    SList       MFreeVoices;          // list of free (non-playing) voices
-    SList       MPlayingVoices;       // list oc active/playing voices
-    SList       MReleasedVoices;      // voices in release state/stage
+    float         MPitchBend;
+    float         MPitchBendRange;
   private:
-    float       MPitchBend;
-    float       MPitchBendRange;
-
-  //----------------------------------------
-  //
-  //----------------------------------------
+    _V            MAllVoices[_N];
+    SList         MFreeVoices;
+    SList         MPlayingVoices;
+    SList         MReleasedVoices;
+    _V*           MNoteMap[128*16];
+    uint32        MNumPlaying;
 
   public:
 
-    SVoiceManager() {
-      MOffset     = 0;
-      MNextEvent  = 999999;
-      MCurrEvent  = 0;
-      MNumEvents  = 0;
-      SMemset(MEvents,0,sizeof(MEvents));
-      MNumPlaying = 0;
-      MSampleRate = 0;
-      //
-      SMemset(MNoteMap,0,sizeof(MNoteMap));
-      //
-      MPitchBend = 0;
+    SVoiceManager(void)
+    : SModule() {
+      MPitchBend      = 0;
       MPitchBendRange = 2;
-
+      for (uint32 i=0; i<_N; i++) MFreeVoices.append( &MAllVoices[i] );
+      SMemset(MNoteMap,0,sizeof(MNoteMap));
+      MNumPlaying     = 0;
+      MNumOutputs     = 2;
     }
 
     virtual ~SVoiceManager() {
-      #ifndef SKEI_NO_AUTODELETE
-      deleteVoices();
-      #endif
+    }
+
+  //----------------------------------------
+  // accessors
+  //----------------------------------------
+
+  public:
+
+    uint32  numPlaying(void)              { return MNumPlaying; }
+    void    pitchBendRange(float ARange)  { MPitchBendRange = ARange; }
+
+  //----------------------------------------
+  // voices
+  //----------------------------------------
+
+  private:
+
+    _V* findFreeVoice(void) {
+      // try free voices first
+      _V* voice = (_V*)MFreeVoices.tail();
+      if (voice) {
+        MFreeVoices.removeTail();
+        return voice;
+      }
+      // if no free voices, grab (oldest) released voices
+      else {
+        // voices are appended to the end (tail), so head is the oldest one
+        voice = (_V*)MReleasedVoices.head();
+        if (voice) {
+          MReleasedVoices.removeHead();
+          return voice;
+        }
+      }
+      return SKEI_NULL;
+    }
+
+    //----------
+
+    /*
+      process voice (to internal buffer), and add result to ABuffer
+    */
+
+    void processTickVoice(SVoice* AVoice, uint32 ALength, SSample** ABuffer) {
+      //AVoice->process(ALength);
+      AVoice->on_processTick(0,ALength);
+      SSample* vptr = AVoice->output(0);
+      SAddMonoBuffer(ABuffer,&vptr,ALength);
     }
 
   //----------------------------------------
@@ -196,161 +109,91 @@ class SVoiceManager {
 
   public:
 
-    float getPitchBend(void) { return MPitchBend; }
+    //void reset(void) {
+    //  for (uint32 i=0; i<NUM; i++) MAllVoices[i].reset();
+    //}
+
+    //----------
+
+    //virtual
+    void on_sampleRate(float ARate) {
+      SModule::on_sampleRate(ARate);
+      for (uint i=0; i<_N; i++) MAllVoices[i].on_sampleRate(MSampleRate);
+    }
+
+    //----------
+
+    //virtual
+    void on_blockSize(uint32 ASize) {
+      SModule::on_blockSize(ASize);
+      for (uint i=0; i<_N; i++) MAllVoices[i].on_blockSize(MBlockSize);
+    }
 
   //----------------------------------------
   //
   //----------------------------------------
 
-  private:
+  public:
 
-    void handle_noteOn(int32 ANote, int32 AVel) {
-      SVoice* V = (SVoice*)MFreeVoices.tail();
-      if (V) {
-        MFreeVoices.removeTail();
-      }
-      else {
-        V = (SVoice*)MReleasedVoices.head();
-        if (V) { MReleasedVoices.removeHead(); }
-      }
-      if (V) {
-        MNoteMap[ANote] = V;
-        MPlayingVoices.append(V);
-        V->setState(svs_playing); //V->MState = svs_playing;
-        V->on_noteOn(ANote,AVel);
+    //virtual
+    void on_parameter(uint32 AIndex, float AValue) {
+      //SModule::control(AIndex,AValue);
+      for (uint32 i=0; i<_N; i++) MAllVoices[i].on_parameter(AIndex,AValue);
+    }
+
+    //----------
+
+    //virtual
+    void on_control(uint32 AIndex, float AValue, uint32 AChannel) {
+      //SModule::control(AIndex,AValue);
+      for (uint32 i=0; i<_N; i++) MAllVoices[i].on_control(AIndex,AValue);
+    }
+
+    //----------
+
+    //virtual
+    void on_noteOn(uint32 ANote, float AVelocity, uint32 AChannel) {
+      //SModule::noteOn(ANote,AVelocity,AChannel);
+      _V* voice = findFreeVoice();
+      if (voice) {
+        MNoteMap[AChannel*16 + ANote] = voice;
+        MPlayingVoices.append(voice);
+        voice->state(sms_active);
+        voice->on_noteOn(ANote,AVelocity);
         MNumPlaying++;
       }
     }
 
     //----------
 
-    void handle_noteOff(int ANote, int AVel) {
-      SVoice* V = MNoteMap[ANote];
-      if (V) {
-        MNoteMap[ANote] = NULL;
-        MPlayingVoices.remove(V);
-        MReleasedVoices.append(V);
-        V->setState(svs_released); //V->MState = svs_released;
-        V->on_noteOff(ANote,AVel);
+    //virtual
+    void on_noteOff(uint32 ANote, float AVelocity, uint32 AChannel) {
+      //SModule::noteOff(ANote,AVelocity,AChannel);
+      _V* voice = MNoteMap[AChannel*16 + ANote];
+      if (voice) {
+        MNoteMap[AChannel*16 + ANote] = SKEI_NULL;
+        MPlayingVoices.remove(voice);
+        MReleasedVoices.append(voice);
+        voice->state(sms_finished);
+        voice->on_noteOff(ANote,AVelocity);
         MNumPlaying--;
       }
     }
 
     //----------
 
-    void handle_pitchBend(int32 ABend) {
-      MPitchBend = (float)ABend - 8192.0f;
-      MPitchBend *= SKEI_INV8192F; //(1/8192);
-      MPitchBend *= MPitchBendRange;
-      for (uint32 i=0; i<MAllVoices.size(); i++) MAllVoices[i]->on_pitchBend(MPitchBend);
-    }
-
-  //public:
-
-    void handle_control(int AIndex, float AVal) {
-      for (uint i=0; i<MAllVoices.size(); i++) MAllVoices[i]->on_control(AIndex,AVal);
-    }
-
-  //----------------------------------------
-  //
-  //----------------------------------------
-
-  //public:
-  private:
-
-    void process_events(void) {
-      while (MOffset==MNextEvent) {
-        //int chn  = mEvents[mCurrEvent].msg1 & 0x0f;
-        int msg  = MEvents[MCurrEvent].msg1 & 0xf0;
-        int note = MEvents[MCurrEvent].msg2;
-        int vel  = MEvents[MCurrEvent].msg3;
-        switch(msg) {
-          case 0x90: // note on
-            if (vel==0) handle_noteOff(note,vel);
-            else handle_noteOn(note,vel);
-            break;
-          case 0x80: // note off
-            note = MEvents[MCurrEvent].msg2;
-            vel  = MEvents[MCurrEvent].msg3;
-            handle_noteOff(note,vel);
-            break;
-          case 0xE0: // pitch bend
-            int32 bend = MEvents[MCurrEvent].msg2 + (MEvents[MCurrEvent].msg3 * 128);
-            handle_pitchBend( bend );
-            break;
-        }
-        MCurrEvent++;
-        if (MCurrEvent<MNumEvents) MNextEvent = MEvents[MCurrEvent].ofs;
-        else MNextEvent = 999999;
-      }
-      MOffset++;
-    }
-
-    //----------
-
-    void process_voices(float* spl0, float*spl1) {
-      float _outs[2];
-      // playing voices
-      SVoice* V = (SVoice*)MPlayingVoices.head();
-      while (V) {
-        //out += V->process();
-        V->on_process(&_outs[0]);
-        *spl0 += _outs[0];
-        *spl1 += _outs[1];
-        V = (SVoice*)V->next();
-      }
-      // released voices
-      V = (SVoice*)MReleasedVoices.head();
-      while (V) {
-        //if (V->MState!=svs_off) {
-        if (V->getState()!=svs_off) {
-          //out += V->process();
-          V->on_process(&_outs[0]);
-          *spl0 += _outs[0];
-          *spl1 += _outs[1];
-        }
-        V = (SVoice*)V->next();
-      }
-    }
-  //----------------------------------------
-  //
-  //----------------------------------------
-
-  public:
-
-    //virtual
-    void appendVoice(SVoice* V) {
-      MAllVoices.append(V);
-      //mFreeVoices.appendNode(V);
-      MFreeVoices.insertTail(V);
-    }
-
-    //----------
-
-    //virtual
-    void deleteVoices(void) {
-      for (uint i=0; i<MAllVoices.size(); i++) {
-        delete MAllVoices[i];
-      }
-    }
-
-    //----------
-
     /*
-      oversampling:
-        ARate * oversample
+      pitchbend is converted to -1..1, then scaled by pitchBend range
+      and sent to all voices
     */
 
     //virtual
-    void setSampleRate( float ARate ) {
-      MSampleRate = ARate;// * OVERSAMPLE;
-      for (uint i=0; i<MAllVoices.size(); i++) MAllVoices[i]->on_setSampleRate(MSampleRate);
-    }
-
-    //----------
-
-    void setPitchBendRange(float ARange) {
-      MPitchBendRange = ARange;
+    void on_pitchBend(float ABend, uint32 AChannel) {
+      //SModule::pitchBend(ABend,AChannel);
+      MPitchBend = (float)ABend - 8192.0f;
+      MPitchBend *= SKEI_INV8192F;
+      MPitchBend *= MPitchBendRange;
+      for (uint32 i=0; i<_N; i++) MAllVoices[i].on_pitchBend(MPitchBend);
     }
 
   //----------------------------------------
@@ -359,88 +202,63 @@ class SVoiceManager {
 
   public:
 
-    void midiEvent(int ofs, unsigned char msg1, unsigned char msg2, unsigned char msg3) {
-      //trace(" ofs "<<ofs << " msg1 "<<msg1 << " msg2 "<<msg2 << " msg3 "<<msg3);
-      if (MNumEvents<MAX_EVENTS) {
-        MEvents[MNumEvents].ofs  = ofs;
-        MEvents[MNumEvents].msg1 = msg1;
-        MEvents[MNumEvents].msg2 = msg2;
-        MEvents[MNumEvents].msg3 = msg3;
-        MNumEvents++;
+    //virtual
+    void on_processTick(uint32 AOffset, uint32 ALength) {
+      SModule::on_processTick(AOffset,ALength);
+      SSample* buffer = MOutputs[0] + AOffset;
+      SClearMonoBuffer(&buffer,ALength);
+      _V* voice;
+      // process playing voices
+      voice = (_V*)MPlayingVoices.head();
+      while (voice) {
+        processTickVoice(voice,ALength,&buffer);
+        voice = (_V*)voice->next();
+      }
+      // released voices
+      voice = (_V*)MReleasedVoices.head();
+      while (voice) {
+        processTickVoice(voice,ALength,&buffer);
+        voice = (_V*)voice->next();
       }
     }
 
     //----------
 
-    void parameterChange(int AIndex, float AVal) {
-      handle_control(AIndex,AVal);
+    // todo
+
+    //virtual
+    void on_processTickFast(uint32 AOffset) {
+      //SModule::processTickFast(AOffset);
+      on_processTick(AOffset, SKEI_MODULE_TICKSIZE);
     }
 
+  //----------------------------------------
+  //
+  //----------------------------------------
 
-    //----------
+  public:
 
-    void preProcess(void) {
-      MOffset = 0;
-      MCurrEvent = 0;
-      if (MNumEvents>0) MNextEvent = MEvents[0].ofs;
-      else MNextEvent = 999999;
-    }
+    // if any of the released voices has changed state to svs_off,
+    // move the voice from released voices list to free voices list
 
-    //----------
-
-    void processBlock(SSample** AInputs, SSample** AOutputs, int32 ANumSamples) {
-    }
-
-    //----------
-
-    void processSample(SSample** AInputs, SSample** AOutputs) {
-      float spl0 = 0; // *AOutputs[0];
-      float spl1 = 0; // *AOutputs[1];
-      process_events();
-      process_voices(&spl0,&spl1);
-      *AOutputs[0] = spl0;
-      *AOutputs[1] = spl1;
-
-    }
-
-    //----------
-
-    void postProcess(void) {
-      SVoice* V = (SVoice*)MReleasedVoices.head();
-      while (V) {
-        //if (V->MState==svs_off) {
-        if (V->getState()==svs_off) {
-          SVoice* next = (SVoice*)V->next();
-          MReleasedVoices.remove(V);
-          MFreeVoices.append(V);
-          V = next;
+    void postProcessVoices(void) {
+      _V* voice = (_V*)MReleasedVoices.head();
+      while (voice) {
+        if (voice->state()==sms_off) {
+          _V* next = (_V*)voice->next();
+          MReleasedVoices.remove(voice);
+          MFreeVoices.append(voice);
+          voice = next;
         }
-        else V = (SVoice*)V->next();
+        else {
+          voice = (_V*)voice->next();
+        }
       }
-      MNumEvents = 0;
     }
-
-
-    // stereo
-    //void process(float* outs) {
-    //  float spl0 = 0;
-    //  float spl1 = 0;
-    //  process_events();
-    //  process_voices(&spl0,&spl1);
-    //  outs[0] = spl0;
-    //  outs[1] = spl1;
-    //}
-
-    //----------
-
-
 
 };
 
-//----------
-
-#undef MAX_EVENTS
-//#undef OVERSAMPLE
+#endif // 0
 
 //----------------------------------------------------------------------
 #endif

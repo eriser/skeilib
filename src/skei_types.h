@@ -12,6 +12,8 @@
 #define SSample  float
 //#define SSample  double
 
+#define SSampleSize sizeof(SSample)
+
 //----------------------------------------------------------------------
 // fixed size types
 //----------------------------------------------------------------------

@@ -13,6 +13,7 @@
 
 // http://www.kvraudio.com/forum/viewtopic.php?p=6107378#p6107378 // tale
 
+static __SKEI_UNUSED
 float SPolyBlamp(float t, float dt) {
   if (t < dt) {
     t = t/dt - 1;

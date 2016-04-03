@@ -38,11 +38,11 @@ class SMidiTiming {
   public:
 
     SMidiTiming(SMidiTiming_Listener* AListener) {
-      MListener = AListener;
-      MOffset = 0;
-      MCurrEvent = 0;
-      MNextEvent = 999999;
-      MNumEvents = 0;
+      MListener   = AListener;
+      MOffset     = 0;
+      MCurrEvent  = 0;
+      MNextEvent  = 999999;
+      MNumEvents  = 0;
       SMemset(MEvents,0,sizeof(MEvents));
     }
 
@@ -92,6 +92,7 @@ class SMidiTiming {
       virtual functions..
     */
 
+    //----------
 
     //virtual
     uint32 process(void) {
@@ -109,6 +110,26 @@ class SMidiTiming {
         num += 1;
       }
       MOffset++;
+      return num;
+    }
+
+    uint32 process(uint32 ACount) {
+      // events
+      uint32 num = 0;
+      for (uint32 i=0; i<ACount; i++) {
+        while (MOffset==MNextEvent) {
+          uint32 msg = MEvents[MCurrEvent].msg1 & 0xf0;
+          uint32 chn = MEvents[MCurrEvent].msg1 & 0x0f;
+          uint32 idx = MEvents[MCurrEvent].msg2 & 0x7f;
+          uint32 val = MEvents[MCurrEvent].msg3 & 0x7f;
+          MListener->on_miditiming_event(msg,chn,idx,val);
+          MCurrEvent++;
+          if (MCurrEvent<MNumEvents) MNextEvent = MEvents[MCurrEvent].ofs;
+          else MNextEvent = 999999;
+          num += 1;
+        }
+        MOffset++;
+      }
       return num;
     }
 

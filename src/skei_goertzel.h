@@ -39,3 +39,7 @@ float SGoertzelHarmonics(float* ABuffer, uint32 ALength, float AFrequency, float
 //----------------------------------------------------------------------
 #endif
 
+/*
+  see also:
+  http://stackoverflow.com/questions/11579367/implementation-of-goertzel-algorithm-in-c
+*/

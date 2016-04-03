@@ -100,11 +100,8 @@ static SDebug_Trace skei_debug_trace;
 
 #else // SKEI_DEBUG
 
-void STrace(const char* format, ...) {
-}
-
-void DTrace(const char* format, ...) {
-}
+__SKEI_ALWAYS_INLINE void STrace(const char* format, ...) {}
+__SKEI_ALWAYS_INLINE void DTrace(const char* format, ...) {}
 
 #endif //SKEI_DEBUG
 

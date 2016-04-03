@@ -1254,6 +1254,7 @@ class SWindow_Xlib
 
 #ifdef SKEI_LIB
 
+//static __SKEI_UNUSED
 void* skei_xlib_threadproc(void* AData) {
   SWindow_Xlib* win = (SWindow_Xlib*)AData;
   if (win) {
@@ -1291,6 +1292,7 @@ void* skei_xlib_threadproc(void* AData) {
 #ifdef SKEI_LIB
 #ifdef SKEI_LINUX_SLEEP_THREAD
 
+//static __SKEI_UNUSED
 void* skei_xlib_threadproc_sleep(void* AData) {
   SWindow_Xlib* win = (SWindow_Xlib*)AData;
   if (win) {
@@ -1342,6 +1344,7 @@ void* skei_xlib_threadproc_sleep(void* AData) {
 
 //static XClientMessageEvent event;
 
+//static __SKEI_UNUSED
 void* skei_xlib_idleproc(void* AData) {
   int prev_cancel_type;
   pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS,&prev_cancel_type);
@@ -1404,6 +1407,7 @@ void* skei_xlib_idleproc(void* AData) {
     win->sendEvent(sts_timer);
 */
 
+//static __SKEI_UNUSED
 void* skei_xlib_timerproc(void* AData) {
   SWindow_Xlib* win = (SWindow_Xlib*)AData;
   if (win) {

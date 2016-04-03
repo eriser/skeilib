@@ -55,18 +55,18 @@ class myPlugin
 
   private:
 
-  public:
+  //----------------------------------------
+  //
+  //----------------------------------------
 
-    //------------------------------------------------------------
-    //
-    //------------------------------------------------------------
+  public:
 
     //virtual
     void on_create(void) {
       MInfo.name       = "template";
       MInfo.author     = "skei";
       MInfo.product    = MInfo.name;
-      MInfo.uniqueId   = SKEI_MAGIC + 0x0000;
+      MInfo.uniqueId   = SKEI_MAGIC + SKEI_ID_NONE;
       MInfo.numInputs  = 2;
       MInfo.numOutputs = 2;
       //
@@ -82,9 +82,11 @@ class myPlugin
     void on_destroy(void) {
     }
 
-    //------------------------------------------------------------
-    // events
-    //------------------------------------------------------------
+  //----------------------------------------
+  // events
+  //----------------------------------------
+
+  public:
 
     //virtual
     void on_stateChange(uint32 AState) {
@@ -141,14 +143,28 @@ class myPlugin
     void on_postProgram(void) {
     }
 
-    //------------------------------------------------------------
-    // audio
-    //------------------------------------------------------------
+  //----------------------------------------
+  // audio
+  //----------------------------------------
+
+  public:
 
     //virtual
     void on_processBlock(SSample** AInputs, SSample** AOutputs, int32 ANumSamples) {
       //SMemcpy(AOutputs[0],AInputs[0],ANumSamples*sizeof(SSample));
       //SMemcpy(AOutputs[1],AInputs[1],ANumSamples*sizeof(SSample));
+      /*
+      float* input0 = AInputs[0];
+      float* input1 = AInputs[1];
+      float* output0 = AOutputs[0];
+      float* output1 = AOutputs[1];
+      for (int32 i=0; i<ANumSamples; i++) {
+        float spl0 = *input0++;
+        float spl1 = *input1++;
+        *output0++ = spl0;
+        *output1++ = spl1;
+      }
+      */
     }
 
     //virtual
@@ -163,9 +179,11 @@ class myPlugin
     void on_postProcess(void) {
     }
 
-    //------------------------------------------------------------
-    // editor
-    //------------------------------------------------------------
+  //----------------------------------------
+  // editor
+  //----------------------------------------
+
+  public:
 
     #ifdef SKEI_PLUGIN_HAS_EDITOR
 

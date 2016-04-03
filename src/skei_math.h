@@ -5,6 +5,7 @@
 //#include <math.h>
 #include <stdlib.h> // abs
 
+/*
 float SAverage(const unsigned int n, const float* ar);
 float SClamp(const float input, const float limit);
 float SClamp(const float input, const float minval, const float maxval);
@@ -33,6 +34,7 @@ float SWindowingBlackman(float pos);
 float SWindowingGaussian(float pos);
 float SWindowingWelch(float pos);
 float SWindowingBartlett(float pos);
+*/
 
 //----------------------------------------------------------------------
 
@@ -46,6 +48,7 @@ float SWindowingBartlett(float pos);
   ar - array of floats
 */
 
+static __SKEI_UNUSED
 float SAverage(const unsigned int n, const float* ar) {
   float total = 0;
   unsigned int i=0;
@@ -59,6 +62,7 @@ float SAverage(const unsigned int n, const float* ar) {
 
 // limits a floating point number to [-limit, limit]
 
+static __SKEI_UNUSED
 float SClamp(const float input, const float limit) {
   const float _t = (input > -limit) ? input : -limit;
   //return (_t > limit) ? _t : limit;
@@ -69,6 +73,7 @@ float SClamp(const float input, const float limit) {
 
 // limits a floating point number to [-limit, limit]
 
+static __SKEI_UNUSED
 float SClamp(const float input, const float minval, const float maxval ) {
   const float _t = (input > minval) ? input : minval;
   return (_t < maxval) ? _t : maxval;
@@ -76,6 +81,7 @@ float SClamp(const float input, const float minval, const float maxval ) {
 
 //----------
 
+static __SKEI_UNUSED
 float SClip(float x, float l, float h) {
   return  (abs(x-l) + (l+h) - abs(x-h)) * 0.5;
 }
@@ -90,6 +96,7 @@ float SClip(float x, float l, float h) {
   and it gets exponential-like.
 */
 
+static __SKEI_UNUSED
 float SCurve(float x, float t) {
   float a = ( 1.0f - 1.0f/t );
   return x / (x+a * (x-1) );
@@ -115,6 +122,7 @@ float SCurve(float x, float t) {
 
 // Convert a value in dB's to a linear amplitude
 
+static __SKEI_UNUSED
 float SDbToAmp(float g) {
   if (g > -144.0) return exp(g * 0.115129254);
   else return 0;
@@ -148,6 +156,7 @@ float SDbToAmp(float g) {
   SFract(-1.9)  = -0.9
 */
 
+static __SKEI_UNUSED
 float SFract(const float value) {
   float intpart = (float)(int)value;
   return (value - intpart);
@@ -155,6 +164,7 @@ float SFract(const float value) {
 
 //----------
 
+static __SKEI_UNUSED
 float SFract(const float value, float* intpart) {
   *intpart = (float)(int)value;
   return (value - *intpart);
@@ -196,6 +206,7 @@ end;
   denormalize input value
 */
 
+static __SKEI_UNUSED
 float SKillDenorm(float n) {
   /*register*/ union
   {
@@ -209,6 +220,7 @@ float SKillDenorm(float n) {
 
 //----------
 
+static __SKEI_UNUSED
 float SMax(const float a, const float b) {
   return (a > b) ? a : b;
 }
@@ -217,6 +229,7 @@ float SMax(const float a, const float b) {
 
 // returns the smaller of two floating point numbers
 
+static __SKEI_UNUSED
 float SMin(const float a, const float b) {
   return (a < b) ? a : b;
 }
@@ -243,12 +256,14 @@ float SMin(const float a, const float b) {
 
 //----------
 
+static __SKEI_UNUSED
 float SModulo(float x, float y) {
   return x - (y * float(floor(x / y)));
 }
 
 //----------
 
+static __SKEI_UNUSED
 float SNoteToHz(float ANote) {
   return 440 * pow(2.0,(ANote-69)*SKEI_INV12F);
 }
@@ -266,6 +281,7 @@ float SNoteToHz(float ANote) {
   ar - array of floats
 */
 
+static __SKEI_UNUSED
 float SRms(const unsigned int n, const float* ar) {
   float numr = 0;
   unsigned int i=0;
@@ -289,6 +305,7 @@ float SRms(const unsigned int n, const float* ar) {
   SRound(-1.9)  = -2.0
 */
 
+static __SKEI_UNUSED
 float SRound(const float v) {
   if (v < 0.f) return (float)(int)(v - 0.5f);
   else return (float)(int)(v + 0.5f);
@@ -307,6 +324,7 @@ float SRound(const float v) {
 */
 
 
+static __SKEI_UNUSED
 float SSigmoid(float x) {
   if ( abs(x) < 1.0f ) return x * (1.5f - 0.5f * x * x);
   else {
@@ -325,6 +343,7 @@ float SSigmoid(float x) {
   SSign(-1.5) = -1
 */
 
+static __SKEI_UNUSED
 float SSign(const float v) {
   union {
     int32 i;
@@ -354,6 +373,7 @@ float SSign(const float v) {
 //  }
 //}
 
+static __SKEI_UNUSED
 float SSinc(float x) {
   if (x==0) return 1;
   else {
@@ -365,6 +385,7 @@ float SSinc(float x) {
 
 //----------
 
+static __SKEI_UNUSED
 float SSqr(float x) {
   return x*x;
 }
@@ -384,6 +405,7 @@ float SSqr(float x) {
 
 //----------
 
+static __SKEI_UNUSED
 float STrunc(const float v) {
   return (float)(int)v;
 }
@@ -392,33 +414,40 @@ float STrunc(const float v) {
 // windowing
 //----------------------------------------------------------------------
 
+static __SKEI_UNUSED
 float SWindowingRect(float pos) {
   return 1.0;
 }
 
+static __SKEI_UNUSED
 float SWindowingHann(float pos) {
   float x = cos(pos*SKEI_PI/2.0);
   return x*x;
 }
 
+static __SKEI_UNUSED
 float SWindowingHamming(float pos) {
   return 0.54 + 0.46 * cos(SKEI_PI*pos);
 }
 
+static __SKEI_UNUSED
 float SWindowingBlackman(float pos) {
   return 0.42 + 0.5 * cos(SKEI_PI*pos) + 0.08 * cos(2.0*SKEI_PI*pos);
 }
 
+static __SKEI_UNUSED
 float SWindowingGaussian(float pos) {
   float a = 4.0;
   float ax = a * pos;
   return exp(-0.5 * ax*ax);
 }
 
+static __SKEI_UNUSED
 float SWindowingWelch(float pos) {
   return 1.0 - pos*pos;
 }
 
+static __SKEI_UNUSED
 float SWindowingBartlett(float pos) {
  if (pos == 0.0) return 1.0;
  else if (pos > -1.0 && pos < 0.0) return pos + 1.0;
@@ -433,6 +462,7 @@ float SWindowingBartlett(float pos) {
 // denormalization killing with dc as presented by Laurent de Soras in
 // http://ldesoras.free.fr/doc/articles/denormal-en.pdf
 
+static __SKEI_UNUSED
 float SAddDc(float val) {
   // static const float antidenormal_dc = 1e-20;
   static const float antidenormal_dc = 0.000000000000000001f;

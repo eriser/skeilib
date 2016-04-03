@@ -169,6 +169,7 @@ uint32 SRgb(SColor AColor) {
 //----------
 
 //inline
+static __SKEI_UNUSED
 uint32 SRgb(uint8 r, uint8 g, uint8 b) {
   return ((uint32)r<<16)
         + ((uint32)g<<8)
@@ -177,6 +178,7 @@ uint32 SRgb(uint8 r, uint8 g, uint8 b) {
 
 //----------
 
+static __SKEI_UNUSED
 uint32 SRgb(SColor AColor) {
   uint32 col = SRgb(AColor.r*255,AColor.g*255,AColor.b*255);
   //STrace("%8x\n",col);
@@ -186,6 +188,7 @@ uint32 SRgb(SColor AColor) {
 //----------
 
 //inline
+static __SKEI_UNUSED
 uint32 SRgba(uint8 r, uint8 g, uint8 b, uint8 a) {
   return   ((uint32)a<<24)
          + ((uint32)r<<16)
@@ -196,6 +199,7 @@ uint32 SRgba(uint8 r, uint8 g, uint8 b, uint8 a) {
 //----------
 
 //inline
+static __SKEI_UNUSED
 uint32 SRgba(uint8 r, uint8 g, uint8 b) {
   return   0 //((uint32)a<<24)
          + ((uint32)r<<16)
@@ -205,13 +209,16 @@ uint32 SRgba(uint8 r, uint8 g, uint8 b) {
 
 //----------
 
-inline uint32 SRgba(SColor AColor) {
+//inline
+static __SKEI_UNUSED
+uint32 SRgba(SColor AColor) {
   return SRgba(AColor.r*255,AColor.g*255,AColor.b*255,AColor.a*255);
 }
 
 //----------
 
 //inline
+static __SKEI_UNUSED
 uint8 alphaColor(uint32 c, uint32 a) {
   uint32 ret = (c*a) >> 8;
   return ret & 0xff;
@@ -220,6 +227,7 @@ uint8 alphaColor(uint32 c, uint32 a) {
 //----------
 
 //inline
+static __SKEI_UNUSED
 uint8 scaleColor(uint8 c, float n ) {
   float nc = n * (float)c;
   return (uint8)SMin(255,nc);
@@ -229,6 +237,7 @@ uint8 scaleColor(uint8 c, float n ) {
 
 // values = 0..1
 
+static __SKEI_UNUSED
 SColor blendColor(float value, float r1, float g1, float b1, float r2, float g2, float b2) {
   SColor col;// = SColor(0);
   col.r = (r1 * (1-value)) + (r2 * value);
@@ -241,6 +250,7 @@ SColor blendColor(float value, float r1, float g1, float b1, float r2, float g2,
 
 //----------
 
+static __SKEI_UNUSED
 SColor blendColor(float value, SColor AColor1, SColor AColor2) {
   return blendColor(value,AColor1.r,AColor1.g,AColor1.b,AColor2.r,AColor2.g,AColor2.b);
 }

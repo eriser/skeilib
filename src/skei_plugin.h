@@ -19,6 +19,8 @@
   #include "skei_plugin_vst.h"
 #endif
 
+#include "skei_plugin_id.h"
+
 //----------
 
 class SPlugin
